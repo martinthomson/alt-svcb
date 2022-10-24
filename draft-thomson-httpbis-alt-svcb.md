@@ -236,7 +236,7 @@ A client does not make a query for the remembered alternative name.  They make a
 query for the name of the server, using the QNAME derived from the URI of the
 target resource.
 
-The RR that matches the remembered service name is selected, overridding any
+The RR that matches the remembered service name is selected, overriding any
 SvcPriority that might otherwise result in another ServiceMode record being
 chosen.
 
@@ -401,14 +401,14 @@ been less concerned about attacks that compromise the integrity of alternative
 services when using RFC 7838.
 
 Though integrity protection might appear to be valuable, it produced conflicts.
-For instance, information about the protocol is ostentibly authentic when
+For instance, information about the protocol is ostensibly authentic when
 provided in Alt-Svc fields or ALTSVC frames.  However, protocol support is also
 authenticated when establishing a connection.  This creates a potential conflict
 between two equally authoritative sources of the same information.
 
 Conflicts also arise when alternative service information is retained as any
 retained state might disagree with what is currently deployed.  This design
-avoids this contention by having the entire service resoltion process occur
+avoids this contention by having the entire service resolution process occur
 almost entirely to the DNS.
 
 An alternative service advertisement providing only a minimal nudge to perform a
