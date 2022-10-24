@@ -397,7 +397,7 @@ maybe {{?SNIP=I-D.ietf-tls-snip}} extensions in the TLS handshake
 {{!TLS=RFC8446}} determine what is used.
 
 In contrast RFC 7838, sending alternative services over an HTTP connection
-ensures that the information is authoritative.  Clients are therefore might have
+ensures that the information is authoritative.  Clients therefore might have
 been less concerned about attacks that compromise the integrity of alternative
 services when using RFC 7838.
 
