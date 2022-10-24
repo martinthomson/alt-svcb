@@ -29,6 +29,10 @@ author:
     fullname: Martin Thomson
     organization: Mozilla
     email: mt@lowentropy.net
+ -
+    fullname: Mike Bishop
+    org: Akamai Technologies
+    email: mbishop@evequefou.be
 
 normative:
   HTTP: RFC9110
