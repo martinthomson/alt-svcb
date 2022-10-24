@@ -311,8 +311,8 @@ To prevent clients that do not support this specification from using these
 services, the "alt-only" SvcParamKey MUST be listed in the "mandatory" SvcParam.
 
 In the following example, though "alt1.example" is listed at a higher priority
-than "example.com", clients will not use this alternative unless an alternative
-was provided by the server:
+than "example.com", clients will not use this service unless an alternative was
+provided by the server:
 
 ~~~ dns
 alt1.example. 7200 IN HTTPS 1 . port=443,alt-only,mandatory=alt-only
