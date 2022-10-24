@@ -459,10 +459,10 @@ only apply to a single origin within the scope of a single connection.
 
 *[Alt-SvcB]: #field
 
-The "Alt-SvcB" response field is a String field (see {{Section 3.3.3 of
-!STRUCTURED-FIELDS=RFC8941}}).  This response field MAY appear in a header or
-trailer section, though servers need to be aware that some clients might not
-process field values.
+The "Alt-SvcB" response field is a List of String values (see {{Sections 3.1 and
+3.3.3 of !STRUCTURED-FIELDS=RFC8941}}).  This response field MAY appear in a
+header or trailer section, though servers need to be aware that some clients
+might not process field values.
 
 Each field value includes an alternative name.  Each alternative name is encoded
 as an ASCII string, or a series of DNS A-labels, each separated by a single
@@ -473,8 +473,20 @@ DNS QNAME whether or not a trailing period is present.
 The applicable origin {{ORIGIN}} is derived from the origin of the Target
 Resource (see {{Section 7.1 of HTTP}}).
 
-If multiple Alt-SvcB fields are present in a response, the client MAY use any or
-even all of the provided alternative names.
+If multiple Alt-SvcB fields or field values are present in a response, the
+client MAY use any subset of the provided alternative names, including none,
+one, or all of the provided names.
+
+Servers SHOULD NOT provide more than one name.  The DNS provides ample
+opportunity to present clients with options, including the use of priority to
+help manage selection.  A list is tolerated only to allow for the possibility
+that multiple field lines might be added to responses without proper
+coordination.
+
+Clients MUST ignore unknown parameters that are provided with alternative names.
+This document does not define any parameters as the DNS is expected to provide
+supplementary information about services; a revision of this document would be
+required to enable the use of parameters.
 
 
 ## ALTSVCB Frame {#frame}
