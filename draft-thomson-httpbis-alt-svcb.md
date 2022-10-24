@@ -37,6 +37,10 @@ author:
     fullname: Lucas Pardue
     organization: Cloudflare
     email: lucaspardue.24.7@gmail.com
+ -
+    fullname: Tommy Jensen
+    organization: Microsoft
+    email: tojens@microsoft.com
 
 normative:
   HTTP: RFC9110
