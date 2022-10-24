@@ -30,6 +30,10 @@ author:
     organization: Mozilla
     email: mt@lowentropy.net
  -
+    fullname: Mike Bishop
+    org: Akamai Technologies
+    email: mbishop@evequefou.be
+ -
     fullname: Lucas Pardue
     organization: Cloudflare
     email: lucaspardue.24.7@gmail.com
