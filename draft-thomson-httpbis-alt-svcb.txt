@@ -4,9 +4,11 @@
 
 HTTP                                                          M. Thomson
 Internet-Draft                                                   Mozilla
-Obsoletes: 7838 (if approved)                                  L. Pardue
-Intended status: Standards Track                              Cloudflare
-Expires: 27 April 2023                                   24 October 2022
+Obsoletes: 7838 (if approved)                                  M. Bishop
+Intended status: Standards Track                     Akamai Technologies
+Expires: 27 April 2023                                         L. Pardue
+                                                              Cloudflare
+                                                         24 October 2022
 
 
                    HTTP Alternative Services, Plan B
@@ -689,6 +691,11 @@ Authors' Addresses
    Martin Thomson
    Mozilla
    Email: mt@lowentropy.net
+
+
+   Mike Bishop
+   Akamai Technologies
+   Email: mbishop@evequefou.be
 
 
    Lucas Pardue
