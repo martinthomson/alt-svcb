@@ -4,9 +4,9 @@
 
 HTTP                                                          M. Thomson
 Internet-Draft                                                   Mozilla
-Obsoletes: 7838 (if approved)                            24 October 2022
-Intended status: Standards Track                                        
-Expires: 27 April 2023
+Obsoletes: 7838 (if approved)                                  L. Pardue
+Intended status: Standards Track                              Cloudflare
+Expires: 27 April 2023                                   24 October 2022
 
 
                    HTTP Alternative Services, Plan B
@@ -93,7 +93,7 @@ Table of Contents
    Contributors
    Acknowledgments
    Index
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -684,8 +684,13 @@ Index
             Section 3.2, Paragraph 2; Section 3.2, Paragraph 4;
             Section 3.2, Paragraph 6; Section 5, Paragraph 1
 
-Author's Address
+Authors' Addresses
 
    Martin Thomson
    Mozilla
    Email: mt@lowentropy.net
+
+
+   Lucas Pardue
+   Cloudflare
+   Email: lucaspardue.24.7@gmail.com
