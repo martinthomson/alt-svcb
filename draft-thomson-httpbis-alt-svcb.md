@@ -264,10 +264,12 @@ query for "example.com" and receive in response:
 
 ~~~ dns
 example.com.  7200 IN HTTPS 1 . port=443
+alt1.example. 7200 IN HTTPS 10 . port=8443
 alt2.example. 7200 IN HTTPS 10 . port=8443
+alt3.example. 7200 IN HTTPS 10 . port=8443
 ~~~
 
-Under normal conditions, the SvcPriority of the "alt2.example." RR would indicate
+Under normal conditions, the SvcPriority of the "alt?.example." RRs would indicate
 that it is not preferred, so the "example.com" record would be used.
 
 If the client received an alternative service advertisement from this server for
@@ -275,12 +277,11 @@ If the client received an alternative service advertisement from this server for
 return a different set of records, as follows:
 
 ~~~ dns
-alt1.example. 7200 IN HTTPS 1 . port=8887
 alt2.example. 7200 IN HTTPS 1 . port=8887
 alt3.example. 7200 IN HTTPS 1 . port=8887
 ~~~
 
-If the client then successfully connects to "alt2.example" as a result, it
+If the client selects "alt2.example." and successfully connects to that host, it
 remembers both the name given as an alternative name ("alt.example.net") and a
 service name (the TargetName from the ServiceMode HTTPS record,
 "alt2.example.").
@@ -292,7 +293,9 @@ AliasMode, CNAME, or similar mechanisms - produces the same records as previousl
 
 ~~~ dns
 example.com.  7200 IN HTTPS 1 . port=443
+alt1.example. 7200 IN HTTPS 10 . port=8443
 alt2.example. 7200 IN HTTPS 10 . port=8443
+alt3.example. 7200 IN HTTPS 10 . port=8443
 ~~~
 
 The ServiceMode HTTPS record for "alt2.example." is used, even though this is a
