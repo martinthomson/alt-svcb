@@ -8,6 +8,8 @@ Obsoletes: 7838 (if approved)                                  M. Bishop
 Intended status: Standards Track                     Akamai Technologies
 Expires: 27 April 2023                                         L. Pardue
                                                               Cloudflare
+                                                               T. Jensen
+                                                               Microsoft
                                                          24 October 2022
 
 
@@ -713,3 +715,8 @@ Authors' Addresses
    Lucas Pardue
    Cloudflare
    Email: lucaspardue.24.7@gmail.com
+
+
+   Tommy Jensen
+   Microsoft
+   Email: tojens@microsoft.com
