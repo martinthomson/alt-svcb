@@ -170,9 +170,10 @@ alternative as follows:
    or a 5xx status code (see {{Section 15.6 of HTTP}}), abort this process.
 
 5. Once a response is received, the connection to the alternative is complete.
-   Any other connections can be closed and future requests.  The client SHOULD
-   remember the alternative name and the service name (the TargetName from the
-   HTTPS ServiceMode record that was used) that were used; see {{remember}}.
+   Any other connections can be closed and future requests directed to the
+   alternative.  The client SHOULD remember the alternative name and the service
+   name (the TargetName from the HTTPS ServiceMode record that was used) that
+   were used; see {{remember}}.
 
 A client MUST NOT remember a service name for an alternative service until a
 request has been successfully completed with a 2xx or 3xx status code.
