@@ -227,6 +227,13 @@ available if the server repeats the information in Alt-SvcB fields or ALTSVCB
 frames.  A client MAY periodically attempt to retry a failed alternative if the
 information is repeated.
 
+A server can explicitly request that a client remove any remembered service name
+by providing an alternative name of "invalid".  The "invalid" domain name
+corresponds to a DNS name that will never successfully resolve (see {{Section
+6.4 of ?SUDN=RFC6761}}), which guarantees that an attempt to use this name
+cannot succeed.  Clients MAY recognize the name "invalid" as special and avoid
+any attempt to use this to discover an alternative service.
+
 
 ## Reusing Alternatives {#reuse}
 
