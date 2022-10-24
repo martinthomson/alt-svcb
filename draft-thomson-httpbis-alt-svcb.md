@@ -114,7 +114,7 @@ about service reachability.  An alternative service advertisement only acts as a
 prompt for clients to seek updated information from the DNS.
 
 To use this new design, a server advertises an alternative name using the
-"Alt-SvcB" header field.
+"Alt-SvcB" field.
 
 ~~~ http-message
 200 OK HTTP/1.1
@@ -170,9 +170,10 @@ alternative as follows:
    or a 5xx status code (see {{Section 15.6 of HTTP}}), abort this process.
 
 5. Once a response is received, the connection to the alternative is complete.
-   Any other connections can be closed and future requests.  The client SHOULD
-   remember the alternative name and the service name (the TargetName from the
-   HTTPS ServiceMode record that was used) that were used; see {{remember}}.
+   Any other connections can be closed and future requests directed to the
+   alternative.  The client SHOULD remember the alternative name and the service
+   name (the TargetName from the HTTPS ServiceMode record that was used) that
+   were used; see {{remember}}.
 
 A client MUST NOT remember a service name for an alternative service until a
 request has been successfully completed with a 2xx or 3xx status code.
@@ -236,7 +237,7 @@ A client does not make a query for the remembered alternative name.  They make a
 query for the name of the server, using the QNAME derived from the URI of the
 target resource.
 
-The RR that matches the remembered service name is selected, overridding any
+The RR that matches the remembered service name is selected, overriding any
 SvcPriority that might otherwise result in another ServiceMode record being
 chosen.
 
@@ -382,7 +383,7 @@ the server provides.  This document deprecates the mechanisms defined in RFC
 7838 {{?ALT-SVC}}.
 
 Servers might provide Alt-Svc fields or ALTSVC frames {{?ALT-SVC}} in order to
-support such clients.  Clients that cannot use HTTPS
+support clients that cannot use HTTPS records.
 
 
 ## No Authority
@@ -396,22 +397,22 @@ maybe {{?SNIP=I-D.ietf-tls-snip}} extensions in the TLS handshake
 {{!TLS=RFC8446}} determine what is used.
 
 In contrast RFC 7838, sending alternative services over an HTTP connection
-ensures that the information is authoritative.  Clients are therefore might have
+ensures that the information is authoritative.  Clients therefore might have
 been less concerned about attacks that compromise the integrity of alternative
 services when using RFC 7838.
 
 Though integrity protection might appear to be valuable, it produced conflicts.
-For instance, information about the protocol is ostentibly authentic when
+For instance, information about the protocol is ostensibly authentic when
 provided in Alt-Svc fields or ALTSVC frames.  However, protocol support is also
 authenticated when establishing a connection.  This creates a potential conflict
 between two equally authoritative sources of the same information.
 
 Conflicts also arise when alternative service information is retained as any
 retained state might disagree with what is currently deployed.  This design
-avoids this contention by having the entire service resoltion process occur
+avoids this contention by having the entire service resolution process occur
 almost entirely to the DNS.
 
-An alternative service advertisement providing only a minimal nudge to perform a
+An alternative service advertisement provides only a minimal nudge to perform a
 DNS query at the time it is made.  On reconnection, remembered state only
 affects prioritization of active DNS records.  Invalid configurations do not
 persist.
