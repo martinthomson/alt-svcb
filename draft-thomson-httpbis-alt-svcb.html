@@ -1376,7 +1376,12 @@ were used; see <a href="#remember" class="auto internal xref">Section 2.1</a>.<a
 </li>
       </ol>
 <p id="section-2-3">A client <span class="bcp14">MUST NOT</span> remember a service name for an alternative service until a
-request has been successfully completed with a 2xx or 3xx status code.<a href="#section-2-3" class="pilcrow">¶</a></p>
+request has been successfully completed with a 2xx or 3xx status code.  A client
+<span class="bcp14">MAY</span> send additional requests using the newly established connection to the
+alternative service after it verifies that the server is authoritative.  The
+alternative service is therefore active once the connection is established, but
+it will not be reused (<a href="#reuse" class="auto internal xref">Section 2.2</a>) for future connections until a request
+completes successfully.<a href="#section-2-3" class="pilcrow">¶</a></p>
 <p id="section-2-4">A client <span class="bcp14">MAY</span> continue sending other requests over any existing connection to the
 server until this process completes in order to minimize latency for those
 requests.  A client <span class="bcp14">MAY</span> - when presented with an alternative name - proactively
@@ -1457,22 +1462,23 @@ query for "example.com" and receive in response:<a href="#section-2.2.1-1" class
 <div id="section-2.2.1-2">
 <pre class="lang-dns sourcecode">
 example.com.  7200 IN HTTPS 1 . port=443
+alt1.example. 7200 IN HTTPS 10 . port=8443
 alt2.example. 7200 IN HTTPS 10 . port=8443
+alt3.example. 7200 IN HTTPS 10 . port=8443
 </pre><a href="#section-2.2.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-2.2.1-3">Under normal conditions, the SvcPriority of the "alt2.example." RR would indicate
+<p id="section-2.2.1-3">Under normal conditions, the SvcPriority of the "alt?.example." RRs would indicate
 that it is not preferred, so the "example.com" record would be used.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.2.1-4">If the client received an alternative service advertisement from this server for
 "alt.example.net" it would then make a DNS query to that name.  This might
 return a different set of records, as follows:<a href="#section-2.2.1-4" class="pilcrow">¶</a></p>
 <div id="section-2.2.1-5">
 <pre class="lang-dns sourcecode">
-alt1.example. 7200 IN HTTPS 1 . port=8887
 alt2.example. 7200 IN HTTPS 1 . port=8887
 alt3.example. 7200 IN HTTPS 1 . port=8887
 </pre><a href="#section-2.2.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-2.2.1-6">If the client then successfully connects to "alt2.example" as a result, it
+<p id="section-2.2.1-6">If the client selects "alt2.example." and successfully connects to that host, it
 remembers both the name given as an alternative name ("alt.example.net") and a
 service name (the TargetName from the ServiceMode HTTPS record,
 "alt2.example.").<a href="#section-2.2.1-6" class="pilcrow">¶</a></p>
@@ -1483,7 +1489,9 @@ AliasMode, CNAME, or similar mechanisms - produces the same records as previousl
 <div id="section-2.2.1-8">
 <pre class="lang-dns sourcecode">
 example.com.  7200 IN HTTPS 1 . port=443
+alt1.example. 7200 IN HTTPS 10 . port=8443
 alt2.example. 7200 IN HTTPS 10 . port=8443
+alt3.example. 7200 IN HTTPS 10 . port=8443
 </pre><a href="#section-2.2.1-8" class="pilcrow">¶</a>
 </div>
 <p id="section-2.2.1-9">The ServiceMode HTTPS record for "alt2.example." is used, even though this is a
