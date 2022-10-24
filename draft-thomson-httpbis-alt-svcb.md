@@ -94,12 +94,12 @@ that is published in the DNS.  With the introduction of HTTPS records
 advertised in the DNS, creating two independent sources of this information,
 with different approaches to caching.
 
-Alternative services can also be highly dependent on networking conditions.  RFC
-7838 attempts to manage this by having clients be responsible for invalidating
-alternatives when changes in their network are detected, unless the alternative
-is explicitly marked as "persistent".  In practice, detecting the necessary
-changes is difficult for many clients, so this requirement is not consistently
-implemented.
+Alternative services can also be highly dependent on networking conditions.
+{{!ALT-SVC=RFC7838}} attempted to manage this by having clients be responsible
+for invalidating alternatives when changes in their network are detected, unless
+the alternative is explicitly marked as "persistent".  In practice, detecting
+the necessary changes is difficult for many clients, so this requirement is not
+consistently implemented.
 
 The alternative services mechanisms defined in RFC 7838 can produce suboptimal
 or even detrimental outcomes in some deployments.  Consequently, this document
