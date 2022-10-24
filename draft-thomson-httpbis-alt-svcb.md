@@ -82,11 +82,11 @@ deployments of alternative services.
 
 ## Caching in Alternative Services
 
-Setting the "ma" (or max-age) parameter for an alternative can be challenging
-for a server deployment.  Setting too a large max-age can mean that clients use
-an alternative for longer than they should.  Conversely, a short cache period
-for an advertisement for HTTP/3 can mean that earlier versions might be used
-more often than is optimal.
+With RFC 7838 {{!ALT-SVC=RFC7838}}, setting the "ma" (or max-age) parameter for
+an alternative can be challenging for a server deployment.  Setting too a large
+max-age can mean that clients use an alternative for longer than they should.
+Conversely, a short cache period for an advertisement for HTTP/3 can mean that
+earlier versions might be used more often than is optimal.
 
 Alternative services can interact poorly with service configuration information
 that is published in the DNS.  With the introduction of HTTPS records
@@ -94,26 +94,26 @@ that is published in the DNS.  With the introduction of HTTPS records
 advertised in the DNS, creating two independent sources of this information,
 with different approaches to caching.
 
-Alternative services can also be highly dependent on networking conditions.
-{{!ALT-SVC=RFC7838}} attempted to manage this by having clients be responsible
-for invalidating alternatives when changes in their network are detected, unless
-the alternative is explicitly marked as "persistent".  In practice, detecting
-the necessary changes is difficult for many clients, so this requirement is not
-consistently implemented.
+Alternative services can also be highly dependent on networking conditions.  RFC
+7838 attempted to manage this by having clients be responsible for invalidating
+alternatives when changes in their network are detected, unless the alternative
+is explicitly marked as "persistent".  In practice, detecting the necessary
+changes is difficult for many clients, so this requirement is not consistently
+implemented.
 
 The alternative services mechanisms defined in RFC 7838 can produce suboptimal
 or even detrimental outcomes in some deployments.  Consequently, this document
 obsoletes RFC 7838.
 
 
-## An Alternative Approach
+## A New Alternative
 
 This document describes a different approach to advertising alternative
 services.  This approach uses the DNS as the singular source of information
 about service reachability.  An alternative service advertisement only acts as a
 prompt for clients to seek updated information from the DNS.
 
-To use this new design, a server advertises an alternative server name using the
+To use this new design, a server advertises an alternative name using the
 "Alt-SvcB" header field.
 
 ~~~ http-message
@@ -124,8 +124,16 @@ content-length: 0
 
 ~~~
 
-Clients can then consult the DNS, making HTTPS queries to this name in place of
-the name of the authority.  {{use}} defines how this name is used in detail.
+Clients can then consult the DNS, making HTTPS queries {{SVCB}} starting with
+this name. The alternative name is used in place of the name of the authority
+and using HTTPS records is mandatory, but the process otherwise follows normal
+HTTPS record resolution and connection procedures.  {{use}} defines how this
+name is used in detail.
+
+Future connections for requests to resources on the same server use HTTPS record
+resolution to the name of the authority, but are reprioritized if a successful
+connection was previously made to an alternative service.  {{reuse}} defines how
+this process works in more detail.
 
 
 ## Conventions and Definitions
@@ -163,8 +171,8 @@ alternative as follows:
 
 5. Once a response is received, the connection to the alternative is complete.
    Any other connections can be closed and future requests.  The client SHOULD
-   remember the alternative name and the service name (TargetName) that were
-   used; see {{remember}}.
+   remember the alternative name and the service name (the TargetName from the
+   HTTPS ServiceMode record that was used) that were used; see {{remember}}.
 
 A client MUST NOT remember a service name for an alternative service until a
 request has been successfully completed with a 2xx or 3xx status code.
@@ -214,7 +222,7 @@ frames.  A client MAY periodically attempt to retry a failed alternative if the
 information is repeated.
 
 
-## Reusing Alternatives
+## Reusing Alternatives {#reuse}
 
 A client remembers the service name, or the TargetName from the ServiceMode
 HTTPS record that it successfully used to establish a connection to an
