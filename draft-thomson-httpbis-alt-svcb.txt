@@ -506,10 +506,10 @@ Table of Contents
 
 3.1.  Alt-SvcB Field
 
-   The "Alt-SvcB" response field is a String field (see Section 3.3.3 of
-   [STRUCTURED-FIELDS]).  This response field MAY appear in a header or
-   trailer section, though servers need to be aware that some clients
-   might not process field values.
+   The "Alt-SvcB" response field is a List of String values (see
+   Sections 3.1 and 3.3.3 of [STRUCTURED-FIELDS]).  This response field
+   MAY appear in a header or trailer section, though servers need to be
+   aware that some clients might not process field values.
 
    Each field value includes an alternative name.  Each alternative name
    is encoded as an ASCII string, or a series of DNS A-labels, each
@@ -521,8 +521,21 @@ Table of Contents
    The applicable origin [ORIGIN] is derived from the origin of the
    Target Resource (see Section 7.1 of [HTTP]).
 
-   If multiple Alt-SvcB fields are present in a response, the client MAY
-   use any or even all of the provided alternative names.
+   If multiple Alt-SvcB fields or field values are present in a
+   response, the client MAY use any subset of the provided alternative
+   names, including none, one, or all of the provided names.
+
+   Servers SHOULD NOT provide more than one name.  The DNS provides
+   ample opportunity to present clients with options, including the use
+   of priority to help manage selection.  A list is tolerated only to
+   allow for the possibility that multiple field lines might be added to
+   responses without proper coordination.
+
+   Clients MUST ignore unknown parameters that are provided with
+   alternative names.  This document does not define any parameters as
+   the DNS is expected to provide supplementary information about
+   services; a revision of this document would be required to enable the
+   use of parameters.
 
 3.2.  ALTSVCB Frame
 
@@ -550,9 +563,9 @@ Table of Contents
    Origin:  The ASCII serialization of the affected origin; see
       Section 6.2 of [ORIGIN].
 
-   Alternative Name:  The remainder of the frame contents contains the
+   Alternative Name:  The remainder of the frame contains a single
       alternative name, encoded as an ASCII string; see the definition
-      in Section 3.1 for more details.
+      in Section 3.1 for more details on the encoding.
 
    If a server sends multiple ALTSVCB frames for the same origin,
    clients MUST ignore any frames other than the most recent.

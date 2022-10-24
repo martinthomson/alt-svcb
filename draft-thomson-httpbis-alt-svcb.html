@@ -1672,9 +1672,9 @@ only apply to a single origin within the scope of a single connection.<a href="#
         <h3 id="name-alt-svcb-field">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-alt-svcb-field" class="section-name selfRef">Alt-SvcB Field</a>
         </h3>
-<p id="section-3.1-1">The "<a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-17" class="iref"></span>" response field is a String field (see <span><a href="https://rfc-editor.org/rfc/rfc8941#section-3.3.3" class="relref">Section 3.3.3</a> of [<a href="#STRUCTURED-FIELDS" class="cite xref">STRUCTURED-FIELDS</a>]</span>).  This response field <span class="bcp14">MAY</span> appear in a header or
-trailer section, though servers need to be aware that some clients might not
-process field values.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">The "<a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-17" class="iref"></span>" response field is a List of String values (see Sections <a href="https://rfc-editor.org/rfc/rfc8941#section-3.1" class="relref">3.1</a> and <a href="https://rfc-editor.org/rfc/rfc8941#section-3.3.3" class="relref">3.3.3</a> of <span>[<a href="#STRUCTURED-FIELDS" class="cite xref">STRUCTURED-FIELDS</a>]</span>).  This response field <span class="bcp14">MAY</span> appear in a
+header or trailer section, though servers need to be aware that some clients
+might not process field values.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">Each field value includes an alternative name.  Each alternative name is encoded
 as an ASCII string, or a series of DNS A-labels, each separated by a single
 period character (".", U+2E).  Each value <span class="bcp14">MAY</span> end with a period, though - for
@@ -1682,8 +1682,18 @@ the purposes of the process in <a href="#use" class="auto internal xref">Section
 DNS QNAME whether or not a trailing period is present.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">The applicable origin <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span> is derived from the origin of the Target
 Resource (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">If multiple <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-18" class="iref"></span> fields are present in a response, the client <span class="bcp14">MAY</span> use any or
-even all of the provided alternative names.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">If multiple <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-18" class="iref"></span> fields or field values are present in a response, the
+client <span class="bcp14">MAY</span> use any subset of the provided alternative names, including none,
+one, or all of the provided names.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">Servers <span class="bcp14">SHOULD NOT</span> provide more than one name.  The DNS provides ample
+opportunity to present clients with options, including the use of priority to
+help manage selection.  A list is tolerated only to allow for the possibility
+that multiple field lines might be added to responses without proper
+coordination.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">Clients <span class="bcp14">MUST</span> ignore unknown parameters that are provided with alternative names.
+This document does not define any parameters as the DNS is expected to provide
+supplementary information about services; a revision of this document would be
+required to enable the use of parameters.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="frame">
@@ -1725,8 +1735,9 @@ ALTSVCB Frame {
           <dd class="break"></dd>
 <dt id="section-3.2-5.5">Alternative Name:</dt>
           <dd style="margin-left: 1.5em" id="section-3.2-5.6">
-            <p id="section-3.2-5.6.1">The remainder of the frame contents contains the alternative name, encoded as
-an ASCII string; see the definition in <a href="#field" class="auto internal xref">Section 3.1</a> for more details.<a href="#section-3.2-5.6.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-5.6.1">The remainder of the frame contains a single alternative name, encoded as an
+ASCII string; see the definition in <a href="#field" class="auto internal xref">Section 3.1</a> for more details on the
+encoding.<a href="#section-3.2-5.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
