@@ -383,7 +383,7 @@ the server provides.  This document deprecates the mechanisms defined in RFC
 7838 {{?ALT-SVC}}.
 
 Servers might provide Alt-Svc fields or ALTSVC frames {{?ALT-SVC}} in order to
-support such clients.  Clients that cannot use HTTPS
+support clients that cannot use HTTPS records.
 
 
 ## No Authority
