@@ -176,7 +176,12 @@ alternative as follows:
    were used; see {{remember}}.
 
 A client MUST NOT remember a service name for an alternative service until a
-request has been successfully completed with a 2xx or 3xx status code.
+request has been successfully completed with a 2xx or 3xx status code.  A client
+MAY send additional requests using the newly established connection to the
+alternative service after it verifies that the server is authoritative.  The
+alternative service is therefore active once the connection is established, but
+it will not be reused ({{reuse}}) for future connections until a request
+completes successfully.
 
 A client MAY continue sending other requests over any existing connection to the
 server until this process completes in order to minimize latency for those
