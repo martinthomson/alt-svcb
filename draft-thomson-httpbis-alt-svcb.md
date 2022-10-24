@@ -19,9 +19,9 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
-category: info
+title: "HTTP Alternative Services, Plan B"
+abbrev: "Alt-SvcB"
+category: std
 
 docname: draft-todo-yourname-protocol-latest
 submissiontype: IETF  # also: "independent", "IAB", or "IRTF"
@@ -45,9 +45,9 @@ venue:
 
 author:
  -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    fullname: Martin Thomson
+    organization: Mozilla
+    email: mt@lowentropy.net
 
 normative:
 
