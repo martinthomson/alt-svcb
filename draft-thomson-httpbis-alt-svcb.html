@@ -1434,6 +1434,11 @@ avoids making repeated attempts to use an alternative service that is not
 available if the server repeats the information in <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-9" class="iref"></span> fields or <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-10" class="iref"></span>
 frames.  A client <span class="bcp14">MAY</span> periodically attempt to retry a failed alternative if the
 information is repeated.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">A server can explicitly request that a client remove any remembered service name
+by providing an alternative name of "invalid".  The "invalid" domain name
+corresponds to a DNS name that will never successfully resolve (see <span><a href="https://rfc-editor.org/rfc/rfc6761#section-6.4" class="relref">Section 6.4</a> of [<a href="#SUDN" class="cite xref">SUDN</a>]</span>), which guarantees that an attempt to use this name
+cannot succeed.  Clients <span class="bcp14">MAY</span> recognize the name "invalid" as special and avoid
+any attempt to use this to discover an alternative service.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="reuse">
@@ -1839,8 +1844,12 @@ see <span><a href="https://rfc-editor.org/rfc/rfc5890#section-2.3.2.1" class="re
 <span class="refAuthor">Bishop, M., Ed.</span>, <span class="refTitle">"HTTP/3"</span>, <span class="seriesInfo">RFC 9114</span>, <span class="seriesInfo">DOI 10.17487/RFC9114</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9114">https://www.rfc-editor.org/rfc/rfc9114</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SNIP">[SNIP]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Thomson, M.</span>, <span class="refTitle">"Secure Negotiation of Incompatible Protocols in TLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-snip-02</span>, <time datetime="2022-06-30" class="refDate">30 June 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-snip-02">https://datatracker.ietf.org/doc/html/draft-ietf-tls-snip-02</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="SUDN">[SUDN]</dt>
+      <dd>
+<span class="refAuthor">Cheshire, S.</span> and <span class="refAuthor">M. Krochmal</span>, <span class="refTitle">"Special-Use Domain Names"</span>, <span class="seriesInfo">RFC 6761</span>, <span class="seriesInfo">DOI 10.17487/RFC6761</span>, <time datetime="2013-02" class="refDate">February 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6761">https://www.rfc-editor.org/rfc/rfc6761</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

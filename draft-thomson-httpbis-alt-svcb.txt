@@ -288,6 +288,14 @@ Table of Contents
    periodically attempt to retry a failed alternative if the information
    is repeated.
 
+   A server can explicitly request that a client remove any remembered
+   service name by providing an alternative name of "invalid".  The
+   "invalid" domain name corresponds to a DNS name that will never
+   successfully resolve (see Section 6.4 of [SUDN]), which guarantees
+   that an attempt to use this name cannot succeed.  Clients MAY
+   recognize the name "invalid" as special and avoid any attempt to use
+   this to discover an alternative service.
+
 2.2.  Reusing Alternatives
 
    A client remembers the service name, or the TargetName from the
@@ -651,6 +659,10 @@ Table of Contents
               snip-02, 30 June 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
               snip-02>.
+
+   [SUDN]     Cheshire, S. and M. Krochmal, "Special-Use Domain Names",
+              RFC 6761, DOI 10.17487/RFC6761, February 2013,
+              <https://www.rfc-editor.org/rfc/rfc6761>.
 
 Contributors
 
