@@ -114,7 +114,7 @@ about service reachability.  An alternative service advertisement only acts as a
 prompt for clients to seek updated information from the DNS.
 
 To use this new design, a server advertises an alternative name using the
-"Alt-SvcB" header field.
+"Alt-SvcB" field.
 
 ~~~ http-message
 200 OK HTTP/1.1
