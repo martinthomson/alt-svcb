@@ -412,7 +412,7 @@ retained state might disagree with what is currently deployed.  This design
 avoids this contention by having the entire service resolution process occur
 almost entirely to the DNS.
 
-An alternative service advertisement providing only a minimal nudge to perform a
+An alternative service advertisement provides only a minimal nudge to perform a
 DNS query at the time it is made.  On reconnection, remembered state only
 affects prioritization of active DNS records.  Invalid configurations do not
 persist.
