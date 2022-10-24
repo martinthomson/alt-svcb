@@ -514,8 +514,9 @@ Origin:
 
 Alternative Name:
 
-: The remainder of the frame contents contains the alternative name, encoded as
-  an ASCII string; see the definition in {{field}} for more details.
+: The remainder of the frame contains a single alternative name, encoded as an
+  ASCII string; see the definition in {{field}} for more details on the
+  encoding.
 
 If a server sends multiple ALTSVCB frames for the same origin, clients MUST
 ignore any frames other than the most recent.
