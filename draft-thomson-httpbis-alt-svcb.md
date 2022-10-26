@@ -59,7 +59,7 @@ informative:
 
 HTTP alternative services
 
-This document deprecates RFC 7838.
+This document obsoletes RFC 7838.
 
 --- middle
 
@@ -406,7 +406,7 @@ of the server it wishes to contact, rather than providing a name.
 
 A client that successfully makes use of HTTPS records in resolving the name of
 an HTTP server MUST ignore any Alt-Svc fields or ALTSVC frames {{?ALT-SVC}} that
-the server provides.  This document deprecates the mechanisms defined in RFC
+the server provides.  This document obsoletes the mechanisms defined in RFC
 7838 {{?ALT-SVC}}.
 
 Servers might provide Alt-Svc fields or ALTSVC frames {{?ALT-SVC}} in order to
