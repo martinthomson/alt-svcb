@@ -6,11 +6,11 @@ HTTP                                                          M. Thomson
 Internet-Draft                                                   Mozilla
 Obsoletes: 7838 (if approved)                                  M. Bishop
 Intended status: Standards Track                     Akamai Technologies
-Expires: 27 April 2023                                         L. Pardue
+Expires: 29 April 2023                                         L. Pardue
                                                               Cloudflare
                                                                T. Jensen
                                                                Microsoft
-                                                         24 October 2022
+                                                         26 October 2022
 
 
                    HTTP Alternative Services, Plan B
@@ -20,7 +20,7 @@ Abstract
 
    HTTP alternative services
 
-   This document deprecates RFC 7838.
+   This document obsoletes RFC 7838.
 
 About This Document
 
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 April 2023.
+   This Internet-Draft will expire on 29 April 2023.
 
 Copyright Notice
 
@@ -451,7 +451,7 @@ Table of Contents
 
    A client that successfully makes use of HTTPS records in resolving
    the name of an HTTP server MUST ignore any Alt-Svc fields or ALTSVC
-   frames [ALT-SVC] that the server provides.  This document deprecates
+   frames [ALT-SVC] that the server provides.  This document obsoletes
    the mechanisms defined in RFC 7838 [ALT-SVC].
 
    Servers might provide Alt-Svc fields or ALTSVC frames [ALT-SVC] in
