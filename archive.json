@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-10-25T01:20:33.971139+00:00",
+  "timestamp": "2022-10-27T01:05:50.665232+00:00",
   "repo": "martinthomson/alt-svcb",
   "labels": [
     {
@@ -279,6 +279,38 @@
       "updatedAt": "2022-10-25T00:12:33Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOISvaoM5U1dUJ",
+      "title": "Endless alternatives",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/20",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This design can result in clients following an indefinite chain of alternatives.  Talk about how to manage this.",
+      "createdAt": "2022-10-26T01:21:55Z",
+      "updatedAt": "2022-10-26T01:21:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOISvaoM5U1ddg",
+      "title": "SVCB-reliant",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/21",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft currently says that looking up an alternative is done as SVCB-reliant (HTTPS is otherwise defined to be SVCB-optional).  Double-check that this is what we want.  It probably is, but let's be sure.",
+      "createdAt": "2022-10-26T01:23:00Z",
+      "updatedAt": "2022-10-26T01:23:00Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -498,6 +530,58 @@
       "mergeCommit": {
         "oid": "60248387612e9371298cef00ddb7ae5bc188bb76"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOISvaoM5BjGIn",
+      "title": "A LOT of changes",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/22",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The first version was done in a bit of a rush.  This is the result of a comprehensive re-read.  It includes:\r\n\r\n* An abstract.  Closes #4.\r\n* Crisper terminology.  Closes #18.\r\n* HTTP/3 in an example.  Closes #19.\r\n* Text on IP addresses.  Closes #6.\r\n* Tweaks to proxy language.  This is for #17, but I want to continue that discussion some more before closing it out.\r\n* Security considerations:\r\n  * A threat model that covers switching between service endpoints. Closes #3.\r\n  * Explicit mention that this is only HTTPS.  Closes #1.\r\n  * Service instances are supposed to be the same.  Closes #8.\r\n  * Language on insider attacks, inspired by and borrowing from RFC 7838.\r\n  * Text on looping and indefinite series of new alternatives, which is new as far as I know.  Closes #20.\r\n  * Text on tracking, copying again from RFC 7838.  Closes #2.\r\n* Editorial fixes throughout.\r\n\r\nIt's a big changeset and probably imperfect.  I also know that people are busy, but I'd like to get this in, using new issues to track pieces where I messed up.  Unless there is something truly terrible, of course.",
+      "createdAt": "2022-10-26T03:35:22Z",
+      "updatedAt": "2022-10-26T03:52:08Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "35b0c8116a17e262b1b26d2e7004a1f379fe4933",
+      "headRepository": "martinthomson/alt-svcb",
+      "headRefName": "big",
+      "headRefOid": "94d6142857dd09ab37b4a061f49facb7aa2f9245",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOISvaoM5BjGeB",
+      "title": "Codeowners",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/23",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-10-26T03:37:54Z",
+      "updatedAt": "2022-10-26T03:37:54Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "35b0c8116a17e262b1b26d2e7004a1f379fe4933",
+      "headRepository": "martinthomson/alt-svcb",
+      "headRefName": "codeowners",
+      "headRefOid": "670e5332f383bfe0f97b9b22cb053a0281055e97",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
