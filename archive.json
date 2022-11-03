@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-10-27T01:05:50.665232+00:00",
+  "timestamp": "2022-11-03T01:04:23.600901+00:00",
   "repo": "martinthomson/alt-svcb",
   "labels": [
     {
@@ -309,6 +309,22 @@
       "body": "The draft currently says that looking up an alternative is done as SVCB-reliant (HTTPS is otherwise defined to be SVCB-optional).  Double-check that this is what we want.  It probably is, but let's be sure.",
       "createdAt": "2022-10-26T01:23:00Z",
       "updatedAt": "2022-10-26T01:23:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOISvaoM5VaSsS",
+      "title": "Fixups for Alt-Svc",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/24",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@davidben says:\r\n\r\n> If we're looking to make a separate system here, with Alt-Svc still existing for a while, should we make a separate draft to patch up some of the more glaring mistakes in Alt-Svc? Or perhaps a paragraph in this one. I'm specifically thinking about how Alt-Svc tries to circumvent the TLS-level ALPN negotiation. For HTTPS/SVCB, we picked a more nuanced interpretation. Otherwise implementers may not know that Alt-Svc misunderstood ALPN and that they need to ignore the spec on this point.\r\n\r\nThis seems like something we could do with this draft, provided that it is limited in scope.  (The ALPN thing is pretty simple.)",
+      "createdAt": "2022-11-02T11:09:01Z",
+      "updatedAt": "2022-11-02T11:09:01Z",
       "closedAt": null,
       "comments": []
     }
