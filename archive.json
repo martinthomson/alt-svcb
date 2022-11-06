@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-11-03T01:04:23.600901+00:00",
+  "timestamp": "2022-11-06T01:02:27.426014+00:00",
   "repo": "martinthomson/alt-svcb",
   "labels": [
     {
@@ -228,9 +228,38 @@
       "labels": [],
       "body": "Right now, we have two interrelated mechanisms that can be used to ensure that an alternative service is used:\r\n\r\n1. If the service name is present in an RRset, then it is chosen, no matter its priority.  This allows low priority entries to jump to the top.\r\n2. If an RR is marked alt-only, it can be pushed right to the top with SvcPriority higher than unmarked RRs.  This allows alternative services to be put at the top in terms of priority, without them being used under ordinary conditions.\r\n\r\nIt's possible that either approach would work.  Are there deployment scenarios that push specifically toward one or other approach such that we might need both?  Or, can we remove one of these?\r\n\r\nObviously the alt-only thing has more \"stuff\" associated with it, which might make it more attractive to remove, but it might also be the more powerful of the two.  For this, my guess is that we need to collect input from people who are looking to deploy this.",
       "createdAt": "2022-10-24T23:17:11Z",
-      "updatedAt": "2022-10-24T23:17:11Z",
+      "updatedAt": "2022-11-05T13:14:07Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "I have a suggestion: add an opaque value to the `alt-only` parameter (which should be inherently mandatory if it isn't too late), and use *that* to implement load-balancing.\r\n\r\n```DNS\r\nexample.com.  7200 IN HTTPS 1 alt1.example port=8443 alt-only=alt1\r\nexample.com.  7200 IN HTTPS 1 alt2.example port=8443 alt-only=alt2\r\nexample.com.  7200 IN HTTPS 1 alt3.example port=8443 alt-only=alt3\r\nexample.com.  7200 IN HTTPS 2 .\r\n```\r\n\r\nWhen initially connecting, a client would skip the first three records and connect using the A/AAAA records of `example.com`. The server might send it the following header:\r\n```HTTP\r\nAlt-SvcB: alt1\r\n```\r\nThe client would understand this to mean it should re-evaluate the (still-cached!) HTTPS records with the ability to use records that have `alt-only=alt1`, thus connecting to the A/AAAA records of `alt1.example`.",
+          "createdAt": "2022-11-03T17:41:27Z",
+          "updatedAt": "2022-11-03T18:00:53Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "In addition to being much easier to understand, this approach offers immense flexibility:\r\n\r\n- Multiple `alt-only` values could be provided by the server to enable multiple records (i.e., the two closest servers to the client)\r\n- `alt-only` could be set without a value in an HTTPS record, which would lead to it being enabled if the client knows of any `alt-only` values\r\n- Multiple records could share an `alt-only` value. I think this would be especially helpful if single onion services were being run at each server:\r\n    ```DNS\r\n    example.com.  7200 IN HTTPS 1 onion-example-1.onion port=8443 alt-only=alt1\r\n    example.com.  7200 IN HTTPS 1 onion-example-2.onion port=8443 alt-only=alt2\r\n    example.com.  7200 IN HTTPS 1 onion-example-3.onion port=8443 alt-only=alt3\r\n    example.com.  7200 IN HTTPS 2 onion-example.onion\r\n    example.com.  7200 IN HTTPS 3 alt1.example port=8443 alt-only=alt1\r\n    example.com.  7200 IN HTTPS 3 alt2.example port=8443 alt-only=alt2\r\n    example.com.  7200 IN HTTPS 3 alt3.example port=8443 alt-only=alt3\r\n    example.com.  7200 IN HTTPS 4 .\r\n    ```\r\n- Because the above scenario is obviously quite a large DNS response, it may be worth considering the following part of draft-ietf-dnsop-svcb-https-11:\r\n    > The use of SvcParams in AliasMode records is currently not defined, but a future specification could extend AliasMode records to include SvcParams.\r\n\r\n    AliasMode records could be extended to support `alt-only` as well, which allows for an approach closer to the current revision of the draft in terms of separation of records:\r\n    ```DNS\r\n    example.com.   7200 IN HTTPS 0 alt1.example alt-only=alt1\r\n    example.com.   7200 IN HTTPS 0 alt2.example alt-only=alt2\r\n    example.com.   7200 IN HTTPS 0 alt3.example alt-only=alt3\r\n    example.com.   7200 IN HTTPS 1 onion-example.onion\r\n    example.com.   7200 IN HTTPS 2 .\r\n\r\n    alt1.example.  7200 IN HTTPS 1 onion-example-1.onion port=8443 alt-only=alt1\r\n    alt1.example.  7200 IN HTTPS 2 . alt-only=alt1\r\n\r\n    alt2.example.  7200 IN HTTPS 1 onion-example-2.onion port=8443 alt-only=alt2\r\n    alt2.example.  7200 IN HTTPS 2 . alt-only=alt2\r\n\r\n    alt3.example.  7200 IN HTTPS 1 onion-example-3.onion port=8443 alt-only=alt3\r\n    alt3.example.  7200 IN HTTPS 2 . alt-only=alt3\r\n    ```\r\n    This approach may seem to violate the SVCB standard at first, but the resulting behavior is actually extremely predictable: clients would ignore all of the AliasMode records even without support, so long as `alt-only` is mandatory. Once one of the AliasMode records are enabled by the server, clients with support would be REQUIRED to follow it as if the other records weren't present.\r\n\r\n    Enabling multiple AliasMode records would also be legal, but unwise: clients SHOULD pick one of them at random, which means they have the freedom to do otherwise. In other words, client behavior may diverge at that point.",
+          "createdAt": "2022-11-03T17:49:41Z",
+          "updatedAt": "2022-11-05T13:14:07Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "This is an interesting idea.  It creates the possibility of naming a subset of the service names without requiring an additional DNS query to a new name.  Do you think that you could raise this idea on the mailing list?\r\n\r\nI wonder whether we need alt=alt1/alt2 in addition to alt-only though.  There is a difference between naming or grouping alternatives and having them only available as alternatives.  See also #16 as it relates to alt-only.\r\n\r\n(I believe that you have to use mandatory=alt-only rather than having the parameter be intrinsically mandatory; intrinsic values only work during the definition of the record type because implementations of the core spec might not be aware of extensions like this one.)",
+          "createdAt": "2022-11-05T10:11:38Z",
+          "updatedAt": "2022-11-05T10:11:38Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "> Do you think that you could raise this idea on the mailing list?\r\n\r\nYou mean the dnsop mailing list? Please clarify before I do.\r\n\r\n> (I believe that you have to use mandatory=alt-only rather than having the parameter be intrinsically mandatory; intrinsic values only work during the definition of the record type because implementations of the core spec might not be aware of extensions like this one.)\r\n\r\nThat is correct: I said \"if it isn't too late\" because the HTTPS record's core spec is still an Internet Draft.\r\n\r\n> I wonder whether we need alt=alt1/alt2 in addition to alt-only though. There is a difference between naming or grouping alternatives and having them only available as alternatives.\r\n\r\nI think orthogonality is very important, and redundant parameters should be avoided if at all possible. I believe what you are thinking of, which seems rather unlikely to be common in my opinion, could be easily conveyed like this:\r\n\r\n```DNS\r\nexample.com.  7200 IN HTTPS 1 alt1.example port=8443 alt-only mandatory=alt-only\r\nexample.com.  7200 IN HTTPS 2 .\r\nexample.com.  7200 IN HTTPS 2 alt1.example port=8443\r\n```\r\n\r\nIf we can't make `alt-only` intrinsically mandatory, we should expect at least some clients to ignore records with it permanently. Simply repeating the target without that parameter gets the point across without preventing incompatible clients from using it.\r\n\r\nYes, it's repetitive, but I don't really think this is going to come up much anyway. And we could always add another parameter later if that proves insufficient.\r\n\r\n---\r\n\r\nBy the way, a few nuances for ease of use: as mentioned earlier, making this parameter optional allows for it to be used more tersely when specificity isn't necessary. The record in the above example could be activated like so:\r\n\r\n```HTTP\r\nAlt-SvcB: 1\r\n```\r\n\r\nAlso, it might be better to call this `alternative` rather than `alt-only`, not least because `mandatory=alternative` would make it rather obvious how this works.\r\n\r\n---\r\n\r\nFinally: this parameter could be generally useful for other SVBC records. HTTPS may use `Alt-SvcB` headers in this draft, but the parameter could be employed by any protocol as future specifications see fit.\r\n\r\nHappily, it could be made intrinsically mandatory in those even if it isn't here.",
+          "createdAt": "2022-11-05T12:37:15Z",
+          "updatedAt": "2022-11-05T13:06:22Z"
+        }
+      ]
     },
     {
       "number": 17,
@@ -324,9 +353,45 @@
       "labels": [],
       "body": "@davidben says:\r\n\r\n> If we're looking to make a separate system here, with Alt-Svc still existing for a while, should we make a separate draft to patch up some of the more glaring mistakes in Alt-Svc? Or perhaps a paragraph in this one. I'm specifically thinking about how Alt-Svc tries to circumvent the TLS-level ALPN negotiation. For HTTPS/SVCB, we picked a more nuanced interpretation. Otherwise implementers may not know that Alt-Svc misunderstood ALPN and that they need to ignore the spec on this point.\r\n\r\nThis seems like something we could do with this draft, provided that it is limited in scope.  (The ALPN thing is pretty simple.)",
       "createdAt": "2022-11-02T11:09:01Z",
-      "updatedAt": "2022-11-02T11:09:01Z",
+      "updatedAt": "2022-11-03T17:37:16Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "On a similar note, is there a reason this draft can't be implemented with a new ALPN protocol name, rather than defining an `Alt-SvcB` header and `ALTSVCB` frame?",
+          "createdAt": "2022-11-03T17:03:58Z",
+          "updatedAt": "2022-11-03T17:03:58Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "What would a new ALPN do, exactly?",
+          "createdAt": "2022-11-03T17:20:40Z",
+          "updatedAt": "2022-11-03T17:20:40Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "`Alt-Svc: svcb=\"instance31.example.com\"`\r\n\r\nThat would be ignored by clients that don't implement this draft, but clients that do could respond to it in the same manner that the current revision prescribes for `Alt-SvcB: instance31.example.com`",
+          "createdAt": "2022-11-03T17:25:18Z",
+          "updatedAt": "2022-11-03T17:25:31Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Oh, yeah, we discussed that and concluded that a discrete field is not materially different than that, except that that version is more verbose, more brittle (it doesn't use structured fields; it might have parameters), and the new field allows us to migrate more cleanly, with a clear indication that the new stuff is in use.  I don't think that there was a single upside to that approach.",
+          "createdAt": "2022-11-03T17:29:04Z",
+          "updatedAt": "2022-11-03T17:29:04Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "Because RFC 7838 doesn't have a way of changing how clients use unknown parameters like SVCB records do, there's only so many ways to reuse the field without misleading older clients.\r\n\r\nI'm mainly just worried by the precedent of tacking letters onto HTTP header names and calling it a day, if I'm being honest with myself. \"Referer\" is bad enough: I don't want to be working with \"HostX-2.0-Final\" headers in a few decades.\r\n\r\nPerhaps we could spin it as `Alt-SVCB`, as in \"Alternative SVCB\", so the name is purely indicative of its function?",
+          "createdAt": "2022-11-03T17:36:43Z",
+          "updatedAt": "2022-11-03T17:37:16Z"
+        }
+      ]
     }
   ],
   "pulls": [
