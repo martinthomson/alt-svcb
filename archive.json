@@ -1,0 +1,670 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2022-11-06T01:02:27.426014+00:00",
+  "repo": "martinthomson/alt-svcb",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOISvaoM5Uq00G",
+      "title": "HTTPS only",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/1",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Using HTTPS records means we're leaving cleartext HTTP in the lurch.  Be explicit about that.",
+      "createdAt": "2022-10-24T09:19:43Z",
+      "updatedAt": "2022-10-24T09:19:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOISvaoM5Uq1L0",
+      "title": "Tracking",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/2",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This should be easy to address.  We don't need anything like as fancy as RFC 7838.   We just need to nod toward resumption and other state that might be used in making new connections.  This only applies to the reuse case as well.",
+      "createdAt": "2022-10-24T09:20:49Z",
+      "updatedAt": "2022-10-24T09:20:49Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOISvaoM5Uq2Lp",
+      "title": "DNS vulnerabilities",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/3",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "We're more exposed to DNS problems with this design, but that is also deliberate.  Be sure to acknowledge this, maybe even point to DNSSEC.  Then, be sure to say that this doesn't really change things from ordinary HTTP, where the DNS is able to deny service or route clients to a server instance of their choosing.  The defenses here are relying on TLS for authority, which also includes protocol choice.  The choice of port remains something that an attacker can choose, without protection, but that is still a problem even without this design.",
+      "createdAt": "2022-10-24T09:23:46Z",
+      "updatedAt": "2022-10-24T09:23:46Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDOISvaoM5Uq2PN",
+      "title": "Abstract",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/4",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Write one.",
+      "createdAt": "2022-10-24T09:23:57Z",
+      "updatedAt": "2022-10-24T09:23:57Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOISvaoM5UuZay",
+      "title": "IP Addresses",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/6",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "What if a server wants to direct to an IP?  How do we accommodate that?",
+      "createdAt": "2022-10-24T21:06:34Z",
+      "updatedAt": "2022-10-24T21:06:34Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOISvaoM5UudDS",
+      "title": "Clearing client state explicitly",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/7",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "How does a server explicitly clear client state?\r\n\r\n1. Send a name that doesn't resolve.  This will fail and state will be cleared.  \"invalid\" is a TLD that never resolves...\r\n2. Send the origin name.\r\n\r\nOption 1?",
+      "createdAt": "2022-10-24T21:18:28Z",
+      "updatedAt": "2022-10-24T22:48:41Z",
+      "closedAt": "2022-10-24T22:48:41Z",
+      "comments": []
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOISvaoM5UufOi",
+      "title": "Security requires True Alternatives",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/8",
+      "state": "OPEN",
+      "author": "MikeBishop",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From last week's meeting:  Security Considerations needs to call out that all endpoints must actually return the same content; different content per endpoint will break many things.",
+      "createdAt": "2022-10-24T21:25:59Z",
+      "updatedAt": "2022-10-24T21:25:59Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOISvaoM5Uuh5w",
+      "title": "Enumerating all server instances",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/9",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The current design more or less requires that the DNS contain a complete enumeration of all possible server instances.  This is not great:\r\n\r\n1. Because it is hard to get a good picture of all services in this fashion.\r\n2. Because a server operator might not want to publish a complete map of its servers.\r\n3. Because DNS responses might get unwieldy.",
+      "createdAt": "2022-10-24T21:35:28Z",
+      "updatedAt": "2022-10-24T21:35:28Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOISvaoM5UujJ0",
+      "title": "Header and frame offer different multiplicity ",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/11",
+      "state": "CLOSED",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The header allows an arbitrary number of alternativess per request. The frame only allows one alternative per origin (and only the last one). I don't see much technical reason for this asymmetry. It could be easily resolved by changing one of them (e.g. allowing the frame to carry a comma-separated list of values). Failing that, we could explain why they are different a bit more.",
+      "createdAt": "2022-10-24T21:39:29Z",
+      "updatedAt": "2022-10-24T23:45:12Z",
+      "closedAt": "2022-10-24T23:45:12Z",
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "My initial take here is that one should be plenty and we only allow more than that for a field because we can't really stop people from adding multiple there.  I'd prefer to explain that and be done with it.",
+          "createdAt": "2022-10-24T22:36:13Z",
+          "updatedAt": "2022-10-24T22:36:13Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Supporting only 1 would work for me, In other specs I've seen what want an Item singleton, they try to accomodate it by saying that any concatenation would look like a list, which is the wrong type and would fail to be parsed - failing closed in this case.",
+          "createdAt": "2022-10-24T22:45:59Z",
+          "updatedAt": "2022-10-24T22:45:59Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Yeah, I don't think that we need to fail closed here.  Using SF means that we are outsourcing most of the parsing pieces already, so if we get N, then any one of those N should work.  If not then \u00af\\\\(\u00b0\\_o)/\u00af.  Potential for harm is minimal.",
+          "createdAt": "2022-10-24T22:53:28Z",
+          "updatedAt": "2022-10-24T22:53:28Z"
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOISvaoM5Uu-SH",
+      "title": "Both a priority override and alt-only?",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/16",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Right now, we have two interrelated mechanisms that can be used to ensure that an alternative service is used:\r\n\r\n1. If the service name is present in an RRset, then it is chosen, no matter its priority.  This allows low priority entries to jump to the top.\r\n2. If an RR is marked alt-only, it can be pushed right to the top with SvcPriority higher than unmarked RRs.  This allows alternative services to be put at the top in terms of priority, without them being used under ordinary conditions.\r\n\r\nIt's possible that either approach would work.  Are there deployment scenarios that push specifically toward one or other approach such that we might need both?  Or, can we remove one of these?\r\n\r\nObviously the alt-only thing has more \"stuff\" associated with it, which might make it more attractive to remove, but it might also be the more powerful of the two.  For this, my guess is that we need to collect input from people who are looking to deploy this.",
+      "createdAt": "2022-10-24T23:17:11Z",
+      "updatedAt": "2022-11-05T13:14:07Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "I have a suggestion: add an opaque value to the `alt-only` parameter (which should be inherently mandatory if it isn't too late), and use *that* to implement load-balancing.\r\n\r\n```DNS\r\nexample.com.  7200 IN HTTPS 1 alt1.example port=8443 alt-only=alt1\r\nexample.com.  7200 IN HTTPS 1 alt2.example port=8443 alt-only=alt2\r\nexample.com.  7200 IN HTTPS 1 alt3.example port=8443 alt-only=alt3\r\nexample.com.  7200 IN HTTPS 2 .\r\n```\r\n\r\nWhen initially connecting, a client would skip the first three records and connect using the A/AAAA records of `example.com`. The server might send it the following header:\r\n```HTTP\r\nAlt-SvcB: alt1\r\n```\r\nThe client would understand this to mean it should re-evaluate the (still-cached!) HTTPS records with the ability to use records that have `alt-only=alt1`, thus connecting to the A/AAAA records of `alt1.example`.",
+          "createdAt": "2022-11-03T17:41:27Z",
+          "updatedAt": "2022-11-03T18:00:53Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "In addition to being much easier to understand, this approach offers immense flexibility:\r\n\r\n- Multiple `alt-only` values could be provided by the server to enable multiple records (i.e., the two closest servers to the client)\r\n- `alt-only` could be set without a value in an HTTPS record, which would lead to it being enabled if the client knows of any `alt-only` values\r\n- Multiple records could share an `alt-only` value. I think this would be especially helpful if single onion services were being run at each server:\r\n    ```DNS\r\n    example.com.  7200 IN HTTPS 1 onion-example-1.onion port=8443 alt-only=alt1\r\n    example.com.  7200 IN HTTPS 1 onion-example-2.onion port=8443 alt-only=alt2\r\n    example.com.  7200 IN HTTPS 1 onion-example-3.onion port=8443 alt-only=alt3\r\n    example.com.  7200 IN HTTPS 2 onion-example.onion\r\n    example.com.  7200 IN HTTPS 3 alt1.example port=8443 alt-only=alt1\r\n    example.com.  7200 IN HTTPS 3 alt2.example port=8443 alt-only=alt2\r\n    example.com.  7200 IN HTTPS 3 alt3.example port=8443 alt-only=alt3\r\n    example.com.  7200 IN HTTPS 4 .\r\n    ```\r\n- Because the above scenario is obviously quite a large DNS response, it may be worth considering the following part of draft-ietf-dnsop-svcb-https-11:\r\n    > The use of SvcParams in AliasMode records is currently not defined, but a future specification could extend AliasMode records to include SvcParams.\r\n\r\n    AliasMode records could be extended to support `alt-only` as well, which allows for an approach closer to the current revision of the draft in terms of separation of records:\r\n    ```DNS\r\n    example.com.   7200 IN HTTPS 0 alt1.example alt-only=alt1\r\n    example.com.   7200 IN HTTPS 0 alt2.example alt-only=alt2\r\n    example.com.   7200 IN HTTPS 0 alt3.example alt-only=alt3\r\n    example.com.   7200 IN HTTPS 1 onion-example.onion\r\n    example.com.   7200 IN HTTPS 2 .\r\n\r\n    alt1.example.  7200 IN HTTPS 1 onion-example-1.onion port=8443 alt-only=alt1\r\n    alt1.example.  7200 IN HTTPS 2 . alt-only=alt1\r\n\r\n    alt2.example.  7200 IN HTTPS 1 onion-example-2.onion port=8443 alt-only=alt2\r\n    alt2.example.  7200 IN HTTPS 2 . alt-only=alt2\r\n\r\n    alt3.example.  7200 IN HTTPS 1 onion-example-3.onion port=8443 alt-only=alt3\r\n    alt3.example.  7200 IN HTTPS 2 . alt-only=alt3\r\n    ```\r\n    This approach may seem to violate the SVCB standard at first, but the resulting behavior is actually extremely predictable: clients would ignore all of the AliasMode records even without support, so long as `alt-only` is mandatory. Once one of the AliasMode records are enabled by the server, clients with support would be REQUIRED to follow it as if the other records weren't present.\r\n\r\n    Enabling multiple AliasMode records would also be legal, but unwise: clients SHOULD pick one of them at random, which means they have the freedom to do otherwise. In other words, client behavior may diverge at that point.",
+          "createdAt": "2022-11-03T17:49:41Z",
+          "updatedAt": "2022-11-05T13:14:07Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "This is an interesting idea.  It creates the possibility of naming a subset of the service names without requiring an additional DNS query to a new name.  Do you think that you could raise this idea on the mailing list?\r\n\r\nI wonder whether we need alt=alt1/alt2 in addition to alt-only though.  There is a difference between naming or grouping alternatives and having them only available as alternatives.  See also #16 as it relates to alt-only.\r\n\r\n(I believe that you have to use mandatory=alt-only rather than having the parameter be intrinsically mandatory; intrinsic values only work during the definition of the record type because implementations of the core spec might not be aware of extensions like this one.)",
+          "createdAt": "2022-11-05T10:11:38Z",
+          "updatedAt": "2022-11-05T10:11:38Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "> Do you think that you could raise this idea on the mailing list?\r\n\r\nYou mean the dnsop mailing list? Please clarify before I do.\r\n\r\n> (I believe that you have to use mandatory=alt-only rather than having the parameter be intrinsically mandatory; intrinsic values only work during the definition of the record type because implementations of the core spec might not be aware of extensions like this one.)\r\n\r\nThat is correct: I said \"if it isn't too late\" because the HTTPS record's core spec is still an Internet Draft.\r\n\r\n> I wonder whether we need alt=alt1/alt2 in addition to alt-only though. There is a difference between naming or grouping alternatives and having them only available as alternatives.\r\n\r\nI think orthogonality is very important, and redundant parameters should be avoided if at all possible. I believe what you are thinking of, which seems rather unlikely to be common in my opinion, could be easily conveyed like this:\r\n\r\n```DNS\r\nexample.com.  7200 IN HTTPS 1 alt1.example port=8443 alt-only mandatory=alt-only\r\nexample.com.  7200 IN HTTPS 2 .\r\nexample.com.  7200 IN HTTPS 2 alt1.example port=8443\r\n```\r\n\r\nIf we can't make `alt-only` intrinsically mandatory, we should expect at least some clients to ignore records with it permanently. Simply repeating the target without that parameter gets the point across without preventing incompatible clients from using it.\r\n\r\nYes, it's repetitive, but I don't really think this is going to come up much anyway. And we could always add another parameter later if that proves insufficient.\r\n\r\n---\r\n\r\nBy the way, a few nuances for ease of use: as mentioned earlier, making this parameter optional allows for it to be used more tersely when specificity isn't necessary. The record in the above example could be activated like so:\r\n\r\n```HTTP\r\nAlt-SvcB: 1\r\n```\r\n\r\nAlso, it might be better to call this `alternative` rather than `alt-only`, not least because `mandatory=alternative` would make it rather obvious how this works.\r\n\r\n---\r\n\r\nFinally: this parameter could be generally useful for other SVBC records. HTTPS may use `Alt-SvcB` headers in this draft, but the parameter could be employed by any protocol as future specifications see fit.\r\n\r\nHappily, it could be made intrinsically mandatory in those even if it isn't here.",
+          "createdAt": "2022-11-05T12:37:15Z",
+          "updatedAt": "2022-11-05T13:06:22Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOISvaoM5UvAVS",
+      "title": "Proxy requirements",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/17",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From @LPardue:\r\n\r\n> The proxy constraints seem a bit too strict. It doesn't seem that much harder to extend or emulate Tommy's dns-proxy-status to return the HTTPS information that would be needed for a client to perform the same verification that the non-proxied flow needs. This proposal actually offers the possibility to make HTTP/3 over MASQUE client behaviour a little more standard. This might work well in coordination with a preflight as suggested above.",
+      "createdAt": "2022-10-24T23:25:48Z",
+      "updatedAt": "2022-10-24T23:25:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOISvaoM5UvIFA",
+      "title": "Naming consistency",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/18",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Ryan Hamilton:\r\n\r\n> There are potentially 3 different \"hostnames\" (servers) involved in \r\n> this protocol: The origin (from the URL), the alternative name (from \r\n> the Alt-SvcB header), and the service (from the HTTPS RR). I think it \r\n> would be a good idea to use these terms more broadly instead of \r\n> \"server\" seems more ambiguous.\r\n\r\nOverall, we could be more consistent in our use of names.  We might need to define terms for these, perhaps:\r\n\r\n* origin name: the name of the logical server from the URL\r\n* alternative name: the name from Alt-SvcB/ALTSVCB\r\n* service name: the TargetName from a HTTPS ServiceMode record\r\n\r\nThen also check that we correctly use \"server\" and \"server instance\" throughout.",
+      "createdAt": "2022-10-25T00:08:13Z",
+      "updatedAt": "2022-10-25T00:08:52Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOISvaoM5UvI27",
+      "title": "HTTP/3 example",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/19",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Ryan Hamilton:\r\n\r\n> It would be great to see an example of using Alt-SvcB to switch to \r\n> H3 since that's currently the main use of Alt-Svc in the wild.\r\n\r\nIt should be possible to have the alternatives in the existing example list \"h3\".",
+      "createdAt": "2022-10-25T00:12:33Z",
+      "updatedAt": "2022-10-25T00:12:33Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOISvaoM5U1dUJ",
+      "title": "Endless alternatives",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/20",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "This design can result in clients following an indefinite chain of alternatives.  Talk about how to manage this.",
+      "createdAt": "2022-10-26T01:21:55Z",
+      "updatedAt": "2022-10-26T01:21:55Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOISvaoM5U1ddg",
+      "title": "SVCB-reliant",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/21",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The draft currently says that looking up an alternative is done as SVCB-reliant (HTTPS is otherwise defined to be SVCB-optional).  Double-check that this is what we want.  It probably is, but let's be sure.",
+      "createdAt": "2022-10-26T01:23:00Z",
+      "updatedAt": "2022-10-26T01:23:00Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOISvaoM5VaSsS",
+      "title": "Fixups for Alt-Svc",
+      "url": "https://github.com/martinthomson/alt-svcb/issues/24",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "@davidben says:\r\n\r\n> If we're looking to make a separate system here, with Alt-Svc still existing for a while, should we make a separate draft to patch up some of the more glaring mistakes in Alt-Svc? Or perhaps a paragraph in this one. I'm specifically thinking about how Alt-Svc tries to circumvent the TLS-level ALPN negotiation. For HTTPS/SVCB, we picked a more nuanced interpretation. Otherwise implementers may not know that Alt-Svc misunderstood ALPN and that they need to ignore the spec on this point.\r\n\r\nThis seems like something we could do with this draft, provided that it is limited in scope.  (The ALPN thing is pretty simple.)",
+      "createdAt": "2022-11-02T11:09:01Z",
+      "updatedAt": "2022-11-03T17:37:16Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "On a similar note, is there a reason this draft can't be implemented with a new ALPN protocol name, rather than defining an `Alt-SvcB` header and `ALTSVCB` frame?",
+          "createdAt": "2022-11-03T17:03:58Z",
+          "updatedAt": "2022-11-03T17:03:58Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "What would a new ALPN do, exactly?",
+          "createdAt": "2022-11-03T17:20:40Z",
+          "updatedAt": "2022-11-03T17:20:40Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "`Alt-Svc: svcb=\"instance31.example.com\"`\r\n\r\nThat would be ignored by clients that don't implement this draft, but clients that do could respond to it in the same manner that the current revision prescribes for `Alt-SvcB: instance31.example.com`",
+          "createdAt": "2022-11-03T17:25:18Z",
+          "updatedAt": "2022-11-03T17:25:31Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Oh, yeah, we discussed that and concluded that a discrete field is not materially different than that, except that that version is more verbose, more brittle (it doesn't use structured fields; it might have parameters), and the new field allows us to migrate more cleanly, with a clear indication that the new stuff is in use.  I don't think that there was a single upside to that approach.",
+          "createdAt": "2022-11-03T17:29:04Z",
+          "updatedAt": "2022-11-03T17:29:04Z"
+        },
+        {
+          "author": "Saklad5",
+          "authorAssociation": "NONE",
+          "body": "Because RFC 7838 doesn't have a way of changing how clients use unknown parameters like SVCB records do, there's only so many ways to reuse the field without misleading older clients.\r\n\r\nI'm mainly just worried by the precedent of tacking letters onto HTTP header names and calling it a day, if I'm being honest with myself. \"Referer\" is bad enough: I don't want to be working with \"HostX-2.0-Final\" headers in a few decades.\r\n\r\nPerhaps we could spin it as `Alt-SVCB`, as in \"Alternative SVCB\", so the name is purely indicative of its function?",
+          "createdAt": "2022-11-03T17:36:43Z",
+          "updatedAt": "2022-11-03T17:37:16Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 5,
+      "id": "PR_kwDOISvaoM5Bbz68",
+      "title": "Trivial fixups",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/5",
+      "state": "MERGED",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Some trivial things I noticed while reading.\r\n\r\n- spellcheck\r\n- not-just-header-field\r\n- Section 2 step 5, future requests hanging\r\n- hanging clients cannot use\r\n- are therefore weirdness\r\n- providing only weirdness\r\n",
+      "createdAt": "2022-10-24T18:01:31Z",
+      "updatedAt": "2022-10-24T20:07:47Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "f0a3cb204e80a01ca867cda4349c2a37547db2cb",
+      "headRepository": "LPardue/alt-svcb",
+      "headRefName": "main",
+      "headRefOid": "4034941140f267440fe67d34ab2be5ee679fd408",
+      "closedAt": "2022-10-24T20:07:46Z",
+      "mergedAt": "2022-10-24T20:07:46Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "3b3aee6b4f59a02043d2170586e5b4e545788af4"
+      },
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Thanks Lucas",
+          "createdAt": "2022-10-24T20:07:40Z",
+          "updatedAt": "2022-10-24T20:07:40Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOISvaoM5BcvvB",
+      "title": "Glom on as author, take 2",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/10",
+      "state": "MERGED",
+      "author": "MikeBishop",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-10-24T21:36:46Z",
+      "updatedAt": "2022-10-24T22:30:09Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "5603174a31822d08be4e59430b1c6e03484307e6",
+      "headRepository": "MikeBishop/alt-svcb",
+      "headRefName": "patch-2",
+      "headRefOid": "ff5f6e6190a28387372f39e883b590947fecdefe",
+      "closedAt": "2022-10-24T22:30:09Z",
+      "mergedAt": "2022-10-24T22:30:09Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "b3b80f378c14940ea18684912e99cb44223436c7"
+      },
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Welcome!  You'll excuse me if I take a while to sort a few things out, but I'll get around to giving you write access to the repo.",
+          "createdAt": "2022-10-24T22:29:43Z",
+          "updatedAt": "2022-10-24T22:29:43Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOISvaoM5Bcxkg",
+      "title": "Add LP",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/12",
+      "state": "MERGED",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "- add LP\r\n",
+      "createdAt": "2022-10-24T21:43:45Z",
+      "updatedAt": "2022-10-24T22:29:30Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "2690aae5fa57c4b4da3f2b151b5a7df2f61962fa",
+      "headRepository": "LPardue/alt-svcb",
+      "headRefName": "add-lp",
+      "headRefOid": "16b886fa202926ed87a609b2bde50d67d53e7a08",
+      "closedAt": "2022-10-24T22:29:27Z",
+      "mergedAt": "2022-10-24T22:29:27Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "5603174a31822d08be4e59430b1c6e03484307e6"
+      },
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Welcome!  You'll excuse me if I take a while to sort a few things out, but I'll get around to giving you write access to the repo.",
+          "createdAt": "2022-10-24T22:29:30Z",
+          "updatedAt": "2022-10-24T22:29:30Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOISvaoM5BdAln",
+      "title": "Use \"invalid\" to clear the service name",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/13",
+      "state": "MERGED",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #7.",
+      "createdAt": "2022-10-24T22:42:01Z",
+      "updatedAt": "2022-10-24T22:48:43Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "b3b80f378c14940ea18684912e99cb44223436c7",
+      "headRepository": "martinthomson/alt-svcb",
+      "headRefName": "invalid",
+      "headRefOid": "d32dbf8e5eb9cee447c2dee0bd224c0a1ccc6633",
+      "closedAt": "2022-10-24T22:48:40Z",
+      "mergedAt": "2022-10-24T22:48:40Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "349534671592a324247cb276fb5780f96b0a56f4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOISvaoM5ExzKn",
+          "commit": {
+            "abbreviatedOid": "d32dbf8"
+          },
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-10-24T22:46:41Z",
+          "updatedAt": "2022-10-24T22:46:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOISvaoM5BdFs2",
+      "title": "Explain the multiple values thing somewhat",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/14",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Also say something about parameters.\r\n\r\nCloses #11.",
+      "createdAt": "2022-10-24T23:03:51Z",
+      "updatedAt": "2022-10-24T23:52:51Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "349534671592a324247cb276fb5780f96b0a56f4",
+      "headRepository": "martinthomson/alt-svcb",
+      "headRefName": "explain-multiplicity",
+      "headRefOid": "fead6c8832292a79b3ec22f392e62898b24e2761",
+      "closedAt": "2022-10-24T23:52:50Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "body": "This looks ok but in order to resolve the consistency matter in #11, I think we need to similarly update the frame section. I.e. where is says \r\n\r\n> \r\n> Alternative Name:\r\n> \r\n>     The remainder of the frame contents contains the alternative name, encoded as an ASCII string; see the definition in [Section 3.1](https://martinthomson.github.io/alt-svcb/draft-thomson-httpbis-alt-svcb.html#field) for more details.\r\n\r\nYou could just say \"the remainder of the frame contents contain the Alt-SvcB field value defined in Section 3.1.",
+          "createdAt": "2022-10-24T23:21:11Z",
+          "updatedAt": "2022-10-24T23:21:11Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "Merged manually.",
+          "createdAt": "2022-10-24T23:52:50Z",
+          "updatedAt": "2022-10-24T23:52:50Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOISvaoM5BdHV9",
+      "title": "Add TommyJ as co-author",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/15",
+      "state": "MERGED",
+      "author": "mstojens",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-10-24T23:10:20Z",
+      "updatedAt": "2022-10-24T23:42:02Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "349534671592a324247cb276fb5780f96b0a56f4",
+      "headRepository": "mstojens/alt-svcb",
+      "headRefName": "main",
+      "headRefOid": "e2e2272f7a7b60b32837331234c6bc3ea3063fc2",
+      "closedAt": "2022-10-24T23:42:02Z",
+      "mergedAt": "2022-10-24T23:42:02Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "60248387612e9371298cef00ddb7ae5bc188bb76"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOISvaoM5BjGIn",
+      "title": "A LOT of changes",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/22",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The first version was done in a bit of a rush.  This is the result of a comprehensive re-read.  It includes:\r\n\r\n* An abstract.  Closes #4.\r\n* Crisper terminology.  Closes #18.\r\n* HTTP/3 in an example.  Closes #19.\r\n* Text on IP addresses.  Closes #6.\r\n* Tweaks to proxy language.  This is for #17, but I want to continue that discussion some more before closing it out.\r\n* Security considerations:\r\n  * A threat model that covers switching between service endpoints. Closes #3.\r\n  * Explicit mention that this is only HTTPS.  Closes #1.\r\n  * Service instances are supposed to be the same.  Closes #8.\r\n  * Language on insider attacks, inspired by and borrowing from RFC 7838.\r\n  * Text on looping and indefinite series of new alternatives, which is new as far as I know.  Closes #20.\r\n  * Text on tracking, copying again from RFC 7838.  Closes #2.\r\n* Editorial fixes throughout.\r\n\r\nIt's a big changeset and probably imperfect.  I also know that people are busy, but I'd like to get this in, using new issues to track pieces where I messed up.  Unless there is something truly terrible, of course.",
+      "createdAt": "2022-10-26T03:35:22Z",
+      "updatedAt": "2022-10-26T03:52:08Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "35b0c8116a17e262b1b26d2e7004a1f379fe4933",
+      "headRepository": "martinthomson/alt-svcb",
+      "headRefName": "big",
+      "headRefOid": "94d6142857dd09ab37b4a061f49facb7aa2f9245",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOISvaoM5BjGeB",
+      "title": "Codeowners",
+      "url": "https://github.com/martinthomson/alt-svcb/pull/23",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-10-26T03:37:54Z",
+      "updatedAt": "2022-10-26T03:37:54Z",
+      "baseRepository": "martinthomson/alt-svcb",
+      "baseRefName": "main",
+      "baseRefOid": "35b0c8116a17e262b1b26d2e7004a1f379fe4933",
+      "headRepository": "martinthomson/alt-svcb",
+      "headRefName": "codeowners",
+      "headRefOid": "670e5332f383bfe0f97b9b22cb053a0281055e97",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
+}
