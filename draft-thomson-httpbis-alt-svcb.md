@@ -595,7 +595,7 @@ ignore any frames other than the most recent.
 Alternative services present servers with a way of influencing how clients
 select service endpoints.  This does not change how a service endpoint might be
 determined to be authoritative (even more so than its predecessor; see
-{{authority7838}}), but this.
+{{authority7838}}).
 
 
 ## Selecting Service Endpoints {#sec-endpoint}
