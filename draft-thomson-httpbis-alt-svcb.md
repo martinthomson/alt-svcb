@@ -411,8 +411,8 @@ example.com.  7200 IN HTTPS 2 . port=443
 
 An alternative name can be provided by a server that is identified by an IP
 address or host names that are not domain names.  However, HTTPS queries cannot
-be made for servers that are not identified by a domain name.  This makes reuse
-({{reuse}}) impossible for such names.  A client MAY disable alternative
+be made for servers that are not identified by a domain name.  This makes it
+impossible to use such identifiers.  A client MAY disable alternative
 services for servers that are not identified by a domain name.
 
 
