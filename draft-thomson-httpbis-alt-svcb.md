@@ -73,8 +73,8 @@ physical servers, the need to place endpoints in network locations that are
 closer to clients for performance reasons, or the need to support multiple HTTP
 versions, like HTTP/2 {{H2}} or HTTP/3 {{H3}}.
 
-For servers that operate multiple service endpoints, it can be advantageous - or
-even necessary - to have clients make requests to a specific service endpoint.
+For servers that operate multiple service endpoints, it can be advantageous to
+have clients make requests to a specific service endpoint.
 
 * Some deployments might seek to direct a client to a service endpoint that is
   better able to serve requests for that client.  This might occur if DNS
