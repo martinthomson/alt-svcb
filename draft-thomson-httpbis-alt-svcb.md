@@ -348,7 +348,7 @@ example.com. 7200 IN HTTPS 10 alt2.example. port=8443
 ~~~
 
 Under normal conditions, the SvcPriority of the "alt?.example" RRs would indicate
-that it is not preferred, so the "example.com" record would be used.
+that they are not preferred, so the "example.com" record would be used.
 
 If the client received an alternative service advertisement from this server for
 "alt.example.net" it would then make a DNS query to that name.  This might
