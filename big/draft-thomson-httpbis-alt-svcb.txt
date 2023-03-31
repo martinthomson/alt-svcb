@@ -628,7 +628,7 @@ Table of Contents
    Alternative services present servers with a way of influencing how
    clients select service endpoints.  This does not change how a service
    endpoint might be determined to be authoritative (even more so than
-   its predecessor; see Appendix A), but this.
+   its predecessor; see Appendix A).
 
 4.1.  Selecting Service Endpoints
 
