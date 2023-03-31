@@ -14,28 +14,28 @@
 alternative services to direct clients to use a different  service endpoint . 
        This document obsoletes RFC 7838. 
     " name="description">
-<meta content="xml2rfc 3.15.1" name="generator">
+<meta content="xml2rfc 3.17.0" name="generator">
 <meta content="next generation" name="keyword">
 <meta content="alternative alternative" name="keyword">
 <meta content="stickiness" name="keyword">
 <meta content="draft-thomson-httpbis-alt-svcb-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.15.1
-    Python 3.10.5
+  xml2rfc 3.17.0
+    Python 3.10.10
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 3.1.2
-    kitchen 1.2.6
-    lxml 4.9.1
+    lxml 4.9.2
     MarkupSafe 2.1.1
     pycountry 22.3.5
     PyYAML 6.0
-    requests 2.27.1
-    setuptools 59.4.0
+    requests 2.28.1
+    setuptools 65.6.0
     six 1.16.0
+    wcwidth 0.2.6
 -->
 <link href="draft-thomson-httpbis-alt-svcb.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -366,7 +366,7 @@ ul.empty li, .ulEmpty li {
   margin-top: 0.5em;
 }
 :is(ul, ol).compact, .ulCompact, .olCompact {
-  line-height: 100%;
+  line-height: 1;
   margin: 0 0 0 2em;
 }
 
@@ -376,10 +376,13 @@ dl {
   --indent: 3ch;
   /* --indent: attr(indent ch); not supported in any browser, but we can dream */
 }
+dl.olPercent {
+  --indent: 5ch;
+}
 dl > dt {
   float: left;
-  margin-right: 1em;
-  min-width: 12ch;
+  margin-right: 2ch;
+  min-width: 8ch;
 }
 dl.dlNewline > dt {
   float: none;
@@ -388,6 +391,9 @@ dl > dd {
   margin-bottom: .8em;
   margin-left: var(--indent) !important; /* stupid element overrides */
   min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
 }
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
@@ -402,7 +408,7 @@ dl > dd > dl {
   margin-top: 0.5em;
   margin-bottom: 0;
 }
-dl .break {
+:is(dd, span).break {
   display: none;
 }
 
@@ -410,11 +416,11 @@ dl .break {
 a, a[href].selfRef:hover {
   text-decoration: none;
 }
-a[href].selfRef {
-  color: var(--text-color);
-}
 a[href] {
   color: var(--link-color);
+}
+a[href].selfRef, .iref + a[href].internal {
+  color: var(--text-color);
 }
 a[href]:hover {
   text-decoration: underline;
@@ -422,7 +428,7 @@ a[href]:hover {
 a[href].selfRef:hover {
   background-color: var(--highlight-color);
 }
-a.xref {
+a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
   white-space: nowrap;
 }
 
@@ -434,7 +440,9 @@ tt, code, pre {
 tt, code {
   /* changing the font for inline elements leads to different ascender
      and descender heights; as we want to retain baseline alignment,
-     remove leading to avoid altering the final height of lines */
+     remove leading to avoid altering the final height of lines
+     note: this fails if these blocks take an entire line,
+     a different solution would be great */
   line-height: 0;
 }
 :is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
@@ -586,10 +594,14 @@ hr {
 .bcp14 {
   font-variant: small-caps;
   font-weight: 600;
-  font-size: 14.5px;
+  font-size: var(--small-font-size);
 }
 .role {
   font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
 }
 
 /* info block */
@@ -1031,7 +1043,7 @@ svg :is([stroke="white"], [stroke^="#fff"]) {
 svg :is([fill="black"], [fill^="#000"], :not([fill])) {
   fill: var(--text-color);
 }
-svg :is([stroke="fill"], [fill^="#fff"]) {
+svg :is([fill="white"], [fill^="#fff"]) {
   fill: var(--background-color);
 }
 </style>
@@ -1042,11 +1054,11 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Alt-SvcB</td>
-<td class="right">October 2022</td>
+<td class="right">March 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Thomson, et al.</td>
-<td class="center">Expires 29 April 2023</td>
+<td class="center">Expires 2 October 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,12 +1074,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc7838" class="eref">7838</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-10-26" class="published">26 October 2022</time>
+<time datetime="2023-03-31" class="published">31 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-04-29">29 April 2023</time></dd>
+<dd class="expires"><time datetime="2023-10-02">2 October 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1092,8 +1104,8 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <h1 id="title">HTTP Alternative Services, Plan B</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">HTTP servers deployments that include multiple <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-1" class="iref"></span> can use
-alternative services to direct clients to use a different <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-2" class="iref"></span>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">HTTP servers deployments that include multiple <span id="iref-service-endpoint-1" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a> can use
+alternative services to direct clients to use a different <span id="iref-service-endpoint-2" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This document obsoletes RFC 7838.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
@@ -1130,7 +1142,7 @@ alternative services to direct clients to use a different <a href="#terms" class
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 29 April 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 October 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1139,7 +1151,7 @@ alternative services to direct clients to use a different <a href="#terms" class
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2022 IETF Trust and the persons identified as the
+            Copyright (c) 2023 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1279,37 +1291,37 @@ alternative services to direct clients to use a different <a href="#terms" class
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">HTTP servers are often comprised of multiple <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-3" class="iref"></span>.  This can be
+<p id="section-1-1">HTTP origins are often comprised of multiple <span id="iref-service-endpoint-3" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>.  This can be
 driven by multiple requirements, such as a need to scale by adding multiple
 physical servers, the need to place endpoints in network locations that are
 closer to clients for performance reasons, or the need to support multiple HTTP
 versions, like HTTP/2 <span>[<a href="#H2" class="cite xref">HTTP/2</a>]</span> or HTTP/3 <span>[<a href="#H3" class="cite xref">HTTP/3</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">For servers that operate multiple <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-4" class="iref"></span>, it can be advantageous - or
-even necessary - to have clients make requests to a specific <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-5" class="iref"></span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">For servers that operate multiple <span id="iref-service-endpoint-4" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>, it can be advantageous - or
+even necessary - to have clients make requests to a specific <span id="iref-service-endpoint-5" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1-3.1">Some deployments might seek to direct a <a href="#terms" class="internal xref">client</a><span id="iref-client-6" class="iref"></span> to a <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-7" class="iref"></span> that is
-better able to serve requests for that <a href="#terms" class="internal xref">client</a><span id="iref-client-8" class="iref"></span>.  This might occur if DNS
-resolution of the <a href="#terms" class="internal xref">server</a><span id="iref-server-9" class="iref"></span> name produces the address of a <a href="#terms" class="internal xref">server</a><span id="iref-server-10" class="iref"></span> instance that
-is further from the <a href="#terms" class="internal xref">client</a><span id="iref-client-11" class="iref"></span>.<a href="#section-1-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1-3.1">Some deployments might seek to direct a <span id="iref-client-6" class="iref"></span><a href="#terms" class="internal xref">client</a> to a <span id="iref-service-endpoint-7" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> that is
+better able to serve requests for that <span id="iref-client-8" class="iref"></span><a href="#terms" class="internal xref">client</a>.  This might occur if DNS
+resolution of the <span id="iref-server-9" class="iref"></span><a href="#terms" class="internal xref">server</a> name produces the address of a <span id="iref-server-10" class="iref"></span><a href="#terms" class="internal xref">server</a> instance that
+is further from the <span id="iref-client-11" class="iref"></span><a href="#terms" class="internal xref">client</a>.<a href="#section-1-3.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-3.2">Servers that might seek to reduce load, perhaps in anticipation of an imminent
-shutdown or maintenance action, might use an alternative service declaration
-to reduce either <a href="#terms" class="internal xref">server</a><span id="iref-server-12" class="iref"></span> load or the number of clients that might be affected.<a href="#section-1-3.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-3.2">Servers might seek to reduce load, perhaps in anticipation of an imminent
+shutdown or maintenance action. An alternative service declaration
+can reduce either <span id="iref-server-12" class="iref"></span><a href="#terms" class="internal xref">server</a> load or the number of clients that might be affected.<a href="#section-1-3.2" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-1-3.3">Many deployments of HTTP/3 <span>[<a href="#H3" class="cite xref">HTTP/3</a>]</span> use the protocol identifiers in an
 alternative service declaration to make clients aware of support for the newer
 protocol.<a href="#section-1-3.3" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="section-1-4">HTTP alternative services provide a means of indicating to clients which service
-instances a <a href="#terms" class="internal xref">server</a><span id="iref-server-13" class="iref"></span> would prefer be used for future requests.  Clients use
+<p id="section-1-4">HTTP alternative services provide a means of indicating to clients which <span id="iref-service-endpoint-13" class="iref"></span><a href="#terms" class="internal xref">service
+endpoints</a> a <span id="iref-server-14" class="iref"></span><a href="#terms" class="internal xref">server</a> would prefer be used for future requests.  Clients use
 alternative service advertisements as prompt to discover and use these more
-preferred <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-14" class="iref"></span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+preferred <span id="iref-service-endpoint-15" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Clients that learn about an alternative service can establish a connection to
-the identified <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-15" class="iref"></span>, which - if successfully established and
+the identified <span id="iref-service-endpoint-16" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a>, which - if successfully established and
 authenticated - is then used for future requests.  Any existing connections the
-<a href="#terms" class="internal xref">client</a><span id="iref-client-16" class="iref"></span> has are retained and used until the new connection is successful.  This
-ensures that clients can continue making requests of the <a href="#terms" class="internal xref">server</a><span id="iref-server-17" class="iref"></span> without
+<span id="iref-client-17" class="iref"></span><a href="#terms" class="internal xref">client</a> has are retained and used until the new connection is successful.  This
+ensures that clients can continue making requests of the <span id="iref-server-18" class="iref"></span><a href="#terms" class="internal xref">server</a> without
 interruption.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="previous-alternative-services-designs">
 <section id="section-1.1">
@@ -1321,15 +1333,14 @@ HTTP.  This design turned out to have a number of shortcomings in deployment.
 Though these issues were anticipated in the design, the measures that were used
 often did not work particularly well.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.1-2">The RFC 7838 design included caching logic based on setting an "ma" (or max-age)
-parameter.  This turned out to be challenging for many <a href="#terms" class="internal xref">server</a><span id="iref-server-18" class="iref"></span> deployments.
-Setting too a large max-age meant that clients used the indicated <a href="#terms" class="internal xref">service
-endpoint</a><span id="iref-service-endpoint-19" class="iref"></span> for longer than was desired when operating conditions changed.
+parameter.  This turned out to be challenging for many <span id="iref-server-19" class="iref"></span><a href="#terms" class="internal xref">server</a> deployments.
+Setting too large a max-age meant that clients used the indicated <span id="iref-service-endpoint-20" class="iref"></span><a href="#terms" class="internal xref">service
+endpoint</a> for longer than was desired when operating conditions changed.
 Conversely, a short cache period for an advertisement for HTTP/3 resulted in
-frequently reverting to earlier versions might be used more often than is
-optimal.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+frequently reverting to previous versions on subsequent connections.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">Alternative services turned out to interact poorly with service configuration
 information that is published in the DNS.  With the introduction of HTTPS
-records <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>, more details of <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-20" class="iref"></span> can be advertised in the
+records <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>, more details of <span id="iref-service-endpoint-21" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a> can be advertised in the
 DNS, including the support for HTTP/3.  But this created two independent sources
 of this information, each with its own approach to caching.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">Alternative services are dependent on networking conditions.  RFC 7838 attempted
@@ -1351,10 +1362,10 @@ produced suboptimal or even detrimental outcomes in some deployments.<a href="#s
 services.  This approach uses the DNS as the singular source of information
 about service reachability.  An alternative service advertisement only acts as a
 prompt for clients to seek updated information from the DNS.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">To use this new design, a <a href="#terms" class="internal xref">server</a><span id="iref-server-21" class="iref"></span> advertises an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-22" class="iref"></span> using the
-"<a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-23" class="iref"></span>" field.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<div id="section-1.2-3">
-<pre class="lang-http-message sourcecode">
+<p id="section-1.2-2">To use this new design, a <span id="iref-server-22" class="iref"></span><a href="#terms" class="internal xref">server</a> advertises an <span id="iref-alternative-name-23" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> using the
+"<span id="iref-alt-svcb-24" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a>" field.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<div class="lang-http-message sourcecode" id="section-1.2-3">
+<pre>
 200 OK HTTP/1.1
 date: Mon, 24 Oct 2022 02:58:31 GMT
 alt-svcb: "instance31.example.com"
@@ -1363,11 +1374,11 @@ content-length: 0
 </pre><a href="#section-1.2-3" class="pilcrow">¶</a>
 </div>
 <p id="section-1.2-4">Clients can then consult the DNS, making HTTPS queries <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span> starting with
-this name. The <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-24" class="iref"></span> is used in place of the name of the authority
+this name. The <span id="iref-alternative-name-25" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> is used in place of the name of the authority
 and using HTTPS records is mandatory, but the process otherwise follows normal
 HTTPS record resolution and connection procedures.  <a href="#use" class="auto internal xref">Section 2</a> defines how this
 name is used in detail.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
-<p id="section-1.2-5">Future connections for requests to resources on the same <a href="#terms" class="internal xref">server</a><span id="iref-server-25" class="iref"></span> use HTTPS record
+<p id="section-1.2-5">Future connections for requests to resources on the same <span id="iref-server-26" class="iref"></span><a href="#terms" class="internal xref">server</a> use HTTPS record
 resolution to the name of the authority, but are reprioritized if a successful
 connection was previously made to an alternative service.  <a href="#reuse" class="auto internal xref">Section 2.2</a> defines how
 this process works in more detail.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
@@ -1382,22 +1393,22 @@ this process works in more detail.<a href="#section-1.2-5" class="pilcrow">¶</a
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
-<p id="section-1.3-2">The terms "<a href="#terms" class="internal xref">server</a><span id="iref-server-26" class="iref"></span>" and "<a href="#terms" class="internal xref">client</a><span id="iref-client-27" class="iref"></span>" are defined in <span>[<a href="#HTTP" class="cite xref">HTTP</a>]</span>.  The term "<a href="#terms" class="internal xref">origin</a><span id="iref-origin-28" class="iref"></span>" is
+<p id="section-1.3-2">The terms "<span id="iref-server-27" class="iref"></span><a href="#terms" class="internal xref">server</a>" and "<span id="iref-client-28" class="iref"></span><a href="#terms" class="internal xref">client</a>" are defined in <span>[<a href="#HTTP" class="cite xref">HTTP</a>]</span>.  The term "<span id="iref-origin-29" class="iref"></span><a href="#terms" class="internal xref">origin</a>" is
 defined in <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.<a href="#section-1.3-2" class="pilcrow">¶</a></p>
-<p id="section-1.3-3">The term "<a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-29" class="iref"></span>" refers to the name advertised by a <a href="#terms" class="internal xref">server</a><span id="iref-server-30" class="iref"></span> to a
-<a href="#terms" class="internal xref">client</a><span id="iref-client-31" class="iref"></span>.  This refers to a domain name that is queried by the <a href="#terms" class="internal xref">client</a><span id="iref-client-32" class="iref"></span> to discover
-both service names and <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-33" class="iref"></span>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
-<p id="section-1.3-4">A "<a href="#terms" class="internal xref">service name</a><span id="iref-service-name-34" class="iref"></span>" is the TargetName from an HTTPS ServiceMode record <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>.
+<p id="section-1.3-3">The term "<span id="iref-alternative-name-30" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>" refers to the name advertised by a <span id="iref-server-31" class="iref"></span><a href="#terms" class="internal xref">server</a> to a
+<span id="iref-client-32" class="iref"></span><a href="#terms" class="internal xref">client</a>.  This refers to a domain name that is queried by the <span id="iref-client-33" class="iref"></span><a href="#terms" class="internal xref">client</a> to discover
+both service names and <span id="iref-service-endpoint-34" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
+<p id="section-1.3-4">A "<span id="iref-service-name-35" class="iref"></span><a href="#terms" class="internal xref">service name</a>" is the TargetName from an HTTPS ServiceMode record <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>.
 Service names, their associated parameters (SvcParams), and IP addresses
-describe a "<a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-35" class="iref"></span>".  Clients establiish connections to <a href="#terms" class="internal xref">service
-endpoints</a><span id="iref-service-endpoints-36" class="iref"></span> in order to make requests of a <a href="#terms" class="internal xref">server</a><span id="iref-server-37" class="iref"></span>.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
-<p id="section-1.3-5">A <a href="#terms" class="internal xref">server</a><span id="iref-server-38" class="iref"></span> is identified using its "<a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-39" class="iref"></span>", which is the domain name from
-the target URI of resources the <a href="#terms" class="internal xref">client</a><span id="iref-client-40" class="iref"></span> makes requests toward.  This is the name
-that the <a href="#terms" class="internal xref">client</a><span id="iref-client-41" class="iref"></span> authenticates when determining if a <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-42" class="iref"></span> is
-authoritative.  Unlike an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-43" class="iref"></span> or <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-44" class="iref"></span>, an <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-45" class="iref"></span> can
+describe a "<span id="iref-service-endpoint-36" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a>".  Clients establiish connections to <span id="iref-service-endpoint-37" class="iref"></span><a href="#terms" class="internal xref">service
+endpoints</a> in order to make requests of a <span id="iref-server-38" class="iref"></span><a href="#terms" class="internal xref">server</a>.<a href="#section-1.3-4" class="pilcrow">¶</a></p>
+<p id="section-1.3-5">A <span id="iref-server-39" class="iref"></span><a href="#terms" class="internal xref">server</a> is identified using its "<span id="iref-origin-name-40" class="iref"></span><a href="#terms" class="internal xref">origin name</a>", which is the domain name from
+the target URI of resources the <span id="iref-client-41" class="iref"></span><a href="#terms" class="internal xref">client</a> makes requests toward.  This is the name
+that the <span id="iref-client-42" class="iref"></span><a href="#terms" class="internal xref">client</a> authenticates when determining if a <span id="iref-service-endpoint-43" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> is
+authoritative.  Unlike an <span id="iref-alternative-name-44" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> or <span id="iref-service-name-45" class="iref"></span><a href="#terms" class="internal xref">service name</a>, an <span id="iref-origin-name-46" class="iref"></span><a href="#terms" class="internal xref">origin name</a> can
 be an IP address rather than a domain name.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
-<p id="section-1.3-6">There can be different values for <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-46" class="iref"></span>, <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-47" class="iref"></span>, and <a href="#terms" class="internal xref">service
-name</a><span id="iref-service-name-48" class="iref"></span>.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
+<p id="section-1.3-6">There can be different values for <span id="iref-origin-name-47" class="iref"></span><a href="#terms" class="internal xref">origin name</a>, <span id="iref-alternative-name-48" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>, and <span id="iref-service-name-49" class="iref"></span><a href="#terms" class="internal xref">service
+name</a>.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1407,55 +1418,55 @@ name</a><span id="iref-service-name-48" class="iref"></span>.<a href="#section-1
       <h2 id="name-using-alternative-services">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-using-alternative-services" class="section-name selfRef">Using Alternative Services</a>
       </h2>
-<p id="section-2-1">A <a href="#terms" class="internal xref">server</a><span id="iref-server-49" class="iref"></span> advertises the availability of alternative services by providing the
-<a href="#terms" class="internal xref">client</a><span id="iref-client-50" class="iref"></span> with an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-51" class="iref"></span>.  The <a href="#terms" class="internal xref">server</a><span id="iref-server-52" class="iref"></span> does this using either a field in a
+<p id="section-2-1">A <span id="iref-server-50" class="iref"></span><a href="#terms" class="internal xref">server</a> advertises the availability of alternative services by providing the
+<span id="iref-client-51" class="iref"></span><a href="#terms" class="internal xref">client</a> with an <span id="iref-alternative-name-52" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.  The <span id="iref-server-53" class="iref"></span><a href="#terms" class="internal xref">server</a> does this using either a field in a
 response (<a href="#field" class="auto internal xref">Section 3.1</a>) or an HTTP/2 or HTTP/3 frame (<a href="#frame" class="auto internal xref">Section 3.2</a>).<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">When a <a href="#terms" class="internal xref">client</a><span id="iref-client-53" class="iref"></span> receives a new <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-54" class="iref"></span> from a <a href="#terms" class="internal xref">server</a><span id="iref-server-55" class="iref"></span>, they <span class="bcp14">SHOULD</span> attempt
-to discover and use the <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-56" class="iref"></span> referred to by that name for future
-requests to that <a href="#terms" class="internal xref">server</a><span id="iref-server-57" class="iref"></span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">In order to discover and use the identified <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-58" class="iref"></span>, the <a href="#terms" class="internal xref">client</a><span id="iref-client-59" class="iref"></span>
-attempts to make a request for a resource on the same <a href="#terms" class="internal xref">server</a><span id="iref-server-60" class="iref"></span> using the provided
-<a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-61" class="iref"></span> as follows:<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-2">When a <span id="iref-client-54" class="iref"></span><a href="#terms" class="internal xref">client</a> receives a new <span id="iref-alternative-name-55" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> from a <span id="iref-server-56" class="iref"></span><a href="#terms" class="internal xref">server</a>, they <span class="bcp14">SHOULD</span> attempt
+to discover and use the <span id="iref-service-endpoint-57" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a> referred to by that name for future
+requests to that <span id="iref-server-58" class="iref"></span><a href="#terms" class="internal xref">server</a>.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">In order to discover and use the identified <span id="iref-service-endpoint-59" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>, the <span id="iref-client-60" class="iref"></span><a href="#terms" class="internal xref">client</a>
+attempts to make a request for a resource on the same <span id="iref-server-61" class="iref"></span><a href="#terms" class="internal xref">server</a> using the provided
+<span id="iref-alternative-name-62" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> as follows:<a href="#section-2-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-2-4">
-<li id="section-2-4.1">The <a href="#terms" class="internal xref">client</a><span id="iref-client-62" class="iref"></span> makes a DNS query for HTTPS records for the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-63" class="iref"></span>,
-following the procedures in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-11#section-3" class="relref">Section 3</a> of [<a href="#SVCB" class="cite xref">SVCB</a>]</span>.  Clients make this query
-as a "SVCB-reliant" <a href="#terms" class="internal xref">client</a><span id="iref-client-64" class="iref"></span>, treating missing or unobtainable HTTPS records as
+<li id="section-2-4.1">The <span id="iref-client-63" class="iref"></span><a href="#terms" class="internal xref">client</a> makes a DNS query for HTTPS records for the <span id="iref-alternative-name-64" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>,
+following the procedures in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-12#section-3" class="relref">Section 3</a> of [<a href="#SVCB" class="cite xref">SVCB</a>]</span>.  Clients make this query
+as a "SVCB-reliant" <span id="iref-client-65" class="iref"></span><a href="#terms" class="internal xref">client</a>, treating missing or unobtainable HTTPS records as
 a failure.  If this process fails to produce service parameters or IP
-addresses, abort this process.<a href="#section-2-4.1" class="pilcrow">¶</a>
+addresses, the process is aborted.<a href="#section-2-4.1" class="pilcrow">¶</a>
 </li>
-        <li id="section-2-4.2">The <a href="#terms" class="internal xref">client</a><span id="iref-client-65" class="iref"></span> establishes a connection using the service parameters and
-addresses learned from the DNS query.  The <a href="#terms" class="internal xref">client</a><span id="iref-client-66" class="iref"></span> uses the <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-67" class="iref"></span> in any
-TLS <a href="#terms" class="internal xref">server</a><span id="iref-server-68" class="iref"></span> name indication <span>[<a href="#SNI" class="cite xref">SNI</a>]</span> of the <a href="#terms" class="internal xref">server</a><span id="iref-server-69" class="iref"></span> name from the URL,
-not the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-70" class="iref"></span>.  This allows the <a href="#terms" class="internal xref">server</a><span id="iref-server-71" class="iref"></span> to produce a certificate
-for the <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-72" class="iref"></span>, which the <a href="#terms" class="internal xref">client</a><span id="iref-client-73" class="iref"></span> can validate as applying to the URL it
-is resolving.  If a connection cannot be established, abort this process.<a href="#section-2-4.2" class="pilcrow">¶</a>
+        <li id="section-2-4.2">The <span id="iref-client-66" class="iref"></span><a href="#terms" class="internal xref">client</a> establishes a connection using the service parameters and
+addresses learned from the DNS query.  The <span id="iref-client-67" class="iref"></span><a href="#terms" class="internal xref">client</a> uses the <span id="iref-origin-name-68" class="iref"></span><a href="#terms" class="internal xref">origin name</a> in any
+TLS <span id="iref-server-69" class="iref"></span><a href="#terms" class="internal xref">server</a> name indication <span>[<a href="#SNI" class="cite xref">SNI</a>]</span> of the <span id="iref-server-70" class="iref"></span><a href="#terms" class="internal xref">server</a> name from the URL,
+not the <span id="iref-alternative-name-71" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.  This allows the <span id="iref-server-72" class="iref"></span><a href="#terms" class="internal xref">server</a> to produce a certificate
+for the <span id="iref-origin-name-73" class="iref"></span><a href="#terms" class="internal xref">origin name</a>, which the <span id="iref-client-74" class="iref"></span><a href="#terms" class="internal xref">client</a> can validate as applying to the URL it
+is resolving.  If a connection cannot be established, the process is aborted.<a href="#section-2-4.2" class="pilcrow">¶</a>
 </li>
-        <li id="section-2-4.3">The <a href="#terms" class="internal xref">client</a><span id="iref-client-74" class="iref"></span> validates that the <a href="#terms" class="internal xref">server</a><span id="iref-server-75" class="iref"></span> is authoritative for the resource using
-the <a href="#terms" class="internal xref">server</a><span id="iref-server-76" class="iref"></span> <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-77" class="iref"></span>.  If the <a href="#terms" class="internal xref">server</a><span id="iref-server-78" class="iref"></span> is not authoritative, abort this
-process.<a href="#section-2-4.3" class="pilcrow">¶</a>
+        <li id="section-2-4.3">The <span id="iref-client-75" class="iref"></span><a href="#terms" class="internal xref">client</a> validates that the <span id="iref-server-76" class="iref"></span><a href="#terms" class="internal xref">server</a> is authoritative for the resource using
+the <span id="iref-server-77" class="iref"></span><a href="#terms" class="internal xref">server</a> <span id="iref-origin-name-78" class="iref"></span><a href="#terms" class="internal xref">origin name</a>.  If the <span id="iref-server-79" class="iref"></span><a href="#terms" class="internal xref">server</a> is not authoritative, the
+process is aborted.<a href="#section-2-4.3" class="pilcrow">¶</a>
 </li>
-        <li id="section-2-4.4">The <a href="#terms" class="internal xref">client</a><span id="iref-client-79" class="iref"></span> makes a query for the resource.  If the <a href="#terms" class="internal xref">server</a><span id="iref-server-80" class="iref"></span> does not respond or
+        <li id="section-2-4.4">The <span id="iref-client-80" class="iref"></span><a href="#terms" class="internal xref">client</a> makes a query for the resource.  If the <span id="iref-server-81" class="iref"></span><a href="#terms" class="internal xref">server</a> does not respond or
 responds with a 421 (Misdirected Request) (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.5.20" class="relref">Section 15.5.20</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>),
-abort this process.  A <a href="#terms" class="internal xref">client</a><span id="iref-client-81" class="iref"></span> <span class="bcp14">MAY</span> re-attempt a request or request another
-resource if the <a href="#terms" class="internal xref">server</a><span id="iref-server-82" class="iref"></span> responds with a 5xx status code (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.6" class="relref">Section 15.6</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>).<a href="#section-2-4.4" class="pilcrow">¶</a>
+the process is aborted.  A <span id="iref-client-82" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> re-attempt a request or request another
+resource if the <span id="iref-server-83" class="iref"></span><a href="#terms" class="internal xref">server</a> responds with a 5xx status code (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.6" class="relref">Section 15.6</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>).<a href="#section-2-4.4" class="pilcrow">¶</a>
 </li>
-        <li id="section-2-4.5">Once a response is received, the connection to the alternative <a href="#terms" class="internal xref">service
-endpoint</a><span id="iref-service-endpoint-83" class="iref"></span> is complete.  Any other connections can be closed and future
-requests directed to the new connection.  The <a href="#terms" class="internal xref">client</a><span id="iref-client-84" class="iref"></span> <span class="bcp14">SHOULD</span> remember the
-<a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-85" class="iref"></span> and the <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-86" class="iref"></span> that were used; see <a href="#remember" class="auto internal xref">Section 2.1</a>.<a href="#section-2-4.5" class="pilcrow">¶</a>
+        <li id="section-2-4.5">Once a response is received, the connection to the alternative <span id="iref-service-endpoint-84" class="iref"></span><a href="#terms" class="internal xref">service
+endpoint</a> is complete.  Any other connections can be closed and future
+requests directed to the new connection.  The <span id="iref-client-85" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">SHOULD</span> remember the
+<span id="iref-alternative-name-86" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> and the <span id="iref-service-name-87" class="iref"></span><a href="#terms" class="internal xref">service name</a> that were used; see <a href="#remember" class="auto internal xref">Section 2.1</a>.<a href="#section-2-4.5" class="pilcrow">¶</a>
 </li>
       </ol>
-<p id="section-2-5">A <a href="#terms" class="internal xref">client</a><span id="iref-client-87" class="iref"></span> <span class="bcp14">MAY</span> send additional requests using the newly established connection to
-the alternative service after it verifies that the <a href="#terms" class="internal xref">server</a><span id="iref-server-88" class="iref"></span> is authoritative.
-However, a <a href="#terms" class="internal xref">client</a><span id="iref-client-89" class="iref"></span> <span class="bcp14">MUST NOT</span> remember a <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-90" class="iref"></span> until a request has been
+<p id="section-2-5">A <span id="iref-client-88" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> send multiple requests using the newly established connection to
+the alternative service after it verifies that the <span id="iref-server-89" class="iref"></span><a href="#terms" class="internal xref">server</a> is authoritative.
+However, a <span id="iref-client-90" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MUST NOT</span> remember a <span id="iref-service-name-91" class="iref"></span><a href="#terms" class="internal xref">service name</a> until at least one request has been
 successfully completed with a 2xx or 3xx status code.  The alternative service
 is therefore active once the connection is established, but it will not be
 reused (<a href="#reuse" class="auto internal xref">Section 2.2</a>) for future connections until a request completes
 successfully.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">A <a href="#terms" class="internal xref">client</a><span id="iref-client-91" class="iref"></span> <span class="bcp14">MAY</span> continue sending other requests over any existing connection to the
-<a href="#terms" class="internal xref">server</a><span id="iref-server-92" class="iref"></span> until this process completes in order to minimize latency for those
-requests.  A <a href="#terms" class="internal xref">client</a><span id="iref-client-93" class="iref"></span> <span class="bcp14">MAY</span> - when presented with an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-94" class="iref"></span> - proactively
-make a request for an arbitrary resource on the <a href="#terms" class="internal xref">server</a><span id="iref-server-95" class="iref"></span>, rather than waiting for
+<p id="section-2-6">A <span id="iref-client-92" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> continue sending other requests over any existing connection to the
+<span id="iref-server-93" class="iref"></span><a href="#terms" class="internal xref">server</a> until this process completes in order to minimize latency for those
+requests.  A <span id="iref-client-94" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> - when presented with an <span id="iref-alternative-name-95" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> - proactively
+make a request for an arbitrary resource on the <span id="iref-server-96" class="iref"></span><a href="#terms" class="internal xref">server</a>, rather than waiting for
 the next time a request is needed.  This might allow the connection to be
 available for future requests with less delay.<a href="#section-2-6" class="pilcrow">¶</a></p>
 <div id="remember">
@@ -1466,38 +1477,38 @@ available for future requests with less delay.<a href="#section-2-6" class="pilc
 <p id="section-2.1-1">Clients <span class="bcp14">SHOULD</span> remember the successful use of an alternative service in order to
 support reuse (<a href="#reuse" class="auto internal xref">Section 2.2</a>).  Two pieces of information are retained:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.1-2.1">the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-96" class="iref"></span>, which is the name provided by the <a href="#terms" class="internal xref">server</a><span id="iref-server-97" class="iref"></span> in the <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-98" class="iref"></span>
-field or <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-99" class="iref"></span> frame, and<a href="#section-2.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2.1-2.1">the <span id="iref-alternative-name-97" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>, which is the name provided by the <span id="iref-server-98" class="iref"></span><a href="#terms" class="internal xref">server</a> in the <span id="iref-alt-svcb-99" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a>
+field or <span id="iref-altsvcb-100" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame, and<a href="#section-2.1-2.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.1-2.2">the <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-100" class="iref"></span>, which is the TargetName from the ServiceMode HTTPS record
-that was used to successfully connect to the <a href="#terms" class="internal xref">server</a><span id="iref-server-101" class="iref"></span>.<a href="#section-2.1-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.1-2.2">the <span id="iref-service-name-101" class="iref"></span><a href="#terms" class="internal xref">service name</a>, which is the TargetName from the ServiceMode HTTPS record
+that was used to successfully connect to the <span id="iref-server-102" class="iref"></span><a href="#terms" class="internal xref">server</a>.<a href="#section-2.1-2.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.1-3">These two names are saved for the <a href="#terms" class="internal xref">server</a><span id="iref-server-102" class="iref"></span> against the <a href="#terms" class="internal xref">origin</a><span id="iref-origin-103" class="iref"></span> of the <a href="#terms" class="internal xref">server</a><span id="iref-server-104" class="iref"></span>
-          <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.  Clients <span class="bcp14">MUST NOT</span> reuse saved information for a <a href="#terms" class="internal xref">server</a><span id="iref-server-105" class="iref"></span> with
+<p id="section-2.1-3">These two names are saved for the <span id="iref-server-103" class="iref"></span><a href="#terms" class="internal xref">server</a> against the <span id="iref-origin-104" class="iref"></span><a href="#terms" class="internal xref">origin</a> of the <span id="iref-server-105" class="iref"></span><a href="#terms" class="internal xref">server</a>
+          <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.  Clients <span class="bcp14">MUST NOT</span> reuse saved information for a <span id="iref-server-106" class="iref"></span><a href="#terms" class="internal xref">server</a> with
 a different hostname, port, or scheme.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1-4">The <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-106" class="iref"></span>, as carried in an <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-107" class="iref"></span> field or <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-108" class="iref"></span> frame, is
-retained only so that the <a href="#terms" class="internal xref">client</a><span id="iref-client-109" class="iref"></span> can avoid repeated attempts to discover and
-connect to alternative services.  A <a href="#terms" class="internal xref">server</a><span id="iref-server-110" class="iref"></span> can send <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-111" class="iref"></span> fields in multiple
-responses or send multiple <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-112" class="iref"></span> frames.  Repeating the discovery process
-could be wasteful for a <a href="#terms" class="internal xref">client</a><span id="iref-client-113" class="iref"></span>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.1-5">Any time that a <a href="#terms" class="internal xref">server</a><span id="iref-server-114" class="iref"></span> provides a different name in an <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-115" class="iref"></span> field or <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-116" class="iref"></span>
-frame, any existing information <span class="bcp14">MUST</span> be discarded.  A <a href="#terms" class="internal xref">client</a><span id="iref-client-117" class="iref"></span> <span class="bcp14">MAY</span> then initiate a
-DNS query and connection attempt using the new <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-118" class="iref"></span>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.1-6">Though a <a href="#terms" class="internal xref">server</a><span id="iref-server-119" class="iref"></span> might repeat an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-120" class="iref"></span>, clients <span class="bcp14">MUST NOT</span> consider the
-absence of an <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-121" class="iref"></span> field in a response as indicative of a retraction of a
-previous advertisement.  An <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-122" class="iref"></span> is only removed when replaced with
-a different <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-123" class="iref"></span> or when a remembered <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-124" class="iref"></span> does not appear
+<p id="section-2.1-4">The <span id="iref-alternative-name-107" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>, as carried in an <span id="iref-alt-svcb-108" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> field or <span id="iref-altsvcb-109" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame, is
+retained only so that the <span id="iref-client-110" class="iref"></span><a href="#terms" class="internal xref">client</a> can avoid repeated attempts to discover and
+connect to alternative services.  A <span id="iref-server-111" class="iref"></span><a href="#terms" class="internal xref">server</a> can send <span id="iref-alt-svcb-112" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> fields in multiple
+responses or send multiple <span id="iref-altsvcb-113" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frames.  Repeating the discovery process
+could be wasteful for a <span id="iref-client-114" class="iref"></span><a href="#terms" class="internal xref">client</a>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">Any time that a <span id="iref-server-115" class="iref"></span><a href="#terms" class="internal xref">server</a> provides a different name in an <span id="iref-alt-svcb-116" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> field or <span id="iref-altsvcb-117" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a>
+frame, any existing information <span class="bcp14">MUST</span> be discarded.  A <span id="iref-client-118" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> then initiate a
+DNS query and connection attempt using the new <span id="iref-alternative-name-119" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-6">Though a <span id="iref-server-120" class="iref"></span><a href="#terms" class="internal xref">server</a> might repeat an <span id="iref-alternative-name-121" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>, clients <span class="bcp14">MUST NOT</span> consider the
+absence of an <span id="iref-alt-svcb-122" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> field in a response as indicative of a retraction of a
+previous advertisement.  An <span id="iref-alternative-name-123" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> is only removed when replaced with
+a different <span id="iref-alternative-name-124" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> or when a remembered <span id="iref-service-name-125" class="iref"></span><a href="#terms" class="internal xref">service name</a> does not appear
 in the set of HTTPS query responses (see <a href="#reuse" class="auto internal xref">Section 2.2</a>).<a href="#section-2.1-6" class="pilcrow">¶</a></p>
 <p id="section-2.1-7">After a failed attempt to use an alternative service, a failure is remembered by
-retaining the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-125" class="iref"></span> without a <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-126" class="iref"></span>.  This avoids making
+retaining the <span id="iref-alternative-name-126" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> without a <span id="iref-service-name-127" class="iref"></span><a href="#terms" class="internal xref">service name</a>.  This avoids making
 repeated attempts to use an alternative service that is not available, even if
-the <a href="#terms" class="internal xref">server</a><span id="iref-server-127" class="iref"></span> repeats the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-128" class="iref"></span>.  A <a href="#terms" class="internal xref">client</a><span id="iref-client-129" class="iref"></span> <span class="bcp14">MAY</span> periodically attempt to
+the <span id="iref-server-128" class="iref"></span><a href="#terms" class="internal xref">server</a> repeats the <span id="iref-alternative-name-129" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.  A <span id="iref-client-130" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> periodically attempt to
 retry a failed alternative if the information is repeated.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
-<p id="section-2.1-8">A <a href="#terms" class="internal xref">server</a><span id="iref-server-130" class="iref"></span> can explicitly request that a <a href="#terms" class="internal xref">client</a><span id="iref-client-131" class="iref"></span> remove any remembered <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-132" class="iref"></span>
-by providing an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-133" class="iref"></span> of "invalid".  The "invalid" domain name
+<p id="section-2.1-8">A <span id="iref-server-131" class="iref"></span><a href="#terms" class="internal xref">server</a> can explicitly request that a <span id="iref-client-132" class="iref"></span><a href="#terms" class="internal xref">client</a> remove any remembered <span id="iref-service-name-133" class="iref"></span><a href="#terms" class="internal xref">service name</a>
+by providing an <span id="iref-alternative-name-134" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> of "invalid".  The "invalid" domain name
 corresponds to a DNS name that will never successfully resolve (see <span><a href="https://rfc-editor.org/rfc/rfc6761#section-6.4" class="relref">Section 6.4</a> of [<a href="#SUDN" class="cite xref">SUDN</a>]</span>), which guarantees that an attempt to use this name
-cannot succeed.  Clients <span class="bcp14">MAY</span> recognize the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-134" class="iref"></span> "invalid" as special
+cannot succeed.  Clients <span class="bcp14">MAY</span> recognize the <span id="iref-alternative-name-135" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> "invalid" as special
 and avoid any attempt to use this to discover an alternative service.<a href="#section-2.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1506,36 +1517,37 @@ and avoid any attempt to use this to discover an alternative service.<a href="#s
         <h3 id="name-reusing-alternatives">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-reusing-alternatives" class="section-name selfRef">Reusing Alternatives</a>
         </h3>
-<p id="section-2.2-1">In subsequent connections to the same <a href="#terms" class="internal xref">server</a><span id="iref-server-135" class="iref"></span>, clients make HTTP queries for the
-<a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-136" class="iref"></span> of the <a href="#terms" class="internal xref">server</a><span id="iref-server-137" class="iref"></span>.  If this query returns a ServiceMode resource record
-(RR) that includes a TargetName that is identical to the <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-138" class="iref"></span> that is
-remembered for the request <a href="#terms" class="internal xref">origin</a><span id="iref-origin-139" class="iref"></span>, the <a href="#terms" class="internal xref">client</a><span id="iref-client-140" class="iref"></span> <span class="bcp14">SHOULD</span> choose that over any
+<p id="section-2.2-1">In subsequent connections to the same <span id="iref-origin-136" class="iref"></span><a href="#terms" class="internal xref">origin</a>, clients make a DNS query for
+HTTPS records for the <span id="iref-origin-name-137" class="iref"></span><a href="#terms" class="internal xref">origin name</a>.  If, after following any CNAME or
+AliasMode records, this query returns a ServiceMode resource record
+(RR) that includes a TargetName that is identical to the <span id="iref-service-name-138" class="iref"></span><a href="#terms" class="internal xref">service name</a> that is
+remembered for the request <span id="iref-origin-139" class="iref"></span><a href="#terms" class="internal xref">origin</a>, the <span id="iref-client-140" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">SHOULD</span> choose that over any
 alternatives.  This ignores any SvcPriority attributes that might cause other
 records to be chosen and includes any RRs that are marked "alt-only"; see
 <a href="#alt-only" class="auto internal xref">Section 2.2.2</a>.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2">Note that when reusing an alternative service, a <a href="#terms" class="internal xref">client</a><span id="iref-client-141" class="iref"></span> does not make a query
-for the remembered <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-142" class="iref"></span>.  HTTPS queries are made for the <a href="#terms" class="internal xref">origin
-name</a><span id="iref-origin-name-143" class="iref"></span>, which is the domain name from the target URI of the request; see also
+<p id="section-2.2-2">Note that when reusing an alternative service, a <span id="iref-client-141" class="iref"></span><a href="#terms" class="internal xref">client</a> does not make a query
+for the remembered <span id="iref-alternative-name-142" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.  HTTPS queries are made for the <span id="iref-origin-name-143" class="iref"></span><a href="#terms" class="internal xref">origin
+name</a>, which is the domain name from the target URI of the request; see also
 <a href="#ip" class="auto internal xref">Section 2.3</a>.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">If a query for HTTPS records does not produce a ServiceMode record with a
-TargetName that matches the remembered <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-144" class="iref"></span>, all remembered information
-<span class="bcp14">MUST</span> be removed for that <a href="#terms" class="internal xref">origin</a><span id="iref-origin-145" class="iref"></span>.  The <a href="#terms" class="internal xref">client</a><span id="iref-client-146" class="iref"></span> then uses the normal SVCB-optional
+TargetName that matches the remembered <span id="iref-service-name-144" class="iref"></span><a href="#terms" class="internal xref">service name</a>, all remembered information
+<span class="bcp14">MUST</span> be removed for that <span id="iref-origin-145" class="iref"></span><a href="#terms" class="internal xref">origin</a>.  The <span id="iref-client-146" class="iref"></span><a href="#terms" class="internal xref">client</a> then uses the normal SVCB-optional
 resolution logic as defined in <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2-4">When reusing stored information, if a connection attempt is unsuccessful (see
-<a href="#use" class="auto internal xref">Section 2</a>), remembered information for that <a href="#terms" class="internal xref">origin</a><span id="iref-origin-147" class="iref"></span> <span class="bcp14">MUST</span> be removed.  Clients clear
+<a href="#use" class="auto internal xref">Section 2</a>), remembered information for that <span id="iref-origin-147" class="iref"></span><a href="#terms" class="internal xref">origin</a> <span class="bcp14">MUST</span> be removed.  Clients clear
 retained alternative service information on reuse to prevent stale information
 from affecting all future connection attempts.  After removing remembered
-information, a <a href="#terms" class="internal xref">client</a><span id="iref-client-148" class="iref"></span> <span class="bcp14">MAY</span> make another attempt to connect using any other
+information, a <span id="iref-client-148" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> make another attempt to connect using any other
 ServiceMode records that the DNS query produced.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <div id="example-of-reuse">
 <section id="section-2.2.1">
           <h4 id="name-example-of-reuse">
 <a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-example-of-reuse" class="section-name selfRef">Example of Reuse</a>
           </h4>
-<p id="section-2.2.1-1">A <a href="#terms" class="internal xref">client</a><span id="iref-client-149" class="iref"></span> that is fetching "https://example.com/" might originally perform a DNS
+<p id="section-2.2.1-1">A <span id="iref-client-149" class="iref"></span><a href="#terms" class="internal xref">client</a> that is fetching "https://example.com/" might originally perform a DNS
 query for "example.com" and receive in response:<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
-<div id="section-2.2.1-2">
-<pre class="lang-dns sourcecode">
+<div class="lang-dns sourcecode" id="section-2.2.1-2">
+<pre>
 example.com. 7200 IN HTTPS 1 . port=443
 example.com. 7200 IN HTTPS 10 alt1.example. port=8443
 example.com. 7200 IN HTTPS 10 alt2.example. port=8443
@@ -1544,25 +1556,25 @@ example.com. 7200 IN HTTPS 10 alt2.example. port=8443
 </div>
 <p id="section-2.2.1-3">Under normal conditions, the SvcPriority of the "alt?.example" RRs would indicate
 that it is not preferred, so the "example.com" record would be used.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-4">If the <a href="#terms" class="internal xref">client</a><span id="iref-client-150" class="iref"></span> received an alternative service advertisement from this <a href="#terms" class="internal xref">server</a><span id="iref-server-151" class="iref"></span> for
+<p id="section-2.2.1-4">If the <span id="iref-client-150" class="iref"></span><a href="#terms" class="internal xref">client</a> received an alternative service advertisement from this <span id="iref-server-151" class="iref"></span><a href="#terms" class="internal xref">server</a> for
 "alt.example.net" it would then make a DNS query to that name.  This might
 return a different set of records, as follows:<a href="#section-2.2.1-4" class="pilcrow">¶</a></p>
-<div id="section-2.2.1-5">
-<pre class="lang-dns sourcecode">
+<div class="lang-dns sourcecode" id="section-2.2.1-5">
+<pre>
 alt.example.net. 7200 IN HTTPS 1 alt2.example. port=8887 alpn=h3
 alt.example.net. 7200 IN HTTPS 1 alt3.example. port=8887 alpn=h3
 </pre><a href="#section-2.2.1-5" class="pilcrow">¶</a>
 </div>
-<p id="section-2.2.1-6">If the <a href="#terms" class="internal xref">client</a><span id="iref-client-152" class="iref"></span> selects "alt2.example" and successfully connects to that host, it
-remembers both the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-153" class="iref"></span> ("alt.example.net") and a <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-154" class="iref"></span>
+<p id="section-2.2.1-6">If the <span id="iref-client-152" class="iref"></span><a href="#terms" class="internal xref">client</a> selects "alt2.example" and successfully connects to that host, it
+remembers both the <span id="iref-alternative-name-153" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> ("alt.example.net") and a <span id="iref-service-name-154" class="iref"></span><a href="#terms" class="internal xref">service name</a>
 ("alt2.example").<a href="#section-2.2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-7">In subsequent connections to "example.com", the <a href="#terms" class="internal xref">client</a><span id="iref-client-155" class="iref"></span> again queries the
-"example.com" name.  Importantly, this is the <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-156" class="iref"></span> and not any other name
+<p id="section-2.2.1-7">In subsequent connections to "example.com", the <span id="iref-client-155" class="iref"></span><a href="#terms" class="internal xref">client</a> again queries the
+"example.com" name.  Importantly, this is the <span id="iref-origin-name-156" class="iref"></span><a href="#terms" class="internal xref">origin name</a> and not any other name
 it might have remembered.  The resulting response - after following indirections
 through AliasMode, CNAME, or similar mechanisms - produces the same records as
 previously (perhaps because these were retained in a cache):<a href="#section-2.2.1-7" class="pilcrow">¶</a></p>
-<div id="section-2.2.1-8">
-<pre class="lang-dns sourcecode">
+<div class="lang-dns sourcecode" id="section-2.2.1-8">
+<pre>
 example.com. 7200 IN HTTPS 1 . port=443
 example.com. 7200 IN HTTPS 10 alt1.example. port=8443
 example.com. 7200 IN HTTPS 10 alt2.example. port=8443
@@ -1581,21 +1593,21 @@ port number or protocol as the previous successful connection.<a href="#section-
           </h4>
 <p id="section-2.2.2-1">ServiceMode HTTPS records can be marked as only being available for use as an
 alternative.  This allows servers to use alternative services for specific
-<a href="#terms" class="internal xref">server</a><span id="iref-server-157" class="iref"></span> instances, without having clients connect to them without being first
+<span id="iref-server-157" class="iref"></span><a href="#terms" class="internal xref">server</a> instances, without having clients connect to them without being first
 invited to do so.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2.2-2">This is achieved with a SvcParam with a key of "alt-only" (codepoint TBD).  The
 value of this SvcParamKey <span class="bcp14">MUST</span> be empty.  HTTPS ServiceMode records with this
-SvcParamKey <span class="bcp14">MUST NOT</span> be used unless the <a href="#terms" class="internal xref">client</a><span id="iref-client-158" class="iref"></span> is actively seeking an
-alternative, either as a result of actively looking up an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-159" class="iref"></span> or
+SvcParamKey <span class="bcp14">MUST NOT</span> be used unless the <span id="iref-client-158" class="iref"></span><a href="#terms" class="internal xref">client</a> is actively seeking an
+alternative, either as a result of actively looking up an <span id="iref-alternative-name-159" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> or
 because the alternative has been remembered.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2.2-3">To prevent clients that do not support this specification from using these
 services, the "alt-only" SvcParamKey <span class="bcp14">MUST</span> be listed in the "mandatory" SvcParam.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2.2-4">In the following example, though "alt1.example" is listed at a higher priority
 than "example.com", clients will not use this service unless an alternative was
-provided by the <a href="#terms" class="internal xref">server</a><span id="iref-server-160" class="iref"></span>:<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
-<div id="section-2.2.2-5">
-<pre class="lang-dns sourcecode">
-alt1.example. 7200 IN HTTPS 1 . port=443 alt-only mandatory=alt-only
+provided by the <span id="iref-server-160" class="iref"></span><a href="#terms" class="internal xref">server</a>:<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
+<div class="lang-dns sourcecode" id="section-2.2.2-5">
+<pre>
+example.com. 7200 IN HTTPS 1 alt1.example. port=443 alt-only mandatory=alt-only
 example.com.  7200 IN HTTPS 2 . port=443
 </pre><a href="#section-2.2.2-5" class="pilcrow">¶</a>
 </div>
@@ -1608,10 +1620,10 @@ example.com.  7200 IN HTTPS 2 . port=443
         <h3 id="name-servers-identified-by-ip">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-servers-identified-by-ip" class="section-name selfRef">Servers Identified by IP</a>
         </h3>
-<p id="section-2.3-1">An <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-161" class="iref"></span> can be provided by a <a href="#terms" class="internal xref">server</a><span id="iref-server-162" class="iref"></span> that is identified by an IP
+<p id="section-2.3-1">An <span id="iref-alternative-name-161" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> can be provided by a <span id="iref-server-162" class="iref"></span><a href="#terms" class="internal xref">server</a> that is identified by an IP
 address or host names that are not domain names.  However, HTTPS queries cannot
 be made for servers that are not identified by a domain name.  This makes reuse
-(<a href="#reuse" class="auto internal xref">Section 2.2</a>) impossible for such names.  A <a href="#terms" class="internal xref">client</a><span id="iref-client-163" class="iref"></span> <span class="bcp14">MAY</span> disable alternative
+(<a href="#reuse" class="auto internal xref">Section 2.2</a>) impossible for such names.  A <span id="iref-client-163" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> disable alternative
 services for servers that are not identified by a domain name.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1620,12 +1632,12 @@ services for servers that are not identified by a domain name.<a href="#section-
         <h3 id="name-port-numbers">
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-port-numbers" class="section-name selfRef">Port Numbers</a>
         </h3>
-<p id="section-2.4-1">An <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-164" class="iref"></span> provided in an <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-165" class="iref"></span> field or <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-166" class="iref"></span> frame can be any
+<p id="section-2.4-1">An <span id="iref-alternative-name-164" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> provided in an <span id="iref-alt-svcb-165" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> field or <span id="iref-altsvcb-166" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame can be any
 valid DNS QNAME.  This includes those with underscored labels
 <span>[<a href="#ATTRLEAF" class="cite xref">ATTRLEAF</a>]</span> and those that might be used to query for HTTPS records to
 a non-default port.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<div id="section-2.4-2">
-<pre class="lang-http-message sourcecode">
+<div class="lang-http-message sourcecode" id="section-2.4-2">
+<pre>
 200 OK HTTP/1.1
 date: Mon, 24 Oct 2022 02:58:31 GMT
 alt-svcb: "_8443._https.example.com"
@@ -1647,10 +1659,10 @@ other and using the port number derived from the service parameters.<a href="#se
         </h3>
 <p id="section-2.5-1">Servers that advertise alternative services cannot expect clients to switch to
 the advertised alternative.  Use of any alternative is entirely at the
-discretion of clients.  If the <a href="#terms" class="internal xref">client</a><span id="iref-client-167" class="iref"></span> is unsuccessful in connecting to an
+discretion of clients.  If the <span id="iref-client-167" class="iref"></span><a href="#terms" class="internal xref">client</a> is unsuccessful in connecting to an
 alternative or does not attempt a connection, they could continue to use the
 existing connection for new requests.<a href="#section-2.5-1" class="pilcrow">¶</a></p>
-<p id="section-2.5-2">A <a href="#terms" class="internal xref">server</a><span id="iref-server-168" class="iref"></span> that seeks to actively encourage clients to disconnect and seek service
+<p id="section-2.5-2">A <span id="iref-server-168" class="iref"></span><a href="#terms" class="internal xref">server</a> that seeks to actively encourage clients to disconnect and seek service
 elsewhere needs to use graceful shutdown procedures of the HTTP version that is
 in use.  HTTP/2 <span>[<a href="#H2" class="cite xref">HTTP/2</a>]</span> and HTTP/3 <span>[<a href="#H3" class="cite xref">HTTP/3</a>]</span> each provide a GOAWAY frame that can be
 used to initiate the graceful shutdown of a connection.  Alternative services is
@@ -1665,13 +1677,13 @@ not a substitute for these mechanisms.<a href="#section-2.5-2" class="pilcrow">�
 <p id="section-2.6-1">The procedures in this document apply to clients that connect to gateways or
 reverse proxies.  However, clients that connect via a proxy, using HTTP CONNECT
 or similar methods, have a choice.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
-<p id="section-2.6-2">Clients that provide a proxy with the <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-169" class="iref"></span> of a <a href="#terms" class="internal xref">server</a><span id="iref-server-170" class="iref"></span> leave name
-resolution to the proxy.  Such a <a href="#terms" class="internal xref">client</a><span id="iref-client-171" class="iref"></span> <span class="bcp14">MUST</span> ignore any alternative service
+<p id="section-2.6-2">Clients that provide a proxy with the <span id="iref-origin-name-169" class="iref"></span><a href="#terms" class="internal xref">origin name</a> of a <span id="iref-server-170" class="iref"></span><a href="#terms" class="internal xref">server</a> leave name
+resolution to the proxy.  Such a <span id="iref-client-171" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MUST</span> ignore any alternative service
 advertisement it receives.  These clients <span class="bcp14">MAY</span> fallback to using legacy
 alternative services; see <a href="#fallback" class="auto internal xref">Section 2.7</a>.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
 <p id="section-2.6-3">Clients that make HTTPS queries for any connection attempt via a proxy can use
-alternative services.  Such a <a href="#terms" class="internal xref">client</a><span id="iref-client-172" class="iref"></span> can provide the proxy with the IP address
-of the <a href="#terms" class="internal xref">server</a><span id="iref-server-173" class="iref"></span> it wishes to contact, rather than providing a name.<a href="#section-2.6-3" class="pilcrow">¶</a></p>
+alternative services.  Such a <span id="iref-client-172" class="iref"></span><a href="#terms" class="internal xref">client</a> can provide the proxy with the IP address
+of the <span id="iref-server-173" class="iref"></span><a href="#terms" class="internal xref">server</a> it wishes to contact, rather than providing a name.<a href="#section-2.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="fallback">
@@ -1679,9 +1691,9 @@ of the <a href="#terms" class="internal xref">server</a><span id="iref-server-17
         <h3 id="name-fallback-to-alt-svc">
 <a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-fallback-to-alt-svc" class="section-name selfRef">Fallback to Alt-Svc</a>
         </h3>
-<p id="section-2.7-1">A <a href="#terms" class="internal xref">client</a><span id="iref-client-174" class="iref"></span> that successfully makes use of HTTPS records in resolving an <a href="#terms" class="internal xref">origin
-name</a><span id="iref-origin-name-175" class="iref"></span> or <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-176" class="iref"></span> <span class="bcp14">MUST</span> ignore any Alt-Svc fields or ALTSVC frames
-<span>[<a href="#ALT-SVC" class="cite xref">ALT-SVC</a>]</span> that the <a href="#terms" class="internal xref">server</a><span id="iref-server-177" class="iref"></span> provides.  This document obsoletes the mechanisms
+<p id="section-2.7-1">A <span id="iref-client-174" class="iref"></span><a href="#terms" class="internal xref">client</a> that successfully makes use of HTTPS records in resolving an <span id="iref-origin-name-175" class="iref"></span><a href="#terms" class="internal xref">origin
+name</a> or <span id="iref-alternative-name-176" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> <span class="bcp14">MUST</span> ignore any Alt-Svc fields or ALTSVC frames
+<span>[<a href="#ALT-SVC" class="cite xref">ALT-SVC</a>]</span> that the <span id="iref-server-177" class="iref"></span><a href="#terms" class="internal xref">server</a> provides.  This document obsoletes the mechanisms
 defined in RFC 7838 <span>[<a href="#ALT-SVC" class="cite xref">ALT-SVC</a>]</span>.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
 <p id="section-2.7-2">Servers might provide Alt-Svc fields or ALTSVC frames <span>[<a href="#ALT-SVC" class="cite xref">ALT-SVC</a>]</span> in order to
 support clients that cannot use HTTPS records.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
@@ -1692,19 +1704,19 @@ support clients that cannot use HTTPS records.<a href="#section-2.7-2" class="pi
         <h3 id="name-authority-for-service-endpo">
 <a href="#section-2.8" class="section-number selfRef">2.8. </a><a href="#name-authority-for-service-endpo" class="section-name selfRef">Authority For Service Endpoint Configuration</a>
         </h3>
-<p id="section-2.8-1">This design does not assume that information provided by a <a href="#terms" class="internal xref">server</a><span id="iref-server-178" class="iref"></span> or by the DNS
-is authoritative information about the configuration of <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-179" class="iref"></span>.  This
-is despite the information in <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-180" class="iref"></span> fields or <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-181" class="iref"></span> frames being provided
-by a <a href="#terms" class="internal xref">server</a><span id="iref-server-182" class="iref"></span> that is authoritative.<a href="#section-2.8-1" class="pilcrow">¶</a></p>
-<p id="section-2.8-2">Instead, once a <a href="#terms" class="internal xref">server</a><span id="iref-server-183" class="iref"></span> is determined to be authorative (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.3" class="relref">Section 4.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>), that <a href="#terms" class="internal xref">server</a><span id="iref-server-184" class="iref"></span> is treated as the authority on all aspects of its own
+<p id="section-2.8-1">This design does not assume that information provided by a <span id="iref-server-178" class="iref"></span><a href="#terms" class="internal xref">server</a> or by the DNS
+is authoritative information about the configuration of <span id="iref-service-endpoint-179" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>.  This
+is despite the information in <span id="iref-alt-svcb-180" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> fields or <span id="iref-altsvcb-181" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frames being provided
+by a <span id="iref-server-182" class="iref"></span><a href="#terms" class="internal xref">server</a> that is authoritative.<a href="#section-2.8-1" class="pilcrow">¶</a></p>
+<p id="section-2.8-2">Instead, once a <span id="iref-server-183" class="iref"></span><a href="#terms" class="internal xref">server</a> is determined to be authorative (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.3" class="relref">Section 4.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>), that <span id="iref-server-184" class="iref"></span><a href="#terms" class="internal xref">server</a> is treated as the authority on all aspects of its own
 configuration.  For example, with protocol selection, <span>[<a href="#ALPN" class="cite xref">ALPN</a>]</span> and
 maybe <span>[<a href="#SNIP" class="cite xref">SNIP</a>]</span> extensions in the TLS handshake
 <span>[<a href="#TLS" class="cite xref">TLS</a>]</span> determine what protocol is used.<a href="#section-2.8-2" class="pilcrow">¶</a></p>
-<p id="section-2.8-3">For requests, a <a href="#terms" class="internal xref">server</a><span id="iref-server-185" class="iref"></span> that is determined to be authoritative for an <a href="#terms" class="internal xref">origin</a><span id="iref-origin-186" class="iref"></span> can
-answer all requests on that <a href="#terms" class="internal xref">origin</a><span id="iref-origin-187" class="iref"></span>.  All <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-188" class="iref"></span> that are
+<p id="section-2.8-3">For requests, a <span id="iref-server-185" class="iref"></span><a href="#terms" class="internal xref">server</a> that is determined to be authoritative for an <span id="iref-origin-186" class="iref"></span><a href="#terms" class="internal xref">origin</a> can
+answer all requests on that <span id="iref-origin-187" class="iref"></span><a href="#terms" class="internal xref">origin</a>.  All <span id="iref-service-endpoint-188" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a> that are
 authoritative <span class="bcp14">SHOULD</span> provide equivalent service to any other, though they could
 differ in terms of performance, diagnostic information, or other minor details.
-Clients will expect <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-189" class="iref"></span> to provide equivalent - or perhaps
+Clients will expect <span id="iref-service-endpoint-189" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a> to provide equivalent - or perhaps
 identical - service.<a href="#section-2.8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1715,39 +1727,39 @@ identical - service.<a href="#section-2.8-3" class="pilcrow">¶</a></p>
       <h2 id="name-protocol-elements">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-protocol-elements" class="section-name selfRef">Protocol Elements</a>
       </h2>
-<p id="section-3-1">Multiple ways of advertising alternative services are defined.  The <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-190" class="iref"></span>
+<p id="section-3-1">Multiple ways of advertising alternative services are defined.  The <span id="iref-alt-svcb-190" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a>
 field in <a href="#field" class="auto internal xref">Section 3.1</a> allows servers to indicate a preferred service in responses.
-The <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-191" class="iref"></span> frames in <a href="#frame" class="auto internal xref">Section 3.2</a> allows a <a href="#terms" class="internal xref">server</a><span id="iref-server-192" class="iref"></span> to provide <a href="#terms" class="internal xref">alternative names</a><span id="iref-alternative-names-193" class="iref"></span>
+The <span id="iref-altsvcb-191" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frames in <a href="#frame" class="auto internal xref">Section 3.2</a> allows a <span id="iref-server-192" class="iref"></span><a href="#terms" class="internal xref">server</a> to provide <span id="iref-alternative-name-193" class="iref"></span><a href="#terms" class="internal xref">alternative names</a>
 outside of the context of a query.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">These approaches have different properties.  <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-194" class="iref"></span> fields are forwarded by
+<p id="section-3-2">These approaches have different properties.  <span id="iref-alt-svcb-194" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> fields are forwarded by
 intermediaries and so might reach clients through a gateway or reverse proxy.
 Clients that use a proxy without using CONNECT or similar tunnels, might also
-receive an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-195" class="iref"></span> using a field.  In comparison, <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-196" class="iref"></span> frames each
-only apply to a single <a href="#terms" class="internal xref">origin</a><span id="iref-origin-197" class="iref"></span> within the scope of a single connection.<a href="#section-3-2" class="pilcrow">¶</a></p>
+receive an <span id="iref-alternative-name-195" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> using a field.  In comparison, <span id="iref-altsvcb-196" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frames each
+only apply to a single <span id="iref-origin-197" class="iref"></span><a href="#terms" class="internal xref">origin</a> within the scope of a single connection.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <div id="field">
 <section id="section-3.1">
         <h3 id="name-alt-svcb-field">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-alt-svcb-field" class="section-name selfRef">Alt-SvcB Field</a>
         </h3>
-<p id="section-3.1-1">The "<a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-198" class="iref"></span>" response field is a List of String values (see Sections <a href="https://rfc-editor.org/rfc/rfc8941#section-3.1" class="relref">3.1</a> and <a href="https://rfc-editor.org/rfc/rfc8941#section-3.3.3" class="relref">3.3.3</a> of <span>[<a href="#STRUCTURED-FIELDS" class="cite xref">STRUCTURED-FIELDS</a>]</span>).  This response field <span class="bcp14">MAY</span> appear in a
+<p id="section-3.1-1">The "<span id="iref-alt-svcb-198" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a>" response field is a List of String values (see Sections <a href="https://rfc-editor.org/rfc/rfc8941#section-3.1" class="relref">3.1</a> and <a href="https://rfc-editor.org/rfc/rfc8941#section-3.3.3" class="relref">3.3.3</a> of <span>[<a href="#STRUCTURED-FIELDS" class="cite xref">STRUCTURED-FIELDS</a>]</span>).  This response field <span class="bcp14">MAY</span> appear in a
 header or trailer section, though servers need to be aware that some clients
 might not process field values.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">Each field value includes an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-199" class="iref"></span>.  Each <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-200" class="iref"></span> is encoded
+<p id="section-3.1-2">Each field value includes an <span id="iref-alternative-name-199" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.  Each <span id="iref-alternative-name-200" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> is encoded
 as an ASCII string, or a series of DNS A-labels, each separated by a single
 period character (".", U+2E).  Each value <span class="bcp14">MAY</span> end with a period, though - for
 the purposes of the process in <a href="#use" class="auto internal xref">Section 2</a> - the string is treated as an absolute
 DNS QNAME whether or not a trailing period is present.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">The applicable <a href="#terms" class="internal xref">origin</a><span id="iref-origin-201" class="iref"></span> is derived from the <a href="#terms" class="internal xref">origin</a><span id="iref-origin-202" class="iref"></span> of the target URI; see
+<p id="section-3.1-3">The applicable <span id="iref-origin-201" class="iref"></span><a href="#terms" class="internal xref">origin</a> is derived from the <span id="iref-origin-202" class="iref"></span><a href="#terms" class="internal xref">origin</a> of the target URI; see
 <span><a href="https://rfc-editor.org/rfc/rfc9110#section-7.1" class="relref">Section 7.1</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span> and <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1-4">If multiple <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-203" class="iref"></span> fields or field values are present in a response, the
-<a href="#terms" class="internal xref">client</a><span id="iref-client-204" class="iref"></span> <span class="bcp14">MAY</span> use any subset of the provided <a href="#terms" class="internal xref">alternative names</a><span id="iref-alternative-names-205" class="iref"></span>, including none,
+<p id="section-3.1-4">If multiple <span id="iref-alt-svcb-203" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> fields or field values are present in a response, the
+<span id="iref-client-204" class="iref"></span><a href="#terms" class="internal xref">client</a> <span class="bcp14">MAY</span> use any subset of the provided <span id="iref-alternative-name-205" class="iref"></span><a href="#terms" class="internal xref">alternative names</a>, including none,
 one, or all of the provided names.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <p id="section-3.1-5">Servers <span class="bcp14">SHOULD NOT</span> provide more than one name.  The DNS provides ample
 opportunity to present clients with multiple options, including the use of
 priority to help manage selection.  A list is tolerated only to allow for the
 possibility that multiple field lines might be added to responses without proper
 coordination.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">Clients <span class="bcp14">MUST</span> ignore unknown parameters that are provided with <a href="#terms" class="internal xref">alternative names</a><span id="iref-alternative-names-206" class="iref"></span>.
+<p id="section-3.1-6">Clients <span class="bcp14">MUST</span> ignore unknown parameters that are provided with <span id="iref-alternative-name-206" class="iref"></span><a href="#terms" class="internal xref">alternative names</a>.
 This document does not define any parameters as the DNS is expected to provide
 supplementary information about services; a revision of this document would be
 required to enable the use of parameters.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
@@ -1758,9 +1770,9 @@ required to enable the use of parameters.<a href="#section-3.1-6" class="pilcrow
         <h3 id="name-altsvcb-frame">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-altsvcb-frame" class="section-name selfRef">ALTSVCB Frame</a>
         </h3>
-<p id="section-3.2-1">An <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-207" class="iref"></span> frame is defined for both HTTP/2 and HTTP/3.  The frame provides an
-<a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-208" class="iref"></span> for an identified <a href="#terms" class="internal xref">origin</a><span id="iref-origin-209" class="iref"></span> <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">In both protocols, the <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-210" class="iref"></span> frame uses the identifier TBD.  The format for
+<p id="section-3.2-1">An <span id="iref-altsvcb-207" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame is defined for both HTTP/2 and HTTP/3.  The frame provides an
+<span id="iref-alternative-name-208" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> for an identified <span id="iref-origin-209" class="iref"></span><a href="#terms" class="internal xref">origin</a> <span>[<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">In both protocols, the <span id="iref-altsvcb-210" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame uses the identifier TBD.  The format for
 both protocols is the same; this is shown in <a href="#fig-frame" class="auto internal xref">Figure 1</a> using the notation
 from <span><a href="https://rfc-editor.org/rfc/rfc9000#section-3" class="relref">Section 3</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <span id="name-altsvcb-frame-format"></span><div id="fig-frame">
@@ -1778,7 +1790,7 @@ ALTSVCB Frame {
 <a href="#name-altsvcb-frame-format" class="selfRef">ALTSVCB Frame Format</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-4">The fields in the <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-211" class="iref"></span> frame are defined as follows:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">The fields in the <span id="iref-altsvcb-211" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame are defined as follows:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-3.2-5">
           <dt id="section-3.2-5.1">Origin Length:</dt>
           <dd style="margin-left: 1.5em" id="section-3.2-5.2">
@@ -1787,18 +1799,18 @@ ALTSVCB Frame {
           <dd class="break"></dd>
 <dt id="section-3.2-5.3">Origin:</dt>
           <dd style="margin-left: 1.5em" id="section-3.2-5.4">
-            <p id="section-3.2-5.4.1">The ASCII serialization of the affected <a href="#terms" class="internal xref">origin</a><span id="iref-origin-212" class="iref"></span>; see <span><a href="https://rfc-editor.org/rfc/rfc6454#section-6.2" class="relref">Section 6.2</a> of [<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.<a href="#section-3.2-5.4.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-5.4.1">The ASCII serialization of the affected <span id="iref-origin-212" class="iref"></span><a href="#terms" class="internal xref">origin</a>; see <span><a href="https://rfc-editor.org/rfc/rfc6454#section-6.2" class="relref">Section 6.2</a> of [<a href="#ORIGIN" class="cite xref">ORIGIN</a>]</span>.<a href="#section-3.2-5.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-3.2-5.5">Alternative Name:</dt>
           <dd style="margin-left: 1.5em" id="section-3.2-5.6">
-            <p id="section-3.2-5.6.1">The remainder of the frame contains a single <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-213" class="iref"></span>, encoded as an
+            <p id="section-3.2-5.6.1">The remainder of the frame contains a single <span id="iref-alternative-name-213" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>, encoded as an
 ASCII string; see the definition in <a href="#field" class="auto internal xref">Section 3.1</a> for more details on the
 encoding.<a href="#section-3.2-5.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-3.2-6">If a <a href="#terms" class="internal xref">server</a><span id="iref-server-214" class="iref"></span> sends multiple <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-215" class="iref"></span> frames for the same <a href="#terms" class="internal xref">origin</a><span id="iref-origin-216" class="iref"></span>, clients <span class="bcp14">MUST</span>
+<p id="section-3.2-6">If a <span id="iref-server-214" class="iref"></span><a href="#terms" class="internal xref">server</a> sends multiple <span id="iref-altsvcb-215" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frames for the same <span id="iref-origin-216" class="iref"></span><a href="#terms" class="internal xref">origin</a>, clients <span class="bcp14">MUST</span>
 ignore any frames other than the most recent.<a href="#section-3.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1810,7 +1822,7 @@ ignore any frames other than the most recent.<a href="#section-3.2-6" class="pil
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-4-1">Alternative services present servers with a way of influencing how clients
-select <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-217" class="iref"></span>.  This does not change how a <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-218" class="iref"></span> might be
+select <span id="iref-service-endpoint-217" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>.  This does not change how a <span id="iref-service-endpoint-218" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> might be
 determined to be authoritative (even more so than its predecessor; see
 <a href="#authority7838" class="auto internal xref">Appendix A</a>), but this.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="sec-endpoint">
@@ -1823,24 +1835,24 @@ determined to be authoritative (even more so than its predecessor; see
 network.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2">This design only supports HTTPS.  Cleartext HTTP, such as might be used for URIs
 with a scheme of "http", is not supported.  This means that TLS <span>[<a href="#TLS" class="cite xref">TLS</a>]</span>
-is always used to establish whether a <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-219" class="iref"></span> is authoritative,
+is always used to establish whether a <span id="iref-service-endpoint-219" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> is authoritative,
 according to <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.3.3" class="relref">Section 4.3.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>.  TLS protects the configuration of
-<a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-220" class="iref"></span>, including the choice of protocol; see <a href="#no-authority" class="auto internal xref">Section 2.8</a>.
+<span id="iref-service-endpoint-220" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>, including the choice of protocol; see <a href="#no-authority" class="auto internal xref">Section 2.8</a>.
 Furthermore, TLS prevents an attacker from inspecting or modifying the content
 of connections.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
-<p id="section-4.1-3">Even with TLS, a <a href="#terms" class="internal xref">client</a><span id="iref-client-221" class="iref"></span> connects to a <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-222" class="iref"></span> of the attacker's choice.
+<p id="section-4.1-3">Even with TLS, a <span id="iref-client-221" class="iref"></span><a href="#terms" class="internal xref">client</a> connects to a <span id="iref-service-endpoint-222" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> of the attacker's choice.
 This is a property of HTTP that the use of alternative services does not change,
-as the choice of <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-223" class="iref"></span> (including IP address and port number) is not
+as the choice of <span id="iref-service-endpoint-223" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> (including IP address and port number) is not
 authenticated when establishing a connection.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
 <p id="section-4.1-4">Certificates used to establish authority for HTTP servers do not include a port
 number, which means that all HTTP services that have a certificate for the same
 name will be treated by clients as being potentially authoritative.  <span><a href="https://rfc-editor.org/rfc/rfc9110#section-4.3.3" class="relref">Section 4.3.3</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span> mandates checks on the target URI to mitigate this attack.
-Servers can use a 421 (Misdirected Request) status code (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.5.20" class="relref">Section 15.5.20</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) to signal any error and avoid the <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-224" class="iref"></span> being used.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
+Servers can use a 421 (Misdirected Request) status code (see <span><a href="https://rfc-editor.org/rfc/rfc9110#section-15.5.20" class="relref">Section 15.5.20</a> of [<a href="#HTTP" class="cite xref">HTTP</a>]</span>) to signal any error and avoid the <span id="iref-service-endpoint-224" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> being used.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.1-5">DNS is not assumed to be secure in this threat model.  The use of DNSSEC
 <span>[<a href="#DNSSEC" class="cite xref">DNSSEC</a>]</span> can ensure that clients do not receive incorrect information
 from DNS queries.  However, DNSSEC does not defend against attacks on routing or
 forwarding infrastructure that might result in connections being directed toward
-a <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-225" class="iref"></span> chosen by an attacker.  Using DNSSEC therefore does not
+a <span id="iref-service-endpoint-225" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> chosen by an attacker.  Using DNSSEC therefore does not
 change this analysis, though it can make attacks less feasible for some classes
 of attacker and so use is encouraged.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
 </section>
@@ -1853,13 +1865,13 @@ of attacker and so use is encouraged.<a href="#section-4.1-5" class="pilcrow">¶
 <p id="section-4.2-1">In addition to network-based attackers, we also consider the possibility that an
 alternative service is advertised by an adversary who is able to generate HTTP
 responses.  An adversary might be given the ability to generate responses for a
-subset of the resources on a <a href="#terms" class="internal xref">server</a><span id="iref-server-226" class="iref"></span>, where they might provide an <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-227" class="iref"></span> field
+subset of the resources on a <span id="iref-server-226" class="iref"></span><a href="#terms" class="internal xref">server</a>, where they might provide an <span id="iref-alt-svcb-227" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> field
 in a response.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">This gives such an adversary some ability to direct clients toward a <a href="#terms" class="internal xref">service
-endpoint</a><span id="iref-service-endpoint-228" class="iref"></span> of their choosing; see <a href="#sec-endpoint" class="auto internal xref">Section 4.1</a>.  It also potentially allows an
+<p id="section-4.2-2">This gives such an adversary some ability to direct clients toward a <span id="iref-service-endpoint-228" class="iref"></span><a href="#terms" class="internal xref">service
+endpoint</a> of their choosing; see <a href="#sec-endpoint" class="auto internal xref">Section 4.1</a>.  It also potentially allows an
 adversary to create an unending sequence of alternatives; see <a href="#sec-loop" class="auto internal xref">Section 4.4</a>.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.2-3">Servers can mitigate these risks by restricting access to the ability of
-advertising an <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-229" class="iref"></span>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+advertising an <span id="iref-alternative-name-229" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="tracking-clients">
@@ -1867,16 +1879,16 @@ advertising an <a href="#terms" class="internal xref">alternative name</a><span 
         <h3 id="name-tracking-clients">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-tracking-clients" class="section-name selfRef">Tracking Clients</a>
         </h3>
-<p id="section-4.3-1">Remembering <a href="#terms" class="internal xref">alternative names</a><span id="iref-alternative-names-230" class="iref"></span> and service names might allow a <a href="#terms" class="internal xref">server</a><span id="iref-server-231" class="iref"></span> to connect
-activity at different times to the same <a href="#terms" class="internal xref">client</a><span id="iref-client-232" class="iref"></span>.  Clients might be assigned a
-unique <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-233" class="iref"></span> and <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-234" class="iref"></span> in order to make return connections
-identifiable.  The need for the <a href="#terms" class="internal xref">service name</a><span id="iref-service-name-235" class="iref"></span> to appears the set of HTTPS records
-at the <a href="#terms" class="internal xref">origin name</a><span id="iref-origin-name-236" class="iref"></span> does limit the ability of servers to individual track clients
+<p id="section-4.3-1">Remembering <span id="iref-alternative-name-230" class="iref"></span><a href="#terms" class="internal xref">alternative names</a> and service names might allow a <span id="iref-server-231" class="iref"></span><a href="#terms" class="internal xref">server</a> to connect
+activity at different times to the same <span id="iref-client-232" class="iref"></span><a href="#terms" class="internal xref">client</a>.  Clients might be assigned a
+unique <span id="iref-alternative-name-233" class="iref"></span><a href="#terms" class="internal xref">alternative name</a> and <span id="iref-service-name-234" class="iref"></span><a href="#terms" class="internal xref">service name</a> in order to make return connections
+identifiable.  The need for the <span id="iref-service-name-235" class="iref"></span><a href="#terms" class="internal xref">service name</a> to appears the set of HTTPS records
+at the <span id="iref-origin-name-236" class="iref"></span><a href="#terms" class="internal xref">origin name</a> does limit the ability of servers to track individual clients
 at scale, but this still might be used to separate clients into groups for
 tracking purposes or to track specific individuals.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.3-2">Clients that clear <a href="#terms" class="internal xref">origin</a><span id="iref-origin-237" class="iref"></span>-specific state in order to manage the risk of tracking
+<p id="section-4.3-2">Clients that clear <span id="iref-origin-237" class="iref"></span><a href="#terms" class="internal xref">origin</a>-specific state in order to manage the risk of tracking
 <span class="bcp14">MUST</span> remove any remembered alternative service information when clearing state
-for a <a href="#terms" class="internal xref">server</a><span id="iref-server-238" class="iref"></span> (typically, this is associated with clearing cookies <span>[<a href="#RFC6265" class="cite xref">RFC6265</a>]</span>).<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+for a <span id="iref-server-238" class="iref"></span><a href="#terms" class="internal xref">server</a> (typically, this is associated with clearing cookies <span>[<a href="#RFC6265" class="cite xref">RFC6265</a>]</span>).<a href="#section-4.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-loop">
@@ -1884,18 +1896,18 @@ for a <a href="#terms" class="internal xref">server</a><span id="iref-server-238
         <h3 id="name-multiple-alternatives-in-se">
 <a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-multiple-alternatives-in-se" class="section-name selfRef">Multiple Alternatives in Sequence</a>
         </h3>
-<p id="section-4.4-1">A <a href="#terms" class="internal xref">client</a><span id="iref-client-239" class="iref"></span> might receive multiple different <a href="#terms" class="internal xref">alternative names</a><span id="iref-alternative-names-240" class="iref"></span> in sequence, causing
+<p id="section-4.4-1">A <span id="iref-client-239" class="iref"></span><a href="#terms" class="internal xref">client</a> might receive multiple different <span id="iref-alternative-name-240" class="iref"></span><a href="#terms" class="internal xref">alternative names</a> in sequence, causing
 it to spend additional resources in discovering and connecting to different
-<a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-241" class="iref"></span>.  Repeatedly making connections can adversely affect
+<span id="iref-service-endpoint-241" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a>.  Repeatedly making connections can adversely affect
 performance.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
-<p id="section-4.4-2">This might be caused by a loop where the <a href="#terms" class="internal xref">alternative name</a><span id="iref-alternative-name-242" class="iref"></span>
-provided by each <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-243" class="iref"></span> points to the other or simply an unending
-sequence of new <a href="#terms" class="internal xref">alternative names</a><span id="iref-alternative-names-244" class="iref"></span>.  This can arise if <a href="#terms" class="internal xref">service endpoints</a><span id="iref-service-endpoints-245" class="iref"></span> are
+<p id="section-4.4-2">This might be caused by a loop where the <span id="iref-alternative-name-242" class="iref"></span><a href="#terms" class="internal xref">alternative name</a>
+provided by each <span id="iref-service-endpoint-243" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> points to the other or simply an unending
+sequence of new <span id="iref-alternative-name-244" class="iref"></span><a href="#terms" class="internal xref">alternative names</a>.  This can arise if <span id="iref-service-endpoint-245" class="iref"></span><a href="#terms" class="internal xref">service endpoints</a> are
 poorly configured.<a href="#section-4.4-2" class="pilcrow">¶</a></p>
-<p id="section-4.4-3">A <a href="#terms" class="internal xref">client</a><span id="iref-client-246" class="iref"></span> can limit the effect of such misconfiguration by ignoring <a href="#terms" class="internal xref">alternative
-names</a><span id="iref-alternative-names-247" class="iref"></span> that change too frequently.  A <a href="#terms" class="internal xref">client</a><span id="iref-client-248" class="iref"></span> might then continue to use the
-<a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-249" class="iref"></span> to which it is connected or disable alternative services
-entirely for that <a href="#terms" class="internal xref">origin</a><span id="iref-origin-250" class="iref"></span>.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
+<p id="section-4.4-3">A <span id="iref-client-246" class="iref"></span><a href="#terms" class="internal xref">client</a> can limit the effect of such misconfiguration by ignoring <span id="iref-alternative-name-247" class="iref"></span><a href="#terms" class="internal xref">alternative
+names</a> that change too frequently.  A <span id="iref-client-248" class="iref"></span><a href="#terms" class="internal xref">client</a> might then continue to use the
+<span id="iref-service-endpoint-249" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a> to which it is connected or disable alternative services
+entirely for that <span id="iref-origin-250" class="iref"></span><a href="#terms" class="internal xref">origin</a>.<a href="#section-4.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1905,8 +1917,8 @@ entirely for that <a href="#terms" class="internal xref">origin</a><span id="ire
       <h2 id="name-internationalization-consid">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-internationalization-consid" class="section-name selfRef">Internationalization Considerations</a>
       </h2>
-<p id="section-5-1">An internationalized domain name that appears in either an <a href="#field" class="internal xref">Alt-SvcB</a><span id="iref-alt-svcb-251" class="iref"></span> field
-(<a href="#field" class="auto internal xref">Section 3.1</a>) or an <a href="#frame" class="internal xref">ALTSVCB</a><span id="iref-altsvcb-252" class="iref"></span> frame (<a href="#frame" class="auto internal xref">Section 3.2</a>) <span class="bcp14">MUST</span> be expressed using A-labels;
+<p id="section-5-1">An internationalized domain name that appears in either an <span id="iref-alt-svcb-251" class="iref"></span><a href="#field" class="internal xref">Alt-SvcB</a> field
+(<a href="#field" class="auto internal xref">Section 3.1</a>) or an <span id="iref-altsvcb-252" class="iref"></span><a href="#frame" class="internal xref">ALTSVCB</a> frame (<a href="#frame" class="auto internal xref">Section 3.2</a>) <span class="bcp14">MUST</span> be expressed using A-labels;
 see <span><a href="https://rfc-editor.org/rfc/rfc5890#section-2.3.2.1" class="relref">Section 2.3.2.1</a> of [<a href="#RFC5890" class="cite xref">RFC5890</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1940,10 +1952,6 @@ see <span><a href="https://rfc-editor.org/rfc/rfc5890#section-2.3.2.1" class="re
 <dt id="ALPN">[ALPN]</dt>
         <dd>
 <span class="refAuthor">Friedl, S.</span>, <span class="refAuthor">Popov, A.</span>, <span class="refAuthor">Langley, A.</span>, and <span class="refAuthor">E. Stephan</span>, <span class="refTitle">"Transport Layer Security (TLS) Application-Layer Protocol Negotiation Extension"</span>, <span class="seriesInfo">RFC 7301</span>, <span class="seriesInfo">DOI 10.17487/RFC7301</span>, <time datetime="2014-07" class="refDate">July 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7301">https://www.rfc-editor.org/rfc/rfc7301</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="ALT-SVC">[ALT-SVC]</dt>
-        <dd>
-<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">McManus, P.</span>, and <span class="refAuthor">J. Reschke</span>, <span class="refTitle">"HTTP Alternative Services"</span>, <span class="seriesInfo">RFC 7838</span>, <span class="seriesInfo">DOI 10.17487/RFC7838</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7838">https://www.rfc-editor.org/rfc/rfc7838</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="HTTP">[HTTP]</dt>
         <dd>
@@ -1979,7 +1987,7 @@ see <span><a href="https://rfc-editor.org/rfc/rfc5890#section-2.3.2.1" class="re
 <dd class="break"></dd>
 <dt id="SVCB">[SVCB]</dt>
         <dd>
-<span class="refAuthor">Schwartz, B. M.</span>, <span class="refAuthor">Bishop, M.</span>, and <span class="refAuthor">E. Nygren</span>, <span class="refTitle">"Service binding and parameter specification via the DNS (DNS SVCB and HTTPS RRs)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-dnsop-svcb-https-11</span>, <time datetime="2022-10-11" class="refDate">11 October 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-11">https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-11</a>&gt;</span>. </dd>
+<span class="refAuthor">Schwartz, B. M.</span>, <span class="refAuthor">Bishop, M.</span>, and <span class="refAuthor">E. Nygren</span>, <span class="refTitle">"Service binding and parameter specification via the DNS (DNS SVCB and HTTPS RRs)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-dnsop-svcb-https-12</span>, <time datetime="2023-03-11" class="refDate">11 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-12">https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-svcb-https-12</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TLS">[TLS]</dt>
       <dd>
@@ -1992,6 +2000,10 @@ see <span><a href="https://rfc-editor.org/rfc/rfc5890#section-2.3.2.1" class="re
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="ALT-SVC">[ALT-SVC]</dt>
+        <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refAuthor">McManus, P.</span>, and <span class="refAuthor">J. Reschke</span>, <span class="refTitle">"HTTP Alternative Services"</span>, <span class="seriesInfo">RFC 7838</span>, <span class="seriesInfo">DOI 10.17487/RFC7838</span>, <time datetime="2016-04" class="refDate">April 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7838">https://www.rfc-editor.org/rfc/rfc7838</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="ATTRLEAF">[ATTRLEAF]</dt>
         <dd>
 <span class="refAuthor">Crocker, D.</span>, <span class="refTitle">"Scoped Interpretation of DNS Resource Records through "Underscored" Naming of Attribute Leaves"</span>, <span class="seriesInfo">BCP 222</span>, <span class="seriesInfo">RFC 8552</span>, <span class="seriesInfo">DOI 10.17487/RFC8552</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8552">https://www.rfc-editor.org/rfc/rfc8552</a>&gt;</span>. </dd>
@@ -2043,9 +2055,9 @@ also authenticated when establishing a connection.  This creates a potential
 conflict between two sources of the same information.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <p id="appendix-A-3">Conflicts also arise when alternative service information is retained as any
 retained state might disagree with what is currently deployed.  This design
-avoids this contention by having the entire service resolution process occur
+avoids this contention by delegating the service resolution process
 almost entirely to the DNS.<a href="#appendix-A-3" class="pilcrow">¶</a></p>
-<p id="appendix-A-4">This design provides clients with a prompt to discover a new <a href="#terms" class="internal xref">service endpoint</a><span id="iref-service-endpoint-253" class="iref"></span>.
+<p id="appendix-A-4">This design provides clients with a prompt to discover a new <span id="iref-service-endpoint-253" class="iref"></span><a href="#terms" class="internal xref">service endpoint</a>.
 On subsequent connections, remembered state only affects prioritization of
 active DNS records.  Service endpoints are always authoritative for their own
 configuration.  Invalid configurations therefore do not persist.<a href="#appendix-A-4" class="pilcrow">¶</a></p>
@@ -2143,31 +2155,26 @@ provided valuable input.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <a href="#section-2.3-1" class="auto internal xref">Section 2.3, Paragraph 1</a>; 
 <a href="#section-2.4-1" class="auto internal xref">Section 2.4, Paragraph 1</a>; 
 <a href="#section-2.7-1" class="auto internal xref">Section 2.7, Paragraph 1</a>; 
+<a href="#section-3-1" class="auto internal xref">Section 3, Paragraph 1</a>; 
 <a href="#section-3-2" class="auto internal xref">Section 3, Paragraph 2</a>; 
 <a href="#section-3.1-2" class="auto internal xref">Section 3.1, Paragraph 2</a>; 
 <a href="#section-3.1-2" class="auto internal xref">Section 3.1, Paragraph 2</a>; 
+<a href="#section-3.1-4" class="auto internal xref">Section 3.1, Paragraph 4</a>; 
+<a href="#section-3.1-6" class="auto internal xref">Section 3.1, Paragraph 6</a>; 
 <a href="#section-3.2-1" class="auto internal xref">Section 3.2, Paragraph 1</a>; 
 <a href="#section-3.2-5.6.1" class="auto internal xref">Section 3.2, Paragraph 5.6.1</a>; 
 <a href="#section-4.2-3" class="auto internal xref">Section 4.2, Paragraph 3</a>; 
 <a href="#section-4.3-1" class="auto internal xref">Section 4.3, Paragraph 1</a>; 
-<a href="#section-4.4-2" class="auto internal xref">Section 4.4, Paragraph 2</a><a href="#appendix-D-2.1.2.1.1.4.1" class="pilcrow">¶</a></p>
-</dd>
-                <dd class="break"></dd>
-<dt id="appendix-D-2.1.2.1.1.5">alternative names</dt>
-                <dd style="margin-left: 1.5em" id="appendix-D-2.1.2.1.1.6">
-                  <p id="appendix-D-2.1.2.1.1.6.1">
-                    <a href="#section-3-1" class="auto internal xref">Section 3, Paragraph 1</a>; 
-<a href="#section-3.1-4" class="auto internal xref">Section 3.1, Paragraph 4</a>; 
-<a href="#section-3.1-6" class="auto internal xref">Section 3.1, Paragraph 6</a>; 
 <a href="#section-4.3-1" class="auto internal xref">Section 4.3, Paragraph 1</a>; 
 <a href="#section-4.4-1" class="auto internal xref">Section 4.4, Paragraph 1</a>; 
 <a href="#section-4.4-2" class="auto internal xref">Section 4.4, Paragraph 2</a>; 
-<a href="#section-4.4-3" class="auto internal xref">Section 4.4, Paragraph 3</a><a href="#appendix-D-2.1.2.1.1.6.1" class="pilcrow">¶</a></p>
+<a href="#section-4.4-2" class="auto internal xref">Section 4.4, Paragraph 2</a>; 
+<a href="#section-4.4-3" class="auto internal xref">Section 4.4, Paragraph 3</a><a href="#appendix-D-2.1.2.1.1.4.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
-<dt id="appendix-D-2.1.2.1.1.7">ALTSVCB</dt>
-                <dd style="margin-left: 1.5em" id="appendix-D-2.1.2.1.1.8">
-                  <p id="appendix-D-2.1.2.1.1.8.1">
+<dt id="appendix-D-2.1.2.1.1.5">ALTSVCB</dt>
+                <dd style="margin-left: 1.5em" id="appendix-D-2.1.2.1.1.6">
+                  <p id="appendix-D-2.1.2.1.1.6.1">
                     <a href="#section-2.1-2.1" class="auto internal xref">Section 2.1, Paragraph 2, Item 1</a>; 
 <a href="#section-2.1-4" class="auto internal xref">Section 2.1, Paragraph 4</a>; 
 <a href="#section-2.1-4" class="auto internal xref">Section 2.1, Paragraph 4</a>; 
@@ -2180,7 +2187,7 @@ provided valuable input.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <a href="#section-3.2-2" class="auto internal xref">Section 3.2, Paragraph 2</a>; 
 <a href="#section-3.2-4" class="auto internal xref">Section 3.2, Paragraph 4</a>; 
 <a href="#section-3.2-6" class="auto internal xref">Section 3.2, Paragraph 6</a>; 
-<a href="#section-5-1" class="auto internal xref">Section 5, Paragraph 1</a><a href="#appendix-D-2.1.2.1.1.8.1" class="pilcrow">¶</a></p>
+<a href="#section-5-1" class="auto internal xref">Section 5, Paragraph 1</a><a href="#appendix-D-2.1.2.1.1.6.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
 </dl>
@@ -2268,6 +2275,7 @@ provided valuable input.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
                     <a href="#section-1.3-2" class="auto internal xref">Section 1.3, Paragraph 2</a>; 
 <a href="#section-2.1-3" class="auto internal xref">Section 2.1, Paragraph 3</a>; 
 <a href="#section-2.2-1" class="auto internal xref">Section 2.2, Paragraph 1</a>; 
+<a href="#section-2.2-1" class="auto internal xref">Section 2.2, Paragraph 1</a>; 
 <a href="#section-2.2-3" class="auto internal xref">Section 2.2, Paragraph 3</a>; 
 <a href="#section-2.2-4" class="auto internal xref">Section 2.2, Paragraph 4</a>; 
 <a href="#section-2.8-3" class="auto internal xref">Section 2.8, Paragraph 3</a>; 
@@ -2352,8 +2360,6 @@ provided valuable input.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <a href="#section-2.1-6" class="auto internal xref">Section 2.1, Paragraph 6</a>; 
 <a href="#section-2.1-7" class="auto internal xref">Section 2.1, Paragraph 7</a>; 
 <a href="#section-2.1-8" class="auto internal xref">Section 2.1, Paragraph 8</a>; 
-<a href="#section-2.2-1" class="auto internal xref">Section 2.2, Paragraph 1</a>; 
-<a href="#section-2.2-1" class="auto internal xref">Section 2.2, Paragraph 1</a>; 
 <a href="#section-2.2.1-4" class="auto internal xref">Section 2.2.1, Paragraph 4</a>; 
 <a href="#section-2.2.2-1" class="auto internal xref">Section 2.2.2, Paragraph 1</a>; 
 <a href="#section-2.2.2-4" class="auto internal xref">Section 2.2.2, Paragraph 4</a>; 
@@ -2378,49 +2384,45 @@ provided valuable input.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
                 <dd style="margin-left: 1.5em" id="appendix-D-2.4.2.1.1.4">
                   <p id="appendix-D-2.4.2.1.1.4.1">
                     <a href="#section-abstract-1" class="auto internal xref">Section Abstract, Paragraph 1</a>; 
+<a href="#section-abstract-1" class="auto internal xref">Section Abstract, Paragraph 1</a>; 
+<a href="#section-1-1" class="auto internal xref">Section 1, Paragraph 1</a>; 
+<a href="#section-1-2" class="auto internal xref">Section 1, Paragraph 2</a>; 
 <a href="#section-1-2" class="auto internal xref">Section 1, Paragraph 2</a>; 
 <a href="#section-1-3.1" class="auto internal xref">Section 1, Paragraph 3, Item 1</a>; 
+<a href="#section-1-4" class="auto internal xref">Section 1, Paragraph 4</a>; 
+<a href="#section-1-4" class="auto internal xref">Section 1, Paragraph 4</a>; 
 <a href="#section-1-5" class="auto internal xref">Section 1, Paragraph 5</a>; 
 <a href="#section-1.1-2" class="auto internal xref">Section 1.1, Paragraph 2</a>; 
+<a href="#section-1.1-3" class="auto internal xref">Section 1.1, Paragraph 3</a>; 
+<a href="#section-1.3-3" class="auto internal xref">Section 1.3, Paragraph 3</a>; 
+<a href="#section-1.3-4" class="auto internal xref">Section 1.3, Paragraph 4</a>; 
 <a href="#section-1.3-4" class="auto internal xref">Section 1.3, Paragraph 4</a>; 
 <a href="#section-1.3-5" class="auto internal xref">Section 1.3, Paragraph 5</a>; 
+<a href="#section-2-2" class="auto internal xref">Section 2, Paragraph 2</a>; 
+<a href="#section-2-3" class="auto internal xref">Section 2, Paragraph 3</a>; 
 <a href="#section-2-4.5" class="auto internal xref">Section 2, Paragraph 4, Item 5</a>; 
+<a href="#section-2.8-1" class="auto internal xref">Section 2.8, Paragraph 1</a>; 
+<a href="#section-2.8-3" class="auto internal xref">Section 2.8, Paragraph 3</a>; 
+<a href="#section-2.8-3" class="auto internal xref">Section 2.8, Paragraph 3</a>; 
 <a href="#section-4-1" class="auto internal xref">Section 4, Paragraph 1</a>; 
+<a href="#section-4-1" class="auto internal xref">Section 4, Paragraph 1</a>; 
+<a href="#section-4.1-2" class="auto internal xref">Section 4.1, Paragraph 2</a>; 
 <a href="#section-4.1-2" class="auto internal xref">Section 4.1, Paragraph 2</a>; 
 <a href="#section-4.1-3" class="auto internal xref">Section 4.1, Paragraph 3</a>; 
 <a href="#section-4.1-3" class="auto internal xref">Section 4.1, Paragraph 3</a>; 
 <a href="#section-4.1-4" class="auto internal xref">Section 4.1, Paragraph 4</a>; 
 <a href="#section-4.1-5" class="auto internal xref">Section 4.1, Paragraph 5</a>; 
 <a href="#section-4.2-2" class="auto internal xref">Section 4.2, Paragraph 2</a>; 
+<a href="#section-4.4-1" class="auto internal xref">Section 4.4, Paragraph 1</a>; 
+<a href="#section-4.4-2" class="auto internal xref">Section 4.4, Paragraph 2</a>; 
 <a href="#section-4.4-2" class="auto internal xref">Section 4.4, Paragraph 2</a>; 
 <a href="#section-4.4-3" class="auto internal xref">Section 4.4, Paragraph 3</a>; 
 <a href="#appendix-A-4" class="auto internal xref">Appendix A, Paragraph 4</a><a href="#appendix-D-2.4.2.1.1.4.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
-<dt id="appendix-D-2.4.2.1.1.5">service endpoints</dt>
+<dt id="appendix-D-2.4.2.1.1.5">service name</dt>
                 <dd style="margin-left: 1.5em" id="appendix-D-2.4.2.1.1.6">
                   <p id="appendix-D-2.4.2.1.1.6.1">
-                    <a href="#section-abstract-1" class="auto internal xref">Section Abstract, Paragraph 1</a>; 
-<a href="#section-1-1" class="auto internal xref">Section 1, Paragraph 1</a>; 
-<a href="#section-1-2" class="auto internal xref">Section 1, Paragraph 2</a>; 
-<a href="#section-1-4" class="auto internal xref">Section 1, Paragraph 4</a>; 
-<a href="#section-1.1-3" class="auto internal xref">Section 1.1, Paragraph 3</a>; 
-<a href="#section-1.3-3" class="auto internal xref">Section 1.3, Paragraph 3</a>; 
-<a href="#section-1.3-4" class="auto internal xref">Section 1.3, Paragraph 4</a>; 
-<a href="#section-2-2" class="auto internal xref">Section 2, Paragraph 2</a>; 
-<a href="#section-2-3" class="auto internal xref">Section 2, Paragraph 3</a>; 
-<a href="#section-2.8-1" class="auto internal xref">Section 2.8, Paragraph 1</a>; 
-<a href="#section-2.8-3" class="auto internal xref">Section 2.8, Paragraph 3</a>; 
-<a href="#section-2.8-3" class="auto internal xref">Section 2.8, Paragraph 3</a>; 
-<a href="#section-4-1" class="auto internal xref">Section 4, Paragraph 1</a>; 
-<a href="#section-4.1-2" class="auto internal xref">Section 4.1, Paragraph 2</a>; 
-<a href="#section-4.4-1" class="auto internal xref">Section 4.4, Paragraph 1</a>; 
-<a href="#section-4.4-2" class="auto internal xref">Section 4.4, Paragraph 2</a><a href="#appendix-D-2.4.2.1.1.6.1" class="pilcrow">¶</a></p>
-</dd>
-                <dd class="break"></dd>
-<dt id="appendix-D-2.4.2.1.1.7">service name</dt>
-                <dd style="margin-left: 1.5em" id="appendix-D-2.4.2.1.1.8">
-                  <p id="appendix-D-2.4.2.1.1.8.1">
                     <a href="#section-1.3-4" class="auto internal xref">Section 1.3, Paragraph 4</a>; 
 <a href="#section-1.3-5" class="auto internal xref">Section 1.3, Paragraph 5</a>; 
 <a href="#section-1.3-6" class="auto internal xref">Section 1.3, Paragraph 6</a>; 
@@ -2434,7 +2436,7 @@ provided valuable input.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <a href="#section-2.2-3" class="auto internal xref">Section 2.2, Paragraph 3</a>; 
 <a href="#section-2.2.1-6" class="auto internal xref">Section 2.2.1, Paragraph 6</a>; 
 <a href="#section-4.3-1" class="auto internal xref">Section 4.3, Paragraph 1</a>; 
-<a href="#section-4.3-1" class="auto internal xref">Section 4.3, Paragraph 1</a><a href="#appendix-D-2.4.2.1.1.8.1" class="pilcrow">¶</a></p>
+<a href="#section-4.3-1" class="auto internal xref">Section 4.3, Paragraph 1</a><a href="#appendix-D-2.4.2.1.1.6.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
 </dl>

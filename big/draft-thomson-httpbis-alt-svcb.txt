@@ -6,11 +6,11 @@ HTTP                                                          M. Thomson
 Internet-Draft                                                   Mozilla
 Obsoletes: 7838 (if approved)                                  M. Bishop
 Intended status: Standards Track                     Akamai Technologies
-Expires: 29 April 2023                                         L. Pardue
+Expires: 2 October 2023                                        L. Pardue
                                                               Cloudflare
                                                                T. Jensen
                                                                Microsoft
-                                                         26 October 2022
+                                                           31 March 2023
 
 
                    HTTP Alternative Services, Plan B
@@ -55,11 +55,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 April 2023.
+   This Internet-Draft will expire on 2 October 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,7 +109,7 @@ Table of Contents
 
 1.  Introduction
 
-   HTTP servers are often comprised of multiple service endpoints.  This
+   HTTP origins are often comprised of multiple service endpoints.  This
    can be driven by multiple requirements, such as a need to scale by
    adding multiple physical servers, the need to place endpoints in
    network locations that are closer to clients for performance reasons,
@@ -125,17 +125,17 @@ Table of Contents
       This might occur if DNS resolution of the server name produces the
       address of a server instance that is further from the client.
 
-   *  Servers that might seek to reduce load, perhaps in anticipation of
-      an imminent shutdown or maintenance action, might use an
-      alternative service declaration to reduce either server load or
-      the number of clients that might be affected.
+   *  Servers might seek to reduce load, perhaps in anticipation of an
+      imminent shutdown or maintenance action.  An alternative service
+      declaration can reduce either server load or the number of clients
+      that might be affected.
 
    *  Many deployments of HTTP/3 [HTTP/3] use the protocol identifiers
       in an alternative service declaration to make clients aware of
       support for the newer protocol.
 
    HTTP alternative services provide a means of indicating to clients
-   which service instances a server would prefer be used for future
+   which service endpoints a server would prefer be used for future
    requests.  Clients use alternative service advertisements as prompt
    to discover and use these more preferred service endpoints.
 
@@ -156,11 +156,11 @@ Table of Contents
 
    The RFC 7838 design included caching logic based on setting an "ma"
    (or max-age) parameter.  This turned out to be challenging for many
-   server deployments.  Setting too a large max-age meant that clients
+   server deployments.  Setting too large a max-age meant that clients
    used the indicated service endpoint for longer than was desired when
    operating conditions changed.  Conversely, a short cache period for
    an advertisement for HTTP/3 resulted in frequently reverting to
-   earlier versions might be used more often than is optimal.
+   previous versions on subsequent connections.
 
    Alternative services turned out to interact poorly with service
    configuration information that is published in the DNS.  With the
@@ -262,7 +262,7 @@ Table of Contents
        [SVCB].  Clients make this query as a "SVCB-reliant" client,
        treating missing or unobtainable HTTPS records as a failure.  If
        this process fails to produce service parameters or IP addresses,
-       abort this process.
+       the process is aborted.
 
    2.  The client establishes a connection using the service parameters
        and addresses learned from the DNS query.  The client uses the
@@ -270,16 +270,16 @@ Table of Contents
        name from the URL, not the alternative name.  This allows the
        server to produce a certificate for the origin name, which the
        client can validate as applying to the URL it is resolving.  If a
-       connection cannot be established, abort this process.
+       connection cannot be established, the process is aborted.
 
    3.  The client validates that the server is authoritative for the
        resource using the server origin name.  If the server is not
-       authoritative, abort this process.
+       authoritative, the process is aborted.
 
    4.  The client makes a query for the resource.  If the server does
        not respond or responds with a 421 (Misdirected Request) (see
-       Section 15.5.20 of [HTTP]), abort this process.  A client MAY re-
-       attempt a request or request another resource if the server
+       Section 15.5.20 of [HTTP]), the process is aborted.  A client MAY
+       re-attempt a request or request another resource if the server
        responds with a 5xx status code (see Section 15.6 of [HTTP]).
 
    5.  Once a response is received, the connection to the alternative
@@ -288,14 +288,14 @@ Table of Contents
        client SHOULD remember the alternative name and the service name
        that were used; see Section 2.1.
 
-   A client MAY send additional requests using the newly established
+   A client MAY send multiple requests using the newly established
    connection to the alternative service after it verifies that the
    server is authoritative.  However, a client MUST NOT remember a
-   service name until a request has been successfully completed with a
-   2xx or 3xx status code.  The alternative service is therefore active
-   once the connection is established, but it will not be reused
-   (Section 2.2) for future connections until a request completes
-   successfully.
+   service name until at least one request has been successfully
+   completed with a 2xx or 3xx status code.  The alternative service is
+   therefore active once the connection is established, but it will not
+   be reused (Section 2.2) for future connections until a request
+   completes successfully.
 
    A client MAY continue sending other requests over any existing
    connection to the server until this process completes in order to
@@ -357,14 +357,14 @@ Table of Contents
 
 2.2.  Reusing Alternatives
 
-   In subsequent connections to the same server, clients make HTTP
-   queries for the origin name of the server.  If this query returns a
-   ServiceMode resource record (RR) that includes a TargetName that is
-   identical to the service name that is remembered for the request
-   origin, the client SHOULD choose that over any alternatives.  This
-   ignores any SvcPriority attributes that might cause other records to
-   be chosen and includes any RRs that are marked "alt-only"; see
-   Section 2.2.2.
+   In subsequent connections to the same origin, clients make a DNS
+   query for HTTPS records for the origin name.  If, after following any
+   CNAME or AliasMode records, this query returns a ServiceMode resource
+   record (RR) that includes a TargetName that is identical to the
+   service name that is remembered for the request origin, the client
+   SHOULD choose that over any alternatives.  This ignores any
+   SvcPriority attributes that might cause other records to be chosen
+   and includes any RRs that are marked "alt-only"; see Section 2.2.2.
 
    Note that when reusing an alternative service, a client does not make
    a query for the remembered alternative name.  HTTPS queries are made
@@ -449,7 +449,7 @@ Table of Contents
    priority than "example.com", clients will not use this service unless
    an alternative was provided by the server:
 
-   alt1.example. 7200 IN HTTPS 1 . port=443 alt-only mandatory=alt-only
+   example.com. 7200 IN HTTPS 1 alt1.example. port=443 alt-only mandatory=alt-only
    example.com.  7200 IN HTTPS 2 . port=443
 
 2.3.  Servers Identified by IP
@@ -690,7 +690,7 @@ Table of Contents
    might be assigned a unique alternative name and service name in order
    to make return connections identifiable.  The need for the service
    name to appears the set of HTTPS records at the origin name does
-   limit the ability of servers to individual track clients at scale,
+   limit the ability of servers to track individual clients at scale,
    but this still might be used to separate clients into groups for
    tracking purposes or to track specific individuals.
 
@@ -743,10 +743,6 @@ Table of Contents
               Negotiation Extension", RFC 7301, DOI 10.17487/RFC7301,
               July 2014, <https://www.rfc-editor.org/rfc/rfc7301>.
 
-   [ALT-SVC]  Nottingham, M., McManus, P., and J. Reschke, "HTTP
-              Alternative Services", RFC 7838, DOI 10.17487/RFC7838,
-              April 2016, <https://www.rfc-editor.org/rfc/rfc7838>.
-
    [HTTP]     Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP Semantics", STD 97, RFC 9110,
               DOI 10.17487/RFC9110, June 2022,
@@ -788,15 +784,19 @@ Table of Contents
    [SVCB]     Schwartz, B. M., Bishop, M., and E. Nygren, "Service
               binding and parameter specification via the DNS (DNS SVCB
               and HTTPS RRs)", Work in Progress, Internet-Draft, draft-
-              ietf-dnsop-svcb-https-11, 11 October 2022,
+              ietf-dnsop-svcb-https-12, 11 March 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-
-              svcb-https-11>.
+              svcb-https-12>.
 
    [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
 
 7.2.  Informative References
+
+   [ALT-SVC]  Nottingham, M., McManus, P., and J. Reschke, "HTTP
+              Alternative Services", RFC 7838, DOI 10.17487/RFC7838,
+              April 2016, <https://www.rfc-editor.org/rfc/rfc7838>.
 
    [ATTRLEAF] Crocker, D., "Scoped Interpretation of DNS Resource
               Records through "Underscored" Naming of Attribute Leaves",
@@ -850,8 +850,8 @@ Appendix A.  Authoritative Information in RFC 7838
 
    Conflicts also arise when alternative service information is retained
    as any retained state might disagree with what is currently deployed.
-   This design avoids this contention by having the entire service
-   resolution process occur almost entirely to the DNS.
+   This design avoids this contention by delegating the service
+   resolution process almost entirely to the DNS.
 
    This design provides clients with a prompt to discover a new service
    endpoint.  On subsequent connections, remembered state only affects
@@ -900,14 +900,14 @@ Index
             Section 2.2, Paragraph 2; Section 2.2.1, Paragraph 6;
             Section 2.2.2, Paragraph 2; Section 2.3, Paragraph 1;
             Section 2.4, Paragraph 1; Section 2.7, Paragraph 1;
-            Section 3, Paragraph 2; Section 3.1, Paragraph 2;
-            Section 3.1, Paragraph 2; Section 3.2, Paragraph 1;
-            Section 3.2, Paragraph 5.6.1; Section 4.2, Paragraph 3;
-            Section 4.3, Paragraph 1; Section 4.4, Paragraph 2
-         alternative names  Section 3, Paragraph 1; Section 3.1,
-            Paragraph 4; Section 3.1, Paragraph 6; Section 4.3,
+            Section 3, Paragraph 1; Section 3, Paragraph 2; Section 3.1,
+            Paragraph 2; Section 3.1, Paragraph 2; Section 3.1,
+            Paragraph 4; Section 3.1, Paragraph 6; Section 3.2,
+            Paragraph 1; Section 3.2, Paragraph 5.6.1; Section 4.2,
+            Paragraph 3; Section 4.3, Paragraph 1; Section 4.3,
             Paragraph 1; Section 4.4, Paragraph 1; Section 4.4,
-            Paragraph 2; Section 4.4, Paragraph 3
+            Paragraph 2; Section 4.4, Paragraph 2; Section 4.4,
+            Paragraph 3
          ALTSVCB  Section 2.1, Paragraph 2, Item 1; Section 2.1,
             Paragraph 4; Section 2.1, Paragraph 4; Section 2.1,
             Paragraph 5; Section 2.4, Paragraph 1; Section 2.8,
@@ -947,13 +947,13 @@ Index
       O
 
          origin  Section 1.3, Paragraph 2; Section 2.1, Paragraph 3;
-            Section 2.2, Paragraph 1; Section 2.2, Paragraph 3;
-            Section 2.2, Paragraph 4; Section 2.8, Paragraph 3;
-            Section 2.8, Paragraph 3; Section 3, Paragraph 2;
-            Section 3.1, Paragraph 3; Section 3.1, Paragraph 3;
-            Section 3.2, Paragraph 1; Section 3.2, Paragraph 5.4.1;
-            Section 3.2, Paragraph 6; Section 4.3, Paragraph 2;
-            Section 4.4, Paragraph 3
+            Section 2.2, Paragraph 1; Section 2.2, Paragraph 1;
+            Section 2.2, Paragraph 3; Section 2.2, Paragraph 4;
+            Section 2.8, Paragraph 3; Section 2.8, Paragraph 3;
+            Section 3, Paragraph 2; Section 3.1, Paragraph 3;
+            Section 3.1, Paragraph 3; Section 3.2, Paragraph 1;
+            Section 3.2, Paragraph 5.4.1; Section 3.2, Paragraph 6;
+            Section 4.3, Paragraph 2; Section 4.4, Paragraph 3
          origin name  Section 1.3, Paragraph 5; Section 1.3, Paragraph
             5; Section 1.3, Paragraph 6; Section 2, Paragraph 4, Item 2;
             Section 2, Paragraph 4, Item 2; Section 2, Paragraph 4, Item
@@ -981,8 +981,7 @@ Index
             Paragraph 3; Section 2.1, Paragraph 3; Section 2.1,
             Paragraph 3; Section 2.1, Paragraph 4; Section 2.1,
             Paragraph 5; Section 2.1, Paragraph 6; Section 2.1,
-            Paragraph 7; Section 2.1, Paragraph 8; Section 2.2,
-            Paragraph 1; Section 2.2, Paragraph 1; Section 2.2.1,
+            Paragraph 7; Section 2.1, Paragraph 8; Section 2.2.1,
             Paragraph 4; Section 2.2.2, Paragraph 1; Section 2.2.2,
             Paragraph 4; Section 2.3, Paragraph 1; Section 2.5,
             Paragraph 2; Section 2.6, Paragraph 2; Section 2.6,
@@ -992,23 +991,23 @@ Index
             Paragraph 3; Section 3, Paragraph 1; Section 3.2, Paragraph
             6; Section 4.2, Paragraph 1; Section 4.3, Paragraph 1;
             Section 4.3, Paragraph 2
-         service endpoint  Section Abstract, Paragraph 1; Section 1,
-            Paragraph 2; Section 1, Paragraph 3, Item 1; Section 1,
-            Paragraph 5; Section 1.1, Paragraph 2; Section 1.3,
-            Paragraph 4; Section 1.3, Paragraph 5; Section 2, Paragraph
-            4, Item 5; Section 4, Paragraph 1; Section 4.1, Paragraph 2;
+         service endpoint  Section Abstract, Paragraph 1;
+            Section Abstract, Paragraph 1; Section 1, Paragraph 1;
+            Section 1, Paragraph 2; Section 1, Paragraph 2; Section 1,
+            Paragraph 3, Item 1; Section 1, Paragraph 4; Section 1,
+            Paragraph 4; Section 1, Paragraph 5; Section 1.1, Paragraph
+            2; Section 1.1, Paragraph 3; Section 1.3, Paragraph 3;
+            Section 1.3, Paragraph 4; Section 1.3, Paragraph 4;
+            Section 1.3, Paragraph 5; Section 2, Paragraph 2; Section 2,
+            Paragraph 3; Section 2, Paragraph 4, Item 5; Section 2.8,
+            Paragraph 1; Section 2.8, Paragraph 3; Section 2.8,
+            Paragraph 3; Section 4, Paragraph 1; Section 4, Paragraph 1;
+            Section 4.1, Paragraph 2; Section 4.1, Paragraph 2;
             Section 4.1, Paragraph 3; Section 4.1, Paragraph 3;
             Section 4.1, Paragraph 4; Section 4.1, Paragraph 5;
-            Section 4.2, Paragraph 2; Section 4.4, Paragraph 2;
+            Section 4.2, Paragraph 2; Section 4.4, Paragraph 1;
+            Section 4.4, Paragraph 2; Section 4.4, Paragraph 2;
             Section 4.4, Paragraph 3; Appendix A, Paragraph 4
-         service endpoints  Section Abstract, Paragraph 1; Section 1,
-            Paragraph 1; Section 1, Paragraph 2; Section 1, Paragraph 4;
-            Section 1.1, Paragraph 3; Section 1.3, Paragraph 3;
-            Section 1.3, Paragraph 4; Section 2, Paragraph 2; Section 2,
-            Paragraph 3; Section 2.8, Paragraph 1; Section 2.8,
-            Paragraph 3; Section 2.8, Paragraph 3; Section 4, Paragraph
-            1; Section 4.1, Paragraph 2; Section 4.4, Paragraph 1;
-            Section 4.4, Paragraph 2
          service name  Section 1.3, Paragraph 4; Section 1.3, Paragraph
             5; Section 1.3, Paragraph 6; Section 2, Paragraph 4, Item 5;
             Section 2, Paragraph 5; Section 2.1, Paragraph 2, Item 2;
