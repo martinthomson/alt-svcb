@@ -654,7 +654,7 @@ advertising an alternative name.
 Remembering alternative names and service names might allow a server to connect
 activity at different times to the same client.  Clients might be assigned a
 unique alternative name and service name in order to make return connections
-identifiable.  The need for the service name to appears the set of HTTPS records
+identifiable.  The need for the service name to appear in the set of HTTPS records
 at the origin name does limit the ability of servers to track individual clients
 at scale, but this still might be used to separate clients into groups for
 tracking purposes or to track specific individuals.
