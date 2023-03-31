@@ -117,8 +117,8 @@ Table of Contents
    or HTTP/3 [HTTP/3].
 
    For servers that operate multiple service endpoints, it can be
-   advantageous - or even necessary - to have clients make requests to a
-   specific service endpoint.
+   advantageous to have clients make requests to a specific service
+   endpoint.
 
    *  Some deployments might seek to direct a client to a service
       endpoint that is better able to serve requests for that client.
