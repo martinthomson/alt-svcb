@@ -67,7 +67,7 @@ This document obsoletes RFC 7838.
 
 # Introduction
 
-HTTP servers are often comprised of multiple service endpoints.  This can be
+HTTP origins are often comprised of multiple service endpoints.  This can be
 driven by multiple requirements, such as a need to scale by adding multiple
 physical servers, the need to place endpoints in network locations that are
 closer to clients for performance reasons, or the need to support multiple HTTP
@@ -81,16 +81,16 @@ even necessary - to have clients make requests to a specific service endpoint.
   resolution of the server name produces the address of a server instance that
   is further from the client.
 
-* Servers that might seek to reduce load, perhaps in anticipation of an imminent
-  shutdown or maintenance action, might use an alternative service declaration
-  to reduce either server load or the number of clients that might be affected.
+* Servers might seek to reduce load, perhaps in anticipation of an imminent
+  shutdown or maintenance action. An alternative service declaration
+  can reduce either server load or the number of clients that might be affected.
 
 * Many deployments of HTTP/3 {{H3}} use the protocol identifiers in an
   alternative service declaration to make clients aware of support for the newer
   protocol.
 
 HTTP alternative services provide a means of indicating to clients which service
-instances a server would prefer be used for future requests.  Clients use
+endpoints a server would prefer be used for future requests.  Clients use
 alternative service advertisements as prompt to discover and use these more
 preferred service endpoints.
 
@@ -104,18 +104,17 @@ interruption.
 
 ## Previous Alternative Services Designs
 
-RFC 7838 {{!ALT-SVC=RFC7838}} provided the first alternative service design for
+RFC 7838 {{?ALT-SVC=RFC7838}} provided the first alternative service design for
 HTTP.  This design turned out to have a number of shortcomings in deployment.
 Though these issues were anticipated in the design, the measures that were used
 often did not work particularly well.
 
 The RFC 7838 design included caching logic based on setting an "ma" (or max-age)
 parameter.  This turned out to be challenging for many server deployments.
-Setting too a large max-age meant that clients used the indicated service
+Setting too large a max-age meant that clients used the indicated service
 endpoint for longer than was desired when operating conditions changed.
 Conversely, a short cache period for an advertisement for HTTP/3 resulted in
-frequently reverting to earlier versions might be used more often than is
-optimal.
+frequently reverting to previous versions on subsequent connections.
 
 Alternative services turned out to interact poorly with service configuration
 information that is published in the DNS.  With the introduction of HTTPS
@@ -181,7 +180,7 @@ client.  This refers to a domain name that is queried by the client to discover
 both service names and service endpoints.
 
 *[alternative name]: #terms
-*[alternative names]: #terms
+*[alternative names]: #terms (((alternative name)))
 
 A "service name" is the TargetName from an HTTPS ServiceMode record {{SVCB}}.
 Service names, their associated parameters (SvcParams), and IP addresses
@@ -190,7 +189,7 @@ endpoints in order to make requests of a server.
 
 *[service name]: #terms
 *[service endpoint]: #terms
-*[service endpoints]: #terms
+*[service endpoints]: #terms (((service endpoint)))
 
 A server is identified using its "origin name", which is the domain name from
 the target URI of resources the client makes requests toward.  This is the name
@@ -222,22 +221,22 @@ alternative name as follows:
    following the procedures in {{Section 3 of SVCB}}.  Clients make this query
    as a "SVCB-reliant" client, treating missing or unobtainable HTTPS records as
    a failure.  If this process fails to produce service parameters or IP
-   addresses, abort this process.
+   addresses, the process is aborted.
 
 2. The client establishes a connection using the service parameters and
    addresses learned from the DNS query.  The client uses the origin name in any
    TLS server name indication {{!SNI=RFC6066}} of the server name from the URL,
    not the alternative name.  This allows the server to produce a certificate
    for the origin name, which the client can validate as applying to the URL it
-   is resolving.  If a connection cannot be established, abort this process.
+   is resolving.  If a connection cannot be established, the process is aborted.
 
 3. The client validates that the server is authoritative for the resource using
-   the server origin name.  If the server is not authoritative, abort this
-   process.
+   the server origin name.  If the server is not authoritative, the
+   process is aborted.
 
 4. The client makes a query for the resource.  If the server does not respond or
    responds with a 421 (Misdirected Request) (see {{Section 15.5.20 of HTTP}}),
-   abort this process.  A client MAY re-attempt a request or request another
+   the process is aborted.  A client MAY re-attempt a request or request another
    resource if the server responds with a 5xx status code (see {{Section 15.6 of
    HTTP}}).
 
@@ -246,9 +245,9 @@ alternative name as follows:
    requests directed to the new connection.  The client SHOULD remember the
    alternative name and the service name that were used; see {{remember}}.
 
-A client MAY send additional requests using the newly established connection to
+A client MAY send multiple requests using the newly established connection to
 the alternative service after it verifies that the server is authoritative.
-However, a client MUST NOT remember a service name until a request has been
+However, a client MUST NOT remember a service name until at least one request has been
 successfully completed with a 2xx or 3xx status code.  The alternative service
 is therefore active once the connection is established, but it will not be
 reused ({{reuse}}) for future connections until a request completes
@@ -309,8 +308,9 @@ and avoid any attempt to use this to discover an alternative service.
 
 ## Reusing Alternatives {#reuse}
 
-In subsequent connections to the same server, clients make HTTP queries for the
-origin name of the server.  If this query returns a ServiceMode resource record
+In subsequent connections to the same origin, clients make a DNS query for
+HTTPS records for the origin name.  If, after following any CNAME or
+AliasMode records, this query returns a ServiceMode resource record
 (RR) that includes a TargetName that is identical to the service name that is
 remembered for the request origin, the client SHOULD choose that over any
 alternatives.  This ignores any SvcPriority attributes that might cause other
@@ -402,7 +402,7 @@ than "example.com", clients will not use this service unless an alternative was
 provided by the server:
 
 ~~~ dns
-alt1.example. 7200 IN HTTPS 1 . port=443 alt-only mandatory=alt-only
+example.com. 7200 IN HTTPS 1 alt1.example. port=443 alt-only mandatory=alt-only
 example.com.  7200 IN HTTPS 2 . port=443
 ~~~
 
@@ -655,7 +655,7 @@ Remembering alternative names and service names might allow a server to connect
 activity at different times to the same client.  Clients might be assigned a
 unique alternative name and service name in order to make return connections
 identifiable.  The need for the service name to appears the set of HTTPS records
-at the origin name does limit the ability of servers to individual track clients
+at the origin name does limit the ability of servers to track individual clients
 at scale, but this still might be used to separate clients into groups for
 tracking purposes or to track specific individuals.
 
@@ -716,7 +716,7 @@ conflict between two sources of the same information.
 
 Conflicts also arise when alternative service information is retained as any
 retained state might disagree with what is currently deployed.  This design
-avoids this contention by having the entire service resolution process occur
+avoids this contention by delegating the service resolution process
 almost entirely to the DNS.
 
 This design provides clients with a prompt to discover a new service endpoint.
