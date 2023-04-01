@@ -6,11 +6,11 @@ HTTP                                                          M. Thomson
 Internet-Draft                                                   Mozilla
 Obsoletes: 7838 (if approved)                                  M. Bishop
 Intended status: Standards Track                     Akamai Technologies
-Expires: 2 October 2023                                        L. Pardue
+Expires: 3 October 2023                                        L. Pardue
                                                               Cloudflare
                                                                T. Jensen
                                                                Microsoft
-                                                           31 March 2023
+                                                            1 April 2023
 
 
                    HTTP Alternative Services, Plan B
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 October 2023.
+   This Internet-Draft will expire on 3 October 2023.
 
 Copyright Notice
 
@@ -689,7 +689,7 @@ Table of Contents
    to connect activity at different times to the same client.  Clients
    might be assigned a unique alternative name and service name in order
    to make return connections identifiable.  The need for the service
-   name to appears the set of HTTPS records at the origin name does
+   name to appear in the set of HTTPS records at the origin name does
    limit the ability of servers to track individual clients at scale,
    but this still might be used to separate clients into groups for
    tracking purposes or to track specific individuals.
